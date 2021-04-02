@@ -9,34 +9,48 @@ import SwiftUI
 import CoreData
 
 struct ProjectListView: View {
+    private let viewModel = ProjectListViewModel()
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     @State var isShowingAddProjectView = false
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Project.dateStarted, ascending: false)],
-        animation: .default)
+        animation: .default
+    )
     private var projects: FetchedResults<Project>
     
     var body: some View {
         NavigationView {
-            VStack {
-                Button("Add a new project") {
-                    isShowingAddProjectView = true
-                }
-                List {
-                    ForEach(projects) { project in
-                        NavigationLink(destination: detailsView(from: project)) {
-                            ProjectListItemView(viewModel: ProjectListItemViewModel(project))
-                        }
+            List {
+                ForEach(projects) { project in
+                    NavigationLink(destination: detailsView(from: project)) {
+                        ProjectListItemView(viewModel: ProjectListItemViewModel(project))
                     }
-                    .onDelete(perform: deleteItems)
+                }
+                .onDelete { offsets in
+                    withAnimation {
+                        deleteItems(offsets: offsets)
+                    }
                 }
             }
-            .sheet(isPresented: $isShowingAddProjectView, content: {
-                AddProjectView()
-                    .environment(\.managedObjectContext, self.viewContext)
-            })
+            .navigationTitle(viewModel.navBarTitle)
+            .navigationBarItems(trailing: barButtonItem)
+        }
+        .sheet(isPresented: $isShowingAddProjectView) {
+            AddProjectView()
+                .environment(\.managedObjectContext, self.viewContext)
+        }
+    }
+    
+    @ViewBuilder private var barButtonItem: some View {
+        Button(action: {
+            isShowingAddProjectView = true
+        }) {
+            Image(systemName: "plus.circle.fill")
+                .resizable()
+                .frame(width: 44, height: 44)
         }
     }
     
@@ -45,18 +59,7 @@ struct ProjectListView: View {
     }
     
     private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { projects[$0] }.forEach(viewContext.delete)
-            
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
+        offsets.map { projects[$0] }.forEach({viewModel.deleteProject(project: $0, from: self.viewContext)})
     }
 }
 

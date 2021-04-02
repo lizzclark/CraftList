@@ -29,8 +29,8 @@ struct AddProjectView: View {
                     }
                 }
             }
+            .navigationBarTitle(viewModel.title)
         }
-        .navigationBarTitle(viewModel.title)
     }
 }
 
