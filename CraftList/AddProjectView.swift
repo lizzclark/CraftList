@@ -18,7 +18,11 @@ struct AddProjectView: View {
             Form {
                 Section {
                     TextField("Project name", text: $name)
-                    
+                    VStack {
+                        DatePicker(selection: $dateStarted, in: ...Date(), displayedComponents: .date) {
+                            Text("Date Started")
+                        }
+                    }
                 }
                 Section {
                     Button("Save") {
