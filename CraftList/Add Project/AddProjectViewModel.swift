@@ -8,15 +8,26 @@
 import Foundation
 import CoreData
 
-class AddProjectViewModel: ObservableObject {
+struct AddProjectViewModel {
+    struct ProjectData {
+        static let `default`: ProjectData = {
+            ProjectData(name: "", dateStarted: Date())
+        }()
+        
+        var name: String
+        var dateStarted: Date
+    }
+    
+    var project: ProjectData = ProjectData.default
+
     let title = "Add a Project"
     let projectNameLabel = "Project Name"
     let dateStartedLabel = "Date Started"
     let saveLabel = "Save"
     
-    func save(_ project: ProjectViewModel, in context: NSManagedObjectContext, completion: () -> Void) {
+    func save(in context: NSManagedObjectContext, completion: () -> Void) {
         let newProject = Project(context: context)
-        newProject.name = project.name
+        newProject.name = project.name.isEmpty ? "Unnamed Project" : project.name
         newProject.dateStarted = project.dateStarted
         do {
             try context.save()

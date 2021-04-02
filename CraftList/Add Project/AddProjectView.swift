@@ -10,21 +10,20 @@ import SwiftUI
 struct AddProjectView: View {
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.presentationMode) var presentationMode
-    @State var project: ProjectViewModel = ProjectViewModel.default
-    private let viewModel = AddProjectViewModel()
+    @State var viewModel = AddProjectViewModel()
     
     var body: some View {
         NavigationView {
             Form {
                 Section {
-                    TextField(viewModel.projectNameLabel, text: $project.name)
-                    DatePicker(selection: $project.dateStarted, in: ...Date(), displayedComponents: .date) {
+                    TextField(viewModel.projectNameLabel, text: $viewModel.project.name)
+                    DatePicker(selection: $viewModel.project.dateStarted, in: ...Date(), displayedComponents: .date) {
                         Text(viewModel.dateStartedLabel)
                     }
                 }
                 Section {
                     Button(viewModel.saveLabel) {
-                        viewModel.save(project, in: self.viewContext) {
+                        viewModel.save(in: self.viewContext) {
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }

@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct ContentView: View {
+struct ProjectListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @State var isShowingAddProjectView = false
@@ -16,7 +16,7 @@ struct ContentView: View {
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Project.dateStarted, ascending: false)],
         animation: .default)
-    private var items: FetchedResults<Project>
+    private var projects: FetchedResults<Project>
     
     var body: some View {
         VStack {
@@ -24,8 +24,8 @@ struct ContentView: View {
                 isShowingAddProjectView = true
             }
             List {
-                ForEach(items) { item in
-                    projectView(from: item)
+                ForEach(projects) { project in
+                    ProjectListItemView(viewModel: ProjectListItemViewModel(project))
                 }
                 .onDelete(perform: deleteItems)
             }
@@ -36,25 +36,9 @@ struct ContentView: View {
         })
     }
     
-    private func projectView(from project: Project) -> some View {
-        VStack(alignment: .leading) {
-            if let name = project.name {
-                Text(name)
-            }
-            if let dateStarted = dateText(from: project) {
-                Text(dateStarted)
-            }
-        }
-    }
-    
-    private func dateText(from project: Project) -> String? {
-        guard let date = project.dateStarted else { return nil }
-        return projectFormatter.string(from: date)
-    }
-    
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+            offsets.map { projects[$0] }.forEach(viewContext.delete)
             
             do {
                 try viewContext.save()
@@ -68,14 +52,8 @@ struct ContentView: View {
     }
 }
 
-private let projectFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .long
-    return formatter
-}()
-
-struct ContentView_Previews: PreviewProvider {
+struct ProjectListView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ProjectListView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

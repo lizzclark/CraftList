@@ -13,7 +13,7 @@ struct CraftListApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ProjectListView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

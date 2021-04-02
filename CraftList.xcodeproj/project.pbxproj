@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		859C9F9A261717D6003D5BF4 /* CraftListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9F99261717D6003D5BF4 /* CraftListApp.swift */; };
-		859C9F9C261717D6003D5BF4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9F9B261717D6003D5BF4 /* ContentView.swift */; };
+		859C9F9C261717D6003D5BF4 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9F9B261717D6003D5BF4 /* ProjectListView.swift */; };
 		859C9F9E261717D8003D5BF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 859C9F9D261717D8003D5BF4 /* Assets.xcassets */; };
 		859C9FA1261717D8003D5BF4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 859C9FA0261717D8003D5BF4 /* Preview Assets.xcassets */; };
 		859C9FA3261717D8003D5BF4 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FA2261717D8003D5BF4 /* Persistence.swift */; };
@@ -17,7 +17,9 @@
 		859C9FBC261717D8003D5BF4 /* CraftListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FBB261717D8003D5BF4 /* CraftListUITests.swift */; };
 		859C9FCD26171A0F003D5BF4 /* AddProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FCC26171A0F003D5BF4 /* AddProjectView.swift */; };
 		859C9FD6261724E5003D5BF4 /* AddProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FD5261724E5003D5BF4 /* AddProjectViewModel.swift */; };
-		859C9FDC2617282E003D5BF4 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FDB2617282E003D5BF4 /* ProjectViewModel.swift */; };
+		859C9FE8261729B2003D5BF4 /* ProjectListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FE7261729B2003D5BF4 /* ProjectListItemView.swift */; };
+		859C9FED26172D35003D5BF4 /* ProjectListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FEC26172D35003D5BF4 /* ProjectListItemViewModel.swift */; };
+		859C9FF826172EA1003D5BF4 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FF726172EA1003D5BF4 /* ProjectListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +42,7 @@
 /* Begin PBXFileReference section */
 		859C9F96261717D6003D5BF4 /* CraftList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CraftList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		859C9F99261717D6003D5BF4 /* CraftListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CraftListApp.swift; sourceTree = "<group>"; };
-		859C9F9B261717D6003D5BF4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		859C9F9B261717D6003D5BF4 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		859C9F9D261717D8003D5BF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		859C9FA0261717D8003D5BF4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		859C9FA2261717D8003D5BF4 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -54,7 +56,9 @@
 		859C9FBD261717D8003D5BF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		859C9FCC26171A0F003D5BF4 /* AddProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectView.swift; sourceTree = "<group>"; };
 		859C9FD5261724E5003D5BF4 /* AddProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectViewModel.swift; sourceTree = "<group>"; };
-		859C9FDB2617282E003D5BF4 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
+		859C9FE7261729B2003D5BF4 /* ProjectListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListItemView.swift; sourceTree = "<group>"; };
+		859C9FEC26172D35003D5BF4 /* ProjectListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListItemViewModel.swift; sourceTree = "<group>"; };
+		859C9FF726172EA1003D5BF4 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,10 +109,9 @@
 		859C9F98261717D6003D5BF4 /* CraftList */ = {
 			isa = PBXGroup;
 			children = (
-				859C9FDA26172821003D5BF4 /* Project */,
+				859C9FE6261729A0003D5BF4 /* Project List */,
 				859C9FD4261724D4003D5BF4 /* Add Project */,
 				859C9F99261717D6003D5BF4 /* CraftListApp.swift */,
-				859C9F9B261717D6003D5BF4 /* ContentView.swift */,
 				859C9F9D261717D8003D5BF4 /* Assets.xcassets */,
 				859C9FA2261717D8003D5BF4 /* Persistence.swift */,
 				859C9FA7261717D8003D5BF4 /* Info.plist */,
@@ -153,12 +156,15 @@
 			path = "Add Project";
 			sourceTree = "<group>";
 		};
-		859C9FDA26172821003D5BF4 /* Project */ = {
+		859C9FE6261729A0003D5BF4 /* Project List */ = {
 			isa = PBXGroup;
 			children = (
-				859C9FDB2617282E003D5BF4 /* ProjectViewModel.swift */,
+				859C9F9B261717D6003D5BF4 /* ProjectListView.swift */,
+				859C9FE7261729B2003D5BF4 /* ProjectListItemView.swift */,
+				859C9FEC26172D35003D5BF4 /* ProjectListItemViewModel.swift */,
+				859C9FF726172EA1003D5BF4 /* ProjectListViewModel.swift */,
 			);
-			path = Project;
+			path = "Project List";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,11 +296,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				859C9FDC2617282E003D5BF4 /* ProjectViewModel.swift in Sources */,
+				859C9FE8261729B2003D5BF4 /* ProjectListItemView.swift in Sources */,
 				859C9FD6261724E5003D5BF4 /* AddProjectViewModel.swift in Sources */,
+				859C9FED26172D35003D5BF4 /* ProjectListItemViewModel.swift in Sources */,
+				859C9FF826172EA1003D5BF4 /* ProjectListViewModel.swift in Sources */,
 				859C9FCD26171A0F003D5BF4 /* AddProjectView.swift in Sources */,
 				859C9FA3261717D8003D5BF4 /* Persistence.swift in Sources */,
-				859C9F9C261717D6003D5BF4 /* ContentView.swift in Sources */,
+				859C9F9C261717D6003D5BF4 /* ProjectListView.swift in Sources */,
 				859C9FA6261717D8003D5BF4 /* CraftList.xcdatamodeld in Sources */,
 				859C9F9A261717D6003D5BF4 /* CraftListApp.swift in Sources */,
 			);
