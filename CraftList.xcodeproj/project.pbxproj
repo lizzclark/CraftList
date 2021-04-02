@@ -16,6 +16,8 @@
 		859C9FB1261717D8003D5BF4 /* CraftListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FB0261717D8003D5BF4 /* CraftListTests.swift */; };
 		859C9FBC261717D8003D5BF4 /* CraftListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FBB261717D8003D5BF4 /* CraftListUITests.swift */; };
 		859C9FCD26171A0F003D5BF4 /* AddProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FCC26171A0F003D5BF4 /* AddProjectView.swift */; };
+		859C9FD6261724E5003D5BF4 /* AddProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FD5261724E5003D5BF4 /* AddProjectViewModel.swift */; };
+		859C9FDC2617282E003D5BF4 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FDB2617282E003D5BF4 /* ProjectViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		859C9FBB261717D8003D5BF4 /* CraftListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CraftListUITests.swift; sourceTree = "<group>"; };
 		859C9FBD261717D8003D5BF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		859C9FCC26171A0F003D5BF4 /* AddProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectView.swift; sourceTree = "<group>"; };
+		859C9FD5261724E5003D5BF4 /* AddProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectViewModel.swift; sourceTree = "<group>"; };
+		859C9FDB2617282E003D5BF4 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,13 +105,14 @@
 		859C9F98261717D6003D5BF4 /* CraftList */ = {
 			isa = PBXGroup;
 			children = (
+				859C9FDA26172821003D5BF4 /* Project */,
+				859C9FD4261724D4003D5BF4 /* Add Project */,
 				859C9F99261717D6003D5BF4 /* CraftListApp.swift */,
 				859C9F9B261717D6003D5BF4 /* ContentView.swift */,
 				859C9F9D261717D8003D5BF4 /* Assets.xcassets */,
 				859C9FA2261717D8003D5BF4 /* Persistence.swift */,
 				859C9FA7261717D8003D5BF4 /* Info.plist */,
 				859C9FA4261717D8003D5BF4 /* CraftList.xcdatamodeld */,
-				859C9FCC26171A0F003D5BF4 /* AddProjectView.swift */,
 				859C9F9F261717D8003D5BF4 /* Preview Content */,
 			);
 			path = CraftList;
@@ -137,6 +142,23 @@
 				859C9FBD261717D8003D5BF4 /* Info.plist */,
 			);
 			path = CraftListUITests;
+			sourceTree = "<group>";
+		};
+		859C9FD4261724D4003D5BF4 /* Add Project */ = {
+			isa = PBXGroup;
+			children = (
+				859C9FCC26171A0F003D5BF4 /* AddProjectView.swift */,
+				859C9FD5261724E5003D5BF4 /* AddProjectViewModel.swift */,
+			);
+			path = "Add Project";
+			sourceTree = "<group>";
+		};
+		859C9FDA26172821003D5BF4 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				859C9FDB2617282E003D5BF4 /* ProjectViewModel.swift */,
+			);
+			path = Project;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,6 +290,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				859C9FDC2617282E003D5BF4 /* ProjectViewModel.swift in Sources */,
+				859C9FD6261724E5003D5BF4 /* AddProjectViewModel.swift in Sources */,
 				859C9FCD26171A0F003D5BF4 /* AddProjectView.swift in Sources */,
 				859C9FA3261717D8003D5BF4 /* Persistence.swift in Sources */,
 				859C9F9C261717D6003D5BF4 /* ContentView.swift in Sources */,
