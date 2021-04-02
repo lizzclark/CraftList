@@ -19,21 +19,29 @@ struct ProjectListView: View {
     private var projects: FetchedResults<Project>
     
     var body: some View {
-        VStack {
-            Button("Add a new project") {
-                isShowingAddProjectView = true
-            }
-            List {
-                ForEach(projects) { project in
-                    ProjectListItemView(viewModel: ProjectListItemViewModel(project))
+        NavigationView {
+            VStack {
+                Button("Add a new project") {
+                    isShowingAddProjectView = true
                 }
-                .onDelete(perform: deleteItems)
+                List {
+                    ForEach(projects) { project in
+                        NavigationLink(destination: detailsView(from: project)) {
+                            ProjectListItemView(viewModel: ProjectListItemViewModel(project))
+                        }
+                    }
+                    .onDelete(perform: deleteItems)
+                }
             }
+            .sheet(isPresented: $isShowingAddProjectView, content: {
+                AddProjectView()
+                    .environment(\.managedObjectContext, self.viewContext)
+            })
         }
-        .sheet(isPresented: $isShowingAddProjectView, content: {
-            AddProjectView()
-                .environment(\.managedObjectContext, self.viewContext)
-        })
+    }
+    
+    private func detailsView(from project: Project) -> some View {
+        ProjectDetailsView(viewModel: .init(project))
     }
     
     private func deleteItems(offsets: IndexSet) {

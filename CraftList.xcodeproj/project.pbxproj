@@ -20,6 +20,8 @@
 		859C9FE8261729B2003D5BF4 /* ProjectListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FE7261729B2003D5BF4 /* ProjectListItemView.swift */; };
 		859C9FED26172D35003D5BF4 /* ProjectListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FEC26172D35003D5BF4 /* ProjectListItemViewModel.swift */; };
 		859C9FF826172EA1003D5BF4 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FF726172EA1003D5BF4 /* ProjectListViewModel.swift */; };
+		859CA00126173A56003D5BF4 /* ProjectDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA00026173A56003D5BF4 /* ProjectDetailsViewModel.swift */; };
+		859CA00626173A76003D5BF4 /* ProjectDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA00526173A76003D5BF4 /* ProjectDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		859C9FE7261729B2003D5BF4 /* ProjectListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListItemView.swift; sourceTree = "<group>"; };
 		859C9FEC26172D35003D5BF4 /* ProjectListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListItemViewModel.swift; sourceTree = "<group>"; };
 		859C9FF726172EA1003D5BF4 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModel.swift; sourceTree = "<group>"; };
+		859CA00026173A56003D5BF4 /* ProjectDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailsViewModel.swift; sourceTree = "<group>"; };
+		859CA00526173A76003D5BF4 /* ProjectDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 		859C9F98261717D6003D5BF4 /* CraftList */ = {
 			isa = PBXGroup;
 			children = (
+				859C9FFF26173A48003D5BF4 /* Project Details */,
 				859C9FE6261729A0003D5BF4 /* Project List */,
 				859C9FD4261724D4003D5BF4 /* Add Project */,
 				859C9F99261717D6003D5BF4 /* CraftListApp.swift */,
@@ -165,6 +170,15 @@
 				859C9FF726172EA1003D5BF4 /* ProjectListViewModel.swift */,
 			);
 			path = "Project List";
+			sourceTree = "<group>";
+		};
+		859C9FFF26173A48003D5BF4 /* Project Details */ = {
+			isa = PBXGroup;
+			children = (
+				859CA00026173A56003D5BF4 /* ProjectDetailsViewModel.swift */,
+				859CA00526173A76003D5BF4 /* ProjectDetailsView.swift */,
+			);
+			path = "Project Details";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,7 +318,9 @@
 				859C9FA3261717D8003D5BF4 /* Persistence.swift in Sources */,
 				859C9F9C261717D6003D5BF4 /* ProjectListView.swift in Sources */,
 				859C9FA6261717D8003D5BF4 /* CraftList.xcdatamodeld in Sources */,
+				859CA00626173A76003D5BF4 /* ProjectDetailsView.swift in Sources */,
 				859C9F9A261717D6003D5BF4 /* CraftListApp.swift in Sources */,
+				859CA00126173A56003D5BF4 /* ProjectDetailsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
