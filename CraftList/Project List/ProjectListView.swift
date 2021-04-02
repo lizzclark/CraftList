@@ -24,7 +24,7 @@ struct ProjectListView: View {
     var body: some View {
         NavigationView {
             renderList(from: projects)
-                .navigationTitle(viewModel.navBarTitle)
+                .navigationBarTitle(viewModel.navBarTitle, displayMode: .inline)
                 .navigationBarItems(trailing: barButtonItem)
         }
         .sheet(isPresented: $isShowingAddProjectView) {
@@ -59,7 +59,7 @@ struct ProjectListView: View {
         }) {
             Image(systemName: "plus.circle.fill")
                 .resizable()
-                .frame(width: 44, height: 44)
+                .frame(width: 24, height: 24)
         }
     }
     

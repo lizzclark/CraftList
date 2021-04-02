@@ -10,25 +10,23 @@ import SwiftUI
 struct ProjectDetailsView: View {
     let viewModel: ProjectDetailsViewModel
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading) {
-                Text(viewModel.name)
-                HStack {
-                    Text(viewModel.dateStartedLabel)
-                    Spacer()
-                    Text(viewModel.dateStarted)
-                }
-                if let dateFinished = viewModel.dateFinished {
-                    HStack {
-                        Text(viewModel.dateFinishedLabel)
-                        Spacer()
-                        Text(dateFinished)
-                    }
-                }
+        VStack(alignment: .leading) {
+            Text(viewModel.name)
+            HStack {
+                Text(viewModel.dateStartedLabel)
                 Spacer()
+                Text(viewModel.dateStarted)
             }
+            if let dateFinished = viewModel.dateFinished {
+                HStack {
+                    Text(viewModel.dateFinishedLabel)
+                    Spacer()
+                    Text(dateFinished)
+                }
+            }
+            Spacer()
         }
-        .navigationBarTitle(viewModel.name)
+        .navigationBarTitle(viewModel.name, displayMode: .inline)
     }
 }
 
