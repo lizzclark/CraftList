@@ -11,7 +11,22 @@ struct ProjectDetailsView: View {
     let viewModel: ProjectDetailsViewModel
     var body: some View {
         NavigationView {
-            Text("Details of \(viewModel.name)")
+            VStack(alignment: .leading) {
+                Text(viewModel.name)
+                HStack {
+                    Text(viewModel.dateStartedLabel)
+                    Spacer()
+                    Text(viewModel.dateStarted)
+                }
+                if let dateFinished = viewModel.dateFinished {
+                    HStack {
+                        Text(viewModel.dateFinishedLabel)
+                        Spacer()
+                        Text(dateFinished)
+                    }
+                }
+                Spacer()
+            }
         }
         .navigationBarTitle(viewModel.name)
     }
@@ -19,7 +34,7 @@ struct ProjectDetailsView: View {
 
 struct ProjectDetailsView_Previews: PreviewProvider {
     static let exampleViewModel: ProjectDetailsViewModel = {
-        ProjectDetailsViewModel(name: "Stripy knitted beanie", dateStarted: Date())
+        ProjectDetailsViewModel(name: "Stripy knitted beanie", dateStarted: "Monday 3rd October 2021", dateFinished: nil)
     }()
     static var previews: some View {
         ProjectDetailsView(viewModel: exampleViewModel)

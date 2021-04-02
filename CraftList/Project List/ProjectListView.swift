@@ -23,24 +23,33 @@ struct ProjectListView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(projects) { project in
-                    NavigationLink(destination: detailsView(from: project)) {
-                        ProjectListItemView(viewModel: ProjectListItemViewModel(project))
-                    }
-                }
-                .onDelete { offsets in
-                    withAnimation {
-                        deleteItems(offsets: offsets)
-                    }
-                }
-            }
-            .navigationTitle(viewModel.navBarTitle)
-            .navigationBarItems(trailing: barButtonItem)
+            renderList(from: projects)
+                .navigationTitle(viewModel.navBarTitle)
+                .navigationBarItems(trailing: barButtonItem)
         }
         .sheet(isPresented: $isShowingAddProjectView) {
             AddProjectView()
                 .environment(\.managedObjectContext, self.viewContext)
+        }
+    }
+    
+    private func renderList(from projects: FetchedResults<Project>) -> some View {
+        let transformedProjects = projects.compactMap { ProjectViewModel($0) }
+        return List {
+            ForEach(transformedProjects, id: \.self) { viewModel in
+                renderListItem(from: viewModel)
+            }
+            .onDelete { offsets in
+                withAnimation {
+                    deleteItems(offsets: offsets)
+                }
+            }
+        }
+    }
+    
+    private func renderListItem(from projectViewModel: ProjectViewModel) -> some View {
+        NavigationLink(destination: ProjectDetailsView(viewModel: projectViewModel.detailsViewModel)) {
+            ProjectListItemView(viewModel: projectViewModel.listItemViewModel)
         }
     }
     
@@ -52,10 +61,6 @@ struct ProjectListView: View {
                 .resizable()
                 .frame(width: 44, height: 44)
         }
-    }
-    
-    private func detailsView(from project: Project) -> some View {
-        ProjectDetailsView(viewModel: .init(project))
     }
     
     private func deleteItems(offsets: IndexSet) {

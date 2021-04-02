@@ -8,17 +8,16 @@
 import Foundation
 
 struct ProjectDetailsViewModel {
+    let dateStartedLabel = "Date Started"
+    let dateFinishedLabel = "Date Finished"
+
     let name: String
-    let dateStarted: Date?
-    
-    init(_ project: Project) {
-        self.name = project.name ?? "Unnamed Project"
-        #warning("how to handle optional stuff")
-        self.dateStarted = project.dateStarted
-    }
-    
-    init(name: String, dateStarted: Date) {
+    let dateStarted: String
+    let dateFinished: String?
+
+    init(name: String, dateStarted: String, dateFinished: String?) {
         self.name = name
         self.dateStarted = dateStarted
+        self.dateFinished = dateFinished
     }
 }
