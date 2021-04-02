@@ -11,6 +11,8 @@ import CoreData
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
+    @State var isShowingAddProjectView = false
+    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
@@ -18,16 +20,20 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Button(action: addItem, label: {
-                Text("add a new item")
-            })
+            Button("Add a new project") {
+                isShowingAddProjectView = true
+            }
             List {
                 ForEach(items) { item in
-                    Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+                    Text("\(item.name ?? "nameless item with timestamp")")
                 }
                 .onDelete(perform: deleteItems)
             }
         }
+        .sheet(isPresented: $isShowingAddProjectView, content: {
+            AddProjectView()
+                .environment(\.managedObjectContext, self.viewContext)
+        })
     }
     
     private func addItem() {
