@@ -10,6 +10,8 @@ import Foundation
 struct ProjectDetailsViewModel {
     let dateStartedLabel = "Date Started"
     let dateFinishedLabel = "Date Finished"
+    let editLabel = "Edit"
+    let wipLabel = "Work in Progress"
 
     let name: String
     let dateStarted: String
