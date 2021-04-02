@@ -14,9 +14,9 @@ struct ContentView: View {
     @State var isShowingAddProjectView = false
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Project.dateStarted, ascending: false)],
         animation: .default)
-    private var items: FetchedResults<Item>
+    private var items: FetchedResults<Project>
     
     var body: some View {
         VStack {
@@ -25,7 +25,7 @@ struct ContentView: View {
             }
             List {
                 ForEach(items) { item in
-                    Text("\(item.name ?? "nameless item with timestamp")")
+                    projectView(from: item)
                 }
                 .onDelete(perform: deleteItems)
             }
@@ -36,20 +36,20 @@ struct ContentView: View {
         })
     }
     
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-            
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+    private func projectView(from project: Project) -> some View {
+        VStack(alignment: .leading) {
+            if let name = project.name {
+                Text(name)
+            }
+            if let dateStarted = dateText(from: project) {
+                Text(dateStarted)
             }
         }
+    }
+    
+    private func dateText(from project: Project) -> String? {
+        guard let date = project.dateStarted else { return nil }
+        return projectFormatter.string(from: date)
     }
     
     private func deleteItems(offsets: IndexSet) {
@@ -68,10 +68,9 @@ struct ContentView: View {
     }
 }
 
-private let itemFormatter: DateFormatter = {
+private let projectFormatter: DateFormatter = {
     let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
+    formatter.dateStyle = .long
     return formatter
 }()
 
