@@ -16,10 +16,11 @@ struct AddProjectView: View {
         NavigationView {
             Form {
                 Section {
-                    TextField(viewModel.projectNameLabel, text: $viewModel.project.name)
-                    DatePicker(selection: $viewModel.project.dateStarted, in: ...Date(), displayedComponents: .date) {
+                    TextField(viewModel.projectNameLabel, text: $viewModel.name)
+                    DatePicker(selection: $viewModel.dateStarted, in: ...Date(), displayedComponents: .date) {
                         Text(viewModel.dateStartedLabel)
                     }
+                    dateFinishedView()
                 }
                 Section {
                     Button(viewModel.saveLabel) {
@@ -30,6 +31,22 @@ struct AddProjectView: View {
                 }
             }
             .navigationBarTitle(viewModel.title)
+        }
+    }
+    
+    @ViewBuilder private func dateFinishedView() -> some View {
+        VStack(alignment: .leading) {
+            Text(viewModel.statusLabel)
+            Picker(selection: $viewModel.isFinished, label: Text(viewModel.statusLabel)) {
+                Text(viewModel.wipLabel).tag(false)
+                Text(viewModel.finishedLabel).tag(true)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            if viewModel.isFinished {
+                DatePicker(selection: $viewModel.dateFinishedFieldValue, in: ...Date(), displayedComponents: .date) {
+                    Text(viewModel.dateFinishedLabel)
+                }
+            }
         }
     }
 }

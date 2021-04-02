@@ -18,13 +18,16 @@ struct ProjectListItemView: View {
         VStack(alignment: .leading) {
             Text(viewModel.name)
             Text(viewModel.dateStarted)
+            if let finishDate = viewModel.dateFinished {
+                Text(finishDate)
+            }
         }
     }
 }
 
 struct ProjectListItemView_Previews: PreviewProvider {
     static let exampleViewModel: ProjectListItemViewModel = {
-        .init(name: "Macrame wall hanging", dateStarted: "3rd October 2020")
+        .init(name: "Macrame wall hanging", dateStarted: "3rd October 2020", dateFinished: "2nd November 2020")
     }()
     static var previews: some View {
         ProjectListItemView(viewModel: exampleViewModel)
