@@ -22,7 +22,6 @@
 		859C9FF826172EA1003D5BF4 /* ProjectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FF726172EA1003D5BF4 /* ProjectListViewModel.swift */; };
 		859CA00126173A56003D5BF4 /* ProjectDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA00026173A56003D5BF4 /* ProjectDetailsViewModel.swift */; };
 		859CA00626173A76003D5BF4 /* ProjectDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA00526173A76003D5BF4 /* ProjectDetailsView.swift */; };
-		859CA00B261767F1003D5BF4 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA00A261767F1003D5BF4 /* ProjectViewModel.swift */; };
 		859CA01226185941003D5BF4 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA01126185941003D5BF4 /* DataStore.swift */; };
 		859CA01A2618603A003D5BF4 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA0192618603A003D5BF4 /* ProjectData.swift */; };
 		859CA02326187816003D5BF4 /* ProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA02226187816003D5BF4 /* ProjectService.swift */; };
@@ -69,7 +68,6 @@
 		859C9FF726172EA1003D5BF4 /* ProjectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModel.swift; sourceTree = "<group>"; };
 		859CA00026173A56003D5BF4 /* ProjectDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailsViewModel.swift; sourceTree = "<group>"; };
 		859CA00526173A76003D5BF4 /* ProjectDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailsView.swift; sourceTree = "<group>"; };
-		859CA00A261767F1003D5BF4 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
 		859CA01126185941003D5BF4 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		859CA0192618603A003D5BF4 /* ProjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectData.swift; sourceTree = "<group>"; };
 		859CA02226187816003D5BF4 /* ProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectService.swift; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 				859C9FA7261717D8003D5BF4 /* Info.plist */,
 				859C9FA4261717D8003D5BF4 /* CraftList.xcdatamodeld */,
 				859C9F9F261717D8003D5BF4 /* Preview Content */,
-				859CA00A261767F1003D5BF4 /* ProjectViewModel.swift */,
 			);
 			path = CraftList;
 			sourceTree = "<group>";
@@ -366,7 +363,6 @@
 				859C9FED26172D35003D5BF4 /* ProjectListItemViewModel.swift in Sources */,
 				859C9FF826172EA1003D5BF4 /* ProjectListViewModel.swift in Sources */,
 				859CA02326187816003D5BF4 /* ProjectService.swift in Sources */,
-				859CA00B261767F1003D5BF4 /* ProjectViewModel.swift in Sources */,
 				859C9FCD26171A0F003D5BF4 /* AddProjectView.swift in Sources */,
 				859C9FA3261717D8003D5BF4 /* Persistence.swift in Sources */,
 				859C9F9C261717D6003D5BF4 /* ProjectListView.swift in Sources */,
