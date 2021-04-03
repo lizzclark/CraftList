@@ -50,4 +50,12 @@ struct ProjectService {
         }
         .eraseToAnyPublisher()
     }
+    
+    func getProject(id: UUID) -> AnyPublisher<ProjectModel, Never> {
+        return dataStore.fetchProject(id: id)
+                .map { projectData in
+                return ProjectModel(id: projectData.id, name: projectData.name, dateStarted: projectData.dateStarted, dateFinished: projectData.dateFinished)
+            }
+            .eraseToAnyPublisher()
+    }
 }

@@ -11,13 +11,15 @@ struct ProjectDetailsView: View {
     let viewModel: ProjectDetailsViewModel
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
-            titleView
-            dateStartedView
-            dateFinishedView
-            Spacer()
+            if let data = viewModel.project {
+                titleView(data.name)
+                dateStartedView(data.dateStartedText)
+                dateFinishedView(data.dateFinishedText)
+                Spacer()
+            }
         }
         .padding()
-        .navigationBarTitle(viewModel.name, displayMode: .inline)
+        .navigationBarTitle(viewModel.project?.name ?? "", displayMode: .inline)
         .navigationBarItems(trailing: deleteButton)
     }
     
@@ -31,12 +33,12 @@ struct ProjectDetailsView: View {
         }
     }
     
-    private var titleView: some View {
+    private func titleView(_ title: String) -> some View {
         HStack(spacing: 16) {
             Button(action: {
                 print("edit name")
             }) {
-                Text(viewModel.name)
+                Text(title)
                     .multilineTextAlignment(.center)
                     .font(.title)
                 Image(systemName: "square.and.pencil")
@@ -44,13 +46,13 @@ struct ProjectDetailsView: View {
         }
     }
     
-    private var dateStartedView: some View {
+    private func dateStartedView(_ dateStartedText: String) -> some View {
         HStack {
             VStack {
                 HStack {
                     Text(viewModel.dateStartedLabel)
                     Spacer()
-                    Text(viewModel.dateStartedText)
+                    Text(dateStartedText)
                 }
                 HStack {
                     Spacer()
@@ -62,12 +64,12 @@ struct ProjectDetailsView: View {
         }
     }
     
-    private var dateFinishedView: some View {
+    private func dateFinishedView(_ dateFinishedText: String?) -> some View {
         VStack {
             HStack {
                 Text(viewModel.dateFinishedLabel)
                 Spacer()
-                if let dateFinished = viewModel.dateFinishedText {
+                if let dateFinished = dateFinishedText {
                     Text(dateFinished)
                 } else {
                     Text(viewModel.wipLabel)
@@ -85,7 +87,7 @@ struct ProjectDetailsView: View {
 
 struct ProjectDetailsView_Previews: PreviewProvider {
     static let exampleViewModel: ProjectDetailsViewModel = {
-        ProjectDetailsViewModel(name: "Stripy knitted beanie", dateStarted: Date(), dateFinished: Date())
+        ProjectDetailsViewModel(id: UUID())
     }()
     static var previews: some View {
         ProjectDetailsView(viewModel: exampleViewModel)

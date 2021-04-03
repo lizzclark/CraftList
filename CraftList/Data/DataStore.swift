@@ -50,6 +50,18 @@ class DataStore: NSObject {
         return projects.eraseToAnyPublisher()
     }
     
+    func fetchProject(id: UUID) -> AnyPublisher<ProjectData, Never> {
+        return projects
+            .map({ data in
+                if let matchingProject = data.first(where: { $0.id == id }) {
+                    return matchingProject
+                } else {
+                    fatalError("failed to get project")
+                }
+            })
+            .eraseToAnyPublisher()
+    }
+    
     func add(projectData: AddProjectData, completion: () -> Void) {
         let newProject = Project(context: managedObjectContext)
         newProject.id = UUID()
