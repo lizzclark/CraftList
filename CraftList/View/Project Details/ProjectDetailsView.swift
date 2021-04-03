@@ -50,7 +50,7 @@ struct ProjectDetailsView: View {
                 HStack {
                     Text(viewModel.dateStartedLabel)
                     Spacer()
-                    Text(viewModel.dateStarted)
+                    Text(viewModel.dateStartedText)
                 }
                 HStack {
                     Spacer()
@@ -67,7 +67,7 @@ struct ProjectDetailsView: View {
             HStack {
                 Text(viewModel.dateFinishedLabel)
                 Spacer()
-                if let dateFinished = viewModel.dateFinished {
+                if let dateFinished = viewModel.dateFinishedText {
                     Text(dateFinished)
                 } else {
                     Text(viewModel.wipLabel)
@@ -85,7 +85,7 @@ struct ProjectDetailsView: View {
 
 struct ProjectDetailsView_Previews: PreviewProvider {
     static let exampleViewModel: ProjectDetailsViewModel = {
-        ProjectDetailsViewModel(name: "Stripy knitted beanie", dateStarted: "Monday 3rd October 2021", dateFinished: nil)
+        ProjectDetailsViewModel(name: "Stripy knitted beanie", dateStarted: Date(), dateFinished: Date())
     }()
     static var previews: some View {
         ProjectDetailsView(viewModel: exampleViewModel)

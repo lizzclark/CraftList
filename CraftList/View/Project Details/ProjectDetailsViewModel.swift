@@ -14,12 +14,20 @@ struct ProjectDetailsViewModel {
     let wipLabel = "Work in Progress"
 
     let name: String
-    let dateStarted: String
-    let dateFinished: String?
+    let dateStarted: Date
+    let dateFinished: Date?
+    let dateStartedText: String
+    let dateFinishedText: String?
 
-    init(name: String, dateStarted: String, dateFinished: String?) {
+    init(name: String, dateStarted: Date, dateFinished: Date?) {
         self.name = name
         self.dateStarted = dateStarted
         self.dateFinished = dateFinished
+        self.dateStartedText = DateFormatter.longDateFormatter.string(from: dateStarted)
+        if let finishDate = dateFinished {
+            self.dateFinishedText = DateFormatter.longDateFormatter.string(from: finishDate)
+        } else {
+            dateFinishedText = nil
+        }
     }
 }

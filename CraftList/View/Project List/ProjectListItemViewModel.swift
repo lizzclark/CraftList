@@ -12,11 +12,11 @@ struct ProjectListItemViewModel {
     let dateStarted: Date
     let dateFinished: Date?
     var dateStartedText: String {
-        return DateFormatter.longDateFormatter.string(from: dateStarted)
+        return "Started \(DateFormatter.longDateFormatter.string(from: dateStarted))"
     }
     var dateFinishedText: String? {
         guard let date = dateFinished else { return nil }
-        return DateFormatter.longDateFormatter.string(from: date)
+        return "Finished \(DateFormatter.longDateFormatter.string(from: date))"
     }
     
     init(name: String, dateStarted: Date, dateFinished: Date?) {

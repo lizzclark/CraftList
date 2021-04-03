@@ -22,13 +22,4 @@ struct ProjectViewModel: Hashable {
         self.dateStarted = dateStarted
         self.dateFinished = project.dateFinished
     }
-    
-    var detailsViewModel: ProjectDetailsViewModel {
-        let dateStartedText = DateFormatter.longDateFormatter.string(from: dateStarted)
-        var dateFinishedText: String?
-        if let dateFinished = dateFinished {
-            dateFinishedText = DateFormatter.longDateFormatter.string(from: dateFinished)
-        }
-        return ProjectDetailsViewModel(name: name, dateStarted: dateStartedText, dateFinished: dateFinishedText)
-    }
 }
