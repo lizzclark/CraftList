@@ -36,7 +36,15 @@ class AddProjectViewModel: ObservableObject {
             finishDate = dateFinishedFieldValue
         }
         service.addProject(name: name, dateStarted: dateStarted, dateFinished: finishDate)
-            .sink { _ in
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure:
+                    // handle error
+                    break
+                }
+            }) { _ in
                 completion()
             }
             .store(in: &cancellables)

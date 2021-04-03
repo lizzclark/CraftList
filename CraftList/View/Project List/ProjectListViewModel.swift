@@ -31,7 +31,15 @@ class ProjectListViewModel: ObservableObject {
     
     private func subscribeToProjects() {
         service.projects()
-            .sink { [weak self] projects in
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure:
+                    // handle error
+                    break
+                }
+            }) { [weak self] projects in
                 guard let self = self else { return }
                 self.projects = self.viewModels(from: projects)
             }
@@ -48,7 +56,15 @@ class ProjectListViewModel: ObservableObject {
     
     private func deleteProject(id: UUID) {
         service.deleteProject(id: id)
-            .sink { _ in
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure:
+                    // handle error
+                    break
+                }
+            }) { _ in
                 // successfully deleted
             }
             .store(in: &cancellables)

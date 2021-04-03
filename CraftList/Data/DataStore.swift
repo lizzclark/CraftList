@@ -9,10 +9,14 @@ import Foundation
 import CoreData
 import Combine
 
+enum DataStoreError: Error {
+    case fetching, deleting, adding
+}
+
 class DataStore: NSObject {
     static let shared: DataStore = DataStore()
     
-    private var projects = CurrentValueSubject<[ProjectData], Never>([])
+    private var projects = CurrentValueSubject<[ProjectData], DataStoreError>([])
     
     private lazy var projectFetchRequest: NSFetchRequest<Project> = {
         let request: NSFetchRequest<Project> = Project.fetchRequest()
@@ -42,28 +46,29 @@ class DataStore: NSObject {
             try projectFetchController?.performFetch()
             projects.value = transformer.projectData(from: projectFetchController?.fetchedObjects)
         } catch {
-            fatalError("failed to fetch data")
+            projects.send(completion: .failure(DataStoreError.fetching))
         }
     }
     
-    func fetchProjects() -> AnyPublisher<[ProjectData], Never> {
+    func projectsPublisher() -> AnyPublisher<[ProjectData], DataStoreError> {
         return projects.eraseToAnyPublisher()
     }
-    
-    func fetchProject(id: UUID, completion: (ProjectData) -> Void) {
+        
+    func fetchProject(id: UUID, completion: (Result<ProjectData, DataStoreError>) -> Void) {
         let fetchController = makeFetchController(for: id)
         do {
             try fetchController.performFetch()
             guard let project = transformer.projectData(fetchController.fetchedObjects?.first) else { fatalError("why") }
-            completion(project)
+            completion(.success(project))
         } catch {
-            fatalError("failed to get project, error: \((error as NSError).userInfo)")
+            completion(.failure(DataStoreError.fetching))
         }
     }
     
-    func add(projectData: AddProjectData, completion: () -> Void) {
+    func add(projectData: AddProjectData, completion: (Result<UUID, DataStoreError>) -> Void) {
         let newProject = Project(context: managedObjectContext)
-        newProject.id = UUID()
+        let id = UUID()
+        newProject.id = id
         newProject.name = projectData.name
         newProject.dateStarted = projectData.dateStarted
         if let dateFinished = projectData.dateFinished {
@@ -71,25 +76,22 @@ class DataStore: NSObject {
         }
         do {
             try managedObjectContext.save()
-            completion()
+            completion(.success(id))
         } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            completion(.failure(DataStoreError.adding))
         }
     }
     
-    func deleteProject(id: UUID, completion: (String) -> Void) {
+    func deleteProject(id: UUID, completion: (Result<String, DataStoreError>) -> Void) {
         let deleteController = makeFetchController(for: id)
         do {
             try deleteController.performFetch()
             guard let object = deleteController.fetchedObjects?.first, let name = object.name else { fatalError() }
             managedObjectContext.delete(object)
             try managedObjectContext.save()
-            completion(name)
+            completion(.success(name))
         } catch {
-            fatalError("failed to delete project, error: \((error as NSError).userInfo)")
+            completion(.failure(DataStoreError.deleting))
         }
     }
     

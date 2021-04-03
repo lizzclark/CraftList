@@ -37,7 +37,15 @@ class ProjectDetailsViewModel: ObservableObject {
     
     func deleteProject() {
         service.deleteProject(id: id)
-            .sink { [weak self] _ in
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure:
+                    // handle error
+                    break
+                }
+            }) { [weak self] _ in
                 self?.project = nil
             }
             .store(in: &cancellables)
@@ -45,7 +53,15 @@ class ProjectDetailsViewModel: ObservableObject {
     
     private func fetchData() {
         service.getProject(id: id)
-            .sink { [weak self] projectData in
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure:
+                    // handle error
+                    break
+                }
+            }) { [weak self] projectData in
                 guard let self = self else { return }
                 self.project = self.transform(projectData)
             }

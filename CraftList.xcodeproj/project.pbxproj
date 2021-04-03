@@ -27,6 +27,7 @@
 		859CA02326187816003D5BF4 /* ProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA02226187816003D5BF4 /* ProjectService.swift */; };
 		859CA02B2618783B003D5BF4 /* ProjectTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA02A2618783B003D5BF4 /* ProjectTransformer.swift */; };
 		859CA03126187D0E003D5BF4 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA03026187D0E003D5BF4 /* DateFormatter+Extensions.swift */; };
+		859CA03C2618A83E003D5BF4 /* ProjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA03B2618A83E003D5BF4 /* ProjectModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		859CA02226187816003D5BF4 /* ProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectService.swift; sourceTree = "<group>"; };
 		859CA02A2618783B003D5BF4 /* ProjectTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTransformer.swift; sourceTree = "<group>"; };
 		859CA03026187D0E003D5BF4 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
+		859CA03B2618A83E003D5BF4 /* ProjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				859CA02226187816003D5BF4 /* ProjectService.swift */,
+				859CA03B2618A83E003D5BF4 /* ProjectModel.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				859C9FF826172EA1003D5BF4 /* ProjectListViewModel.swift in Sources */,
 				859CA02326187816003D5BF4 /* ProjectService.swift in Sources */,
 				859C9FCD26171A0F003D5BF4 /* AddProjectView.swift in Sources */,
+				859CA03C2618A83E003D5BF4 /* ProjectModel.swift in Sources */,
 				859C9FA3261717D8003D5BF4 /* Persistence.swift in Sources */,
 				859C9F9C261717D6003D5BF4 /* ProjectListView.swift in Sources */,
 				859C9FA6261717D8003D5BF4 /* CraftList.xcdatamodeld in Sources */,
