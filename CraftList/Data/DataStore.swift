@@ -50,8 +50,9 @@ class DataStore: NSObject {
         return projects.eraseToAnyPublisher()
     }
     
-    func add(projectData: ProjectData, completion: () -> Void) {
+    func add(projectData: AddProjectData, completion: () -> Void) {
         let newProject = Project(context: managedObjectContext)
+        newProject.id = UUID()
         newProject.name = projectData.name
         newProject.dateStarted = projectData.dateStarted
         if let dateFinished = projectData.dateFinished {
@@ -66,6 +67,29 @@ class DataStore: NSObject {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
+    }
+    
+    func deleteProject(id: UUID, completion: (String) -> Void) {
+        let deleteController = makeFetchController(for: id)
+        do {
+            try deleteController.performFetch()
+            guard let object = deleteController.fetchedObjects?.first, let name = object.name else { fatalError() }
+            managedObjectContext.delete(object)
+            try managedObjectContext.save()
+            completion(name)
+        } catch {
+            fatalError("failed to delete project, error: \((error as NSError).userInfo)")
+        }
+    }
+    
+    private func makeFetchController(for id: UUID) -> NSFetchedResultsController<Project> {
+        let request: NSFetchRequest<Project> = Project.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \Project.dateStarted, ascending: false)]
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        return NSFetchedResultsController(fetchRequest: request,
+                                          managedObjectContext: managedObjectContext,
+                                          sectionNameKeyPath: nil,
+                                          cacheName: nil)
     }
 }
 

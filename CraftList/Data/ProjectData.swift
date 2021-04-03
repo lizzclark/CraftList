@@ -8,6 +8,13 @@
 import Foundation
 
 struct ProjectData {
+    let id: UUID
+    let name: String
+    let dateStarted: Date
+    let dateFinished: Date?
+}
+
+struct AddProjectData {
     let name: String
     let dateStarted: Date
     let dateFinished: Date?

@@ -32,7 +32,7 @@ struct ProjectListView: View {
             }
             .onDelete { offsets in
                 withAnimation {
-//                    deleteItems(offsets: offsets)
+                    viewModel.deleteItems(offsets: offsets)
                 }
             }
         }
@@ -47,10 +47,6 @@ struct ProjectListView: View {
                 .frame(width: 24, height: 24)
         }
     }
-    
-//    private func deleteItems(offsets: IndexSet) {
-//        offsets.map { projects[$0] }.forEach({viewModel.deleteProject(project: $0, from: self.viewContext)})
-//    }
 }
 
 struct ProjectListView_Previews: PreviewProvider {

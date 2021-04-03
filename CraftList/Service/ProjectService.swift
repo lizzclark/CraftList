@@ -9,6 +9,7 @@ import Foundation
 import Combine
 
 struct ProjectModel {
+    let id: UUID
     let name: String
     let dateStarted: Date
     let dateFinished: Date?
@@ -26,27 +27,27 @@ struct ProjectService {
             .fetchProjects()
             .map({ data in
                 return data.map { projectData in
-                    return ProjectModel(name: projectData.name, dateStarted: projectData.dateStarted, dateFinished: projectData.dateFinished)
+                    return ProjectModel(id: projectData.id, name: projectData.name, dateStarted: projectData.dateStarted, dateFinished: projectData.dateFinished)
                 }
             })
             .eraseToAnyPublisher()
     }
     
-    func addProject(name: String, dateStarted: Date, dateFinished: Date?) -> AnyPublisher<ProjectModel, Never> {
-        return Future<ProjectModel, Never> { promise in
-            dataStore.add(projectData: ProjectData(name: name, dateStarted: dateStarted, dateFinished: dateFinished)) {
-                promise(.success(ProjectModel(name: name, dateStarted: dateStarted, dateFinished: dateFinished)))
+    func addProject(name: String, dateStarted: Date, dateFinished: Date?) -> AnyPublisher<String, Never> {
+        return Future<String, Never> { promise in
+            dataStore.add(projectData: AddProjectData(name: name, dateStarted: dateStarted, dateFinished: dateFinished)) {
+                promise(.success(name))
             }
         }
         .eraseToAnyPublisher()
     }
     
-//    func deleteProject(id: String) -> AnyPublisher<String, Never> {
-//        return Future<ProjectModel, Never> { promise in
-//            dataStore.deleteProject(id: id) {
-//                promise(.success(id))
-//            }
-//        }
-//        .eraseToAnyPublisher()
-//    }
+    func deleteProject(id: UUID) -> AnyPublisher<String, Never> {
+        return Future<String, Never> { promise in
+            dataStore.deleteProject(id: id) { projectName in
+                promise(.success(projectName))
+            }
+        }
+        .eraseToAnyPublisher()
+    }
 }

@@ -13,8 +13,9 @@ struct ProjectTransformer {
     }
     
     private func transform(_ project: Project) -> ProjectData? {
-        guard let name = project.name,
+        guard let id = project.id,
+              let name = project.name,
               let dateStarted = project.dateStarted else { return nil }
-        return ProjectData(name: name, dateStarted: dateStarted, dateFinished: project.dateFinished)
+        return ProjectData(id: id, name: name, dateStarted: dateStarted, dateFinished: project.dateFinished)
     }
 }

@@ -11,6 +11,7 @@ import Combine
 class ProjectListViewModel: ObservableObject {
     
     struct Project: Hashable {
+        let id: UUID
         let name: String
         let dateStarted: Date
         let dateFinished: Date?
@@ -21,7 +22,7 @@ class ProjectListViewModel: ObservableObject {
     @Published var projects: [Project] = []
     
     private let service: ProjectService
-    private var cancellable: AnyCancellable?
+    private var cancellables = Set<AnyCancellable>()
     
     init(service: ProjectService = ProjectService()) {
         self.service = service
@@ -29,26 +30,27 @@ class ProjectListViewModel: ObservableObject {
     }
     
     private func subscribeToProjects() {
-        cancellable = service.projects()
+        service.projects()
             .sink { [weak self] projects in
                 guard let self = self else { return }
                 self.projects = self.viewModels(from: projects)
             }
+            .store(in: &cancellables)
     }
     
     func viewModels(from projects: [ProjectModel]) -> [Project] {
-        return projects.map { Project(name: $0.name, dateStarted: $0.dateStarted, dateFinished: $0.dateFinished) }
+        return projects.map { Project(id: $0.id, name: $0.name, dateStarted: $0.dateStarted, dateFinished: $0.dateFinished) }
     }
     
-//    func deleteProject(project: NSManagedObject, from context: NSManagedObjectContext) {
-//        context.delete(project)
-//        do {
-//            try context.save()
-//        } catch {
-//            // Replace this implementation with code to handle the error appropriately.
-//            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//            let nsError = error as NSError
-//            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-//        }
-//    }
+    func deleteItems(offsets: IndexSet) {
+        offsets.map { projects[$0] }.forEach({ deleteProject(id: $0.id) })
+    }
+    
+    private func deleteProject(id: UUID) {
+        service.deleteProject(id: id)
+            .sink { _ in
+                // successfully deleted
+            }
+            .store(in: &cancellables)
+    }
 }
