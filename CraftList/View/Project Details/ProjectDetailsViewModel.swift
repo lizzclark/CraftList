@@ -8,11 +8,12 @@
 import Foundation
 import Combine
 
-class ProjectDetailsViewModel {
+class ProjectDetailsViewModel: ObservableObject {
     let dateStartedLabel = "Date Started"
     let dateFinishedLabel = "Date Finished"
     let editLabel = "Edit"
     let wipLabel = "Work in Progress"
+    let emptyStateLabel = "There's nothing here."
 
     struct Data {
         let name: String
@@ -32,6 +33,14 @@ class ProjectDetailsViewModel {
         self.service = service
         self.id = id
         fetchData()
+    }
+    
+    func deleteProject() {
+        service.deleteProject(id: id)
+            .sink { [weak self] _ in
+                self?.project = nil
+            }
+            .store(in: &cancellables)
     }
     
     private func fetchData() {

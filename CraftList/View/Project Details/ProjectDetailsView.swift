@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ProjectDetailsView: View {
-    let viewModel: ProjectDetailsViewModel
+    @ObservedObject var viewModel: ProjectDetailsViewModel
+    
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
             if let data = viewModel.project {
@@ -16,6 +17,8 @@ struct ProjectDetailsView: View {
                 dateStartedView(data.dateStartedText)
                 dateFinishedView(data.dateFinishedText)
                 Spacer()
+            } else {
+                Text(viewModel.emptyStateLabel)
             }
         }
         .padding()
@@ -24,9 +27,7 @@ struct ProjectDetailsView: View {
     }
     
     private var deleteButton: some View {
-        Button(action: {
-            print("delete project")
-        }) {
+        Button(action: viewModel.deleteProject) {
             Image(systemName: "trash.fill")
                 .resizable()
                 .frame(width: 24, height: 24)

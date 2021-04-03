@@ -52,10 +52,12 @@ struct ProjectService {
     }
     
     func getProject(id: UUID) -> AnyPublisher<ProjectModel, Never> {
-        return dataStore.fetchProject(id: id)
-                .map { projectData in
-                return ProjectModel(id: projectData.id, name: projectData.name, dateStarted: projectData.dateStarted, dateFinished: projectData.dateFinished)
+        return Future<ProjectModel, Never> { promise in
+            dataStore.fetchProject(id: id) { projectData in
+                let model = ProjectModel(id: projectData.id, name: projectData.name, dateStarted: projectData.dateStarted, dateFinished: projectData.dateFinished)
+                promise(.success(model))
             }
-            .eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
     }
 }

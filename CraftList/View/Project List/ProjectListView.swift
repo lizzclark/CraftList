@@ -25,7 +25,7 @@ struct ProjectListView: View {
     
     private func renderProjectList() -> some View {
         return List {
-            ForEach(viewModel.projects, id: \.self) { project in
+            ForEach(viewModel.projects, id: \.id) { project in
                 NavigationLink(destination: ProjectDetailsView(viewModel: ProjectDetailsViewModel(id: project.id))) {
                     ProjectListItemView(viewModel: ProjectListItemViewModel(name: project.name, dateStarted: project.dateStarted, dateFinished: project.dateFinished))
                 }

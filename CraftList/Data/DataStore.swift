@@ -50,16 +50,15 @@ class DataStore: NSObject {
         return projects.eraseToAnyPublisher()
     }
     
-    func fetchProject(id: UUID) -> AnyPublisher<ProjectData, Never> {
-        return projects
-            .map({ data in
-                if let matchingProject = data.first(where: { $0.id == id }) {
-                    return matchingProject
-                } else {
-                    fatalError("failed to get project")
-                }
-            })
-            .eraseToAnyPublisher()
+    func fetchProject(id: UUID, completion: (ProjectData) -> Void) {
+        let fetchController = makeFetchController(for: id)
+        do {
+            try fetchController.performFetch()
+            guard let project = transformer.projectData(fetchController.fetchedObjects?.first) else { fatalError("why") }
+            completion(project)
+        } catch {
+            fatalError("failed to get project, error: \((error as NSError).userInfo)")
+        }
     }
     
     func add(projectData: AddProjectData, completion: () -> Void) {
