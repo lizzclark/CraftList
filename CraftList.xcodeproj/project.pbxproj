@@ -23,6 +23,11 @@
 		859CA00126173A56003D5BF4 /* ProjectDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA00026173A56003D5BF4 /* ProjectDetailsViewModel.swift */; };
 		859CA00626173A76003D5BF4 /* ProjectDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA00526173A76003D5BF4 /* ProjectDetailsView.swift */; };
 		859CA00B261767F1003D5BF4 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA00A261767F1003D5BF4 /* ProjectViewModel.swift */; };
+		859CA01226185941003D5BF4 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA01126185941003D5BF4 /* DataStore.swift */; };
+		859CA01A2618603A003D5BF4 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA0192618603A003D5BF4 /* ProjectData.swift */; };
+		859CA02326187816003D5BF4 /* ProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA02226187816003D5BF4 /* ProjectService.swift */; };
+		859CA02B2618783B003D5BF4 /* ProjectTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA02A2618783B003D5BF4 /* ProjectTransformer.swift */; };
+		859CA03126187D0E003D5BF4 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA03026187D0E003D5BF4 /* DateFormatter+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +70,11 @@
 		859CA00026173A56003D5BF4 /* ProjectDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailsViewModel.swift; sourceTree = "<group>"; };
 		859CA00526173A76003D5BF4 /* ProjectDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailsView.swift; sourceTree = "<group>"; };
 		859CA00A261767F1003D5BF4 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
+		859CA01126185941003D5BF4 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		859CA0192618603A003D5BF4 /* ProjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectData.swift; sourceTree = "<group>"; };
+		859CA02226187816003D5BF4 /* ProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectService.swift; sourceTree = "<group>"; };
+		859CA02A2618783B003D5BF4 /* ProjectTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectTransformer.swift; sourceTree = "<group>"; };
+		859CA03026187D0E003D5BF4 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,9 +125,10 @@
 		859C9F98261717D6003D5BF4 /* CraftList */ = {
 			isa = PBXGroup;
 			children = (
-				859C9FFF26173A48003D5BF4 /* Project Details */,
-				859C9FE6261729A0003D5BF4 /* Project List */,
-				859C9FD4261724D4003D5BF4 /* Add Project */,
+				859CA02F26187D03003D5BF4 /* Utils */,
+				859CA02126187808003D5BF4 /* Service */,
+				859CA01026185927003D5BF4 /* Data */,
+				859CA00F2618590C003D5BF4 /* View */,
 				859C9F99261717D6003D5BF4 /* CraftListApp.swift */,
 				859C9F9D261717D8003D5BF4 /* Assets.xcassets */,
 				859C9FA2261717D8003D5BF4 /* Persistence.swift */,
@@ -182,6 +193,42 @@
 				859CA00526173A76003D5BF4 /* ProjectDetailsView.swift */,
 			);
 			path = "Project Details";
+			sourceTree = "<group>";
+		};
+		859CA00F2618590C003D5BF4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				859C9FD4261724D4003D5BF4 /* Add Project */,
+				859C9FFF26173A48003D5BF4 /* Project Details */,
+				859C9FE6261729A0003D5BF4 /* Project List */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		859CA01026185927003D5BF4 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				859CA01126185941003D5BF4 /* DataStore.swift */,
+				859CA0192618603A003D5BF4 /* ProjectData.swift */,
+				859CA02A2618783B003D5BF4 /* ProjectTransformer.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		859CA02126187808003D5BF4 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				859CA02226187816003D5BF4 /* ProjectService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		859CA02F26187D03003D5BF4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				859CA03026187D0E003D5BF4 /* DateFormatter+Extensions.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,10 +360,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				859CA01226185941003D5BF4 /* DataStore.swift in Sources */,
 				859C9FE8261729B2003D5BF4 /* ProjectListItemView.swift in Sources */,
 				859C9FD6261724E5003D5BF4 /* AddProjectViewModel.swift in Sources */,
 				859C9FED26172D35003D5BF4 /* ProjectListItemViewModel.swift in Sources */,
 				859C9FF826172EA1003D5BF4 /* ProjectListViewModel.swift in Sources */,
+				859CA02326187816003D5BF4 /* ProjectService.swift in Sources */,
 				859CA00B261767F1003D5BF4 /* ProjectViewModel.swift in Sources */,
 				859C9FCD26171A0F003D5BF4 /* AddProjectView.swift in Sources */,
 				859C9FA3261717D8003D5BF4 /* Persistence.swift in Sources */,
@@ -324,7 +373,10 @@
 				859C9FA6261717D8003D5BF4 /* CraftList.xcdatamodeld in Sources */,
 				859CA00626173A76003D5BF4 /* ProjectDetailsView.swift in Sources */,
 				859C9F9A261717D6003D5BF4 /* CraftListApp.swift in Sources */,
+				859CA02B2618783B003D5BF4 /* ProjectTransformer.swift in Sources */,
 				859CA00126173A56003D5BF4 /* ProjectDetailsViewModel.swift in Sources */,
+				859CA01A2618603A003D5BF4 /* ProjectData.swift in Sources */,
+				859CA03126187D0E003D5BF4 /* DateFormatter+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

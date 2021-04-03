@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct AddProjectView: View {
-    @Environment(\.managedObjectContext) var viewContext
     @Environment(\.presentationMode) var presentationMode
-    @State var viewModel = AddProjectViewModel()
+    @ObservedObject var viewModel = AddProjectViewModel()
     
     var body: some View {
         NavigationView {
@@ -24,7 +23,7 @@ struct AddProjectView: View {
                 }
                 Section {
                     Button(viewModel.saveLabel) {
-                        viewModel.save(in: self.viewContext) {
+                        viewModel.save {
                             self.presentationMode.wrappedValue.dismiss()
                         }
                     }
