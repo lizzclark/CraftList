@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProjectDetailsView: View {
+    @State private var isShowingDeleteAlert = false
     @ObservedObject var viewModel: ProjectDetailsViewModel
     
     var body: some View {
@@ -21,19 +22,25 @@ struct ProjectDetailsView: View {
                 Text(viewModel.emptyStateLabel)
             }
         }
+        .alert(isPresented: $isShowingDeleteAlert, content: {
+            Alert(title: Text(viewModel.deleteTitle),
+                  message: Text(viewModel.deleteMessage),
+                  primaryButton: .destructive(Text(viewModel.deleteLabel), action: viewModel.deleteProject),
+                  secondaryButton: .cancel(Text(viewModel.cancelLabel)))
+        })
         .padding()
         .navigationBarTitle(viewModel.project?.name ?? "", displayMode: .inline)
         .navigationBarItems(trailing: deleteButton)
     }
     
     private var deleteButton: some View {
-        Button(action: viewModel.deleteProject) {
+        Button(action: { isShowingDeleteAlert.toggle() }) {
             Image(systemName: "trash.fill")
                 .resizable()
                 .frame(width: 24, height: 24)
         }
     }
-    
+        
     private func titleView(_ title: String) -> some View {
         HStack(spacing: 16) {
             Button(action: {

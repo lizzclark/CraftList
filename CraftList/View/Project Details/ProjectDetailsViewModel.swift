@@ -14,6 +14,10 @@ class ProjectDetailsViewModel: ObservableObject {
     let editLabel = "Edit"
     let wipLabel = "Work in Progress"
     let emptyStateLabel = "There's nothing here."
+    let deleteTitle = "Are you sure?"
+    let deleteMessage = "The project will be permanently deleted."
+    let deleteLabel = "Delete"
+    let cancelLabel = "Cancel"
 
     struct Data {
         let name: String
