@@ -29,7 +29,7 @@ class ProjectDetailsViewModel: ObservableObject {
     
     @Published var project: Data?
     
-    private let id: UUID
+    let id: UUID
     private let service: ProjectService
     private var cancellables = Set<AnyCancellable>()
     

@@ -9,7 +9,10 @@ import SwiftUI
 
 struct ProjectDetailsView: View {
     @State private var isShowingDeleteAlert = false
+    @State private var isShowingEditNameView = false
     @ObservedObject var viewModel: ProjectDetailsViewModel
+    
+    @State private var name = ""
     
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
@@ -28,6 +31,13 @@ struct ProjectDetailsView: View {
                   primaryButton: .destructive(Text(viewModel.deleteLabel), action: viewModel.deleteProject),
                   secondaryButton: .cancel(Text(viewModel.cancelLabel)))
         })
+        .sheet(isPresented: $isShowingEditNameView) {
+            if let project = viewModel.project {
+                EditNameView(viewModel: .init(projectId: viewModel.id, name: project.name))
+            } else {
+                EmptyView()
+            }
+        }
         .padding()
         .navigationBarTitle(viewModel.project?.name ?? "", displayMode: .inline)
         .navigationBarItems(trailing: deleteButton)
@@ -43,9 +53,7 @@ struct ProjectDetailsView: View {
         
     private func titleView(_ title: String) -> some View {
         HStack(spacing: 16) {
-            Button(action: {
-                print("edit name")
-            }) {
+            Button(action: { isShowingEditNameView.toggle() }) {
                 Text(title)
                     .multilineTextAlignment(.center)
                     .font(.title)

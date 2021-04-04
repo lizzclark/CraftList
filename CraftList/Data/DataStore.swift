@@ -10,11 +10,17 @@ import CoreData
 import Combine
 
 enum DataStoreError: Error {
-    case fetching, deleting, adding
+    case fetching, deleting, adding, updating
 }
 
 class DataStore: NSObject {
     static let shared: DataStore = DataStore()
+    
+    private enum Keys {
+        static let name = "name"
+        static let dateStarted = "dateStarted"
+        static let dateFinished = "dateFinished"
+    }
     
     private var projects = CurrentValueSubject<[ProjectData], DataStoreError>([])
     
@@ -58,7 +64,7 @@ class DataStore: NSObject {
         let fetchController = makeFetchController(for: id)
         do {
             try fetchController.performFetch()
-            guard let project = transformer.projectData(fetchController.fetchedObjects?.first) else { fatalError("why") }
+            guard let project = transformer.projectData(fetchController.fetchedObjects?.first) else { throw DataStoreError.fetching }
             completion(.success(project))
         } catch {
             completion(.failure(DataStoreError.fetching))
@@ -86,7 +92,7 @@ class DataStore: NSObject {
         let deleteController = makeFetchController(for: id)
         do {
             try deleteController.performFetch()
-            guard let object = deleteController.fetchedObjects?.first, let name = object.name else { fatalError() }
+            guard let object = deleteController.fetchedObjects?.first, let name = object.name else { throw DataStoreError.deleting }
             managedObjectContext.delete(object)
             try managedObjectContext.save()
             completion(.success(name))
@@ -95,6 +101,20 @@ class DataStore: NSObject {
         }
     }
     
+    func updateProjectName(id: UUID, name: String, completion: (Result<String, DataStoreError>) -> Void) {
+        let fetchController = makeFetchController(for: id)
+        do {
+            try fetchController.performFetch()
+            guard let object = fetchController.fetchedObjects?.first else { throw DataStoreError.fetching }
+            object.setValue(name, forKey: Keys.name)
+            try managedObjectContext.save()
+            guard let newName = object.name else { throw DataStoreError.updating }
+            completion(.success(newName))
+        } catch {
+            completion(.failure(DataStoreError.updating))
+        }
+    }
+        
     private func makeFetchController(for id: UUID) -> NSFetchedResultsController<Project> {
         let request: NSFetchRequest<Project> = Project.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Project.dateStarted, ascending: false)]

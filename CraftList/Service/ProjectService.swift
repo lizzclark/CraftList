@@ -75,4 +75,18 @@ struct ProjectService {
         }
         .eraseToAnyPublisher()
     }
+    
+    func updateProjectName(id: UUID, name: String) -> AnyPublisher<String, ServiceError> {
+        return Future<String, ServiceError> { promise in
+            dataStore.updateProjectName(id: id, name: name) { result in
+                switch result {
+                case .success(let updatedName):
+                    promise(.success(updatedName))
+                case .failure:
+                    promise(.failure(ServiceError.failure))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
 }
