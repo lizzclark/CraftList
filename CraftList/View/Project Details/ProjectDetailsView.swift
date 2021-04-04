@@ -35,7 +35,7 @@ struct ProjectDetailsView: View {
         
     private func projectDetails(for project: ProjectDetailsViewModel.Data) -> some View {
         VStack(alignment: .center, spacing: 16) {
-                titleView(project.name)
+                nameView(project.name)
                 dateStartedView(project.dateStartedText)
                 dateFinishedView(project.dateFinishedText)
                 Spacer()
@@ -66,10 +66,10 @@ struct ProjectDetailsView: View {
         }
     }
         
-    private func titleView(_ title: String) -> some View {
+    private func nameView(_ name: String) -> some View {
         HStack(spacing: 16) {
             Button(action: { activeEditSheet = .name }) {
-                Text(title)
+                Text(name)
                     .multilineTextAlignment(.center)
                     .font(.title)
                 Image(systemName: "square.and.pencil")
