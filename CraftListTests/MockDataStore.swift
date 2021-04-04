@@ -67,7 +67,8 @@ final class MockDataStore: DataStoreProtocol {
     }
     
     var capturedUpdateProjectId: UUID?
-    
+    var capturedUpdateProjectDate: Date?
+
     var updateProjectNameCalled = false
     var capturedUpdateProjectName: String?
     func updateProjectName(id: UUID, name: String, completion: (Result<String, DataStoreError>) -> Void) {
@@ -81,15 +82,27 @@ final class MockDataStore: DataStoreProtocol {
         }
     }
     
+    var updateProjectDateStartedCalled = false
     func updateProjectDateStarted(id: UUID, date: Date, completion: (Result<Date, DataStoreError>) -> Void) {
+        updateProjectDateStartedCalled = true
+        capturedUpdateProjectId = id
+        capturedUpdateProjectDate = date
         if let error = stubError {
             completion(.failure(error))
+        } else {
+            completion(.success(date))
         }
     }
     
+    var updateProjectDateFinishedCalled = false
     func updateProjectDateFinished(id: UUID, date: Date, completion: (Result<Date, DataStoreError>) -> Void) {
+        updateProjectDateFinishedCalled = true
+        capturedUpdateProjectId = id
+        capturedUpdateProjectDate = date
         if let error = stubError {
             completion(.failure(error))
+        } else {
+            completion(.success(date))
         }
     }
 }
