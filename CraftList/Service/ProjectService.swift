@@ -89,4 +89,18 @@ struct ProjectService {
         }
         .eraseToAnyPublisher()
     }
+    
+    func updateProjectDateStarted(id: UUID, date: Date) -> AnyPublisher<Date, ServiceError> {
+        return Future<Date, ServiceError> { promise in
+            dataStore.updateProjectDateStarted(id: id, date: date) { result in
+                switch result {
+                case .success(let updatedDate):
+                    promise(.success(updatedDate))
+                case .failure:
+                    promise(.failure(ServiceError.failure))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
 }

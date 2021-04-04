@@ -30,6 +30,8 @@
 		859CA03C2618A83E003D5BF4 /* ProjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA03B2618A83E003D5BF4 /* ProjectModel.swift */; };
 		859CA0432618E674003D5BF4 /* EditNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA0422618E673003D5BF4 /* EditNameView.swift */; };
 		859CA0542619BC28003D5BF4 /* EditNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA0532619BC28003D5BF4 /* EditNameViewModel.swift */; };
+		859CA05A2619C0C5003D5BF4 /* EditDateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA0592619C0C5003D5BF4 /* EditDateViewModel.swift */; };
+		859CA05F2619C641003D5BF4 /* EditDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA05E2619C641003D5BF4 /* EditDateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		859CA03B2618A83E003D5BF4 /* ProjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectModel.swift; sourceTree = "<group>"; };
 		859CA0422618E673003D5BF4 /* EditNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameView.swift; sourceTree = "<group>"; };
 		859CA0532619BC28003D5BF4 /* EditNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameViewModel.swift; sourceTree = "<group>"; };
+		859CA0592619C0C5003D5BF4 /* EditDateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDateViewModel.swift; sourceTree = "<group>"; };
+		859CA05E2619C641003D5BF4 /* EditDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +196,7 @@
 		859C9FFF26173A48003D5BF4 /* Project Details */ = {
 			isa = PBXGroup;
 			children = (
+				859CA0582619C0BA003D5BF4 /* Edit Date */,
 				859CA0412618E663003D5BF4 /* Edit Name */,
 				859CA00026173A56003D5BF4 /* ProjectDetailsViewModel.swift */,
 				859CA00526173A76003D5BF4 /* ProjectDetailsView.swift */,
@@ -243,6 +248,15 @@
 				859CA0532619BC28003D5BF4 /* EditNameViewModel.swift */,
 			);
 			path = "Edit Name";
+			sourceTree = "<group>";
+		};
+		859CA0582619C0BA003D5BF4 /* Edit Date */ = {
+			isa = PBXGroup;
+			children = (
+				859CA0592619C0C5003D5BF4 /* EditDateViewModel.swift */,
+				859CA05E2619C641003D5BF4 /* EditDateView.swift */,
+			);
+			path = "Edit Date";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,8 +400,10 @@
 				859C9FA3261717D8003D5BF4 /* Persistence.swift in Sources */,
 				859CA0542619BC28003D5BF4 /* EditNameViewModel.swift in Sources */,
 				859C9F9C261717D6003D5BF4 /* ProjectListView.swift in Sources */,
+				859CA05F2619C641003D5BF4 /* EditDateView.swift in Sources */,
 				859C9FA6261717D8003D5BF4 /* CraftList.xcdatamodeld in Sources */,
 				859CA00626173A76003D5BF4 /* ProjectDetailsView.swift in Sources */,
+				859CA05A2619C0C5003D5BF4 /* EditDateViewModel.swift in Sources */,
 				859C9F9A261717D6003D5BF4 /* CraftListApp.swift in Sources */,
 				859CA02B2618783B003D5BF4 /* ProjectTransformer.swift in Sources */,
 				859CA00126173A56003D5BF4 /* ProjectDetailsViewModel.swift in Sources */,

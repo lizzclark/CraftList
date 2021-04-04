@@ -10,6 +10,7 @@ import SwiftUI
 struct ProjectDetailsView: View {
     @State private var isShowingDeleteAlert = false
     @State private var isShowingEditNameView = false
+    @State private var isShowingEditDateStartedView = false
     @ObservedObject var viewModel: ProjectDetailsViewModel
     
     @State private var name = ""
@@ -34,6 +35,13 @@ struct ProjectDetailsView: View {
         .sheet(isPresented: $isShowingEditNameView) {
             if let project = viewModel.project {
                 EditNameView(viewModel: .init(projectId: viewModel.id, name: project.name))
+            } else {
+                EmptyView()
+            }
+        }
+        .sheet(isPresented: $isShowingEditDateStartedView) {
+            if let project = viewModel.project {
+                EditDateView(viewModel: .init(projectId: viewModel.id, date: project.dateStarted))
             } else {
                 EmptyView()
             }
@@ -72,9 +80,7 @@ struct ProjectDetailsView: View {
                 }
                 HStack {
                     Spacer()
-                    Button(viewModel.editLabel) {
-                        print("edit date started")
-                    }
+                    Button(viewModel.editLabel, action: { isShowingEditDateStartedView.toggle() })
                 }
             }
         }
