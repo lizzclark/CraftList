@@ -11,20 +11,21 @@ import Combine
 class EditDateViewModel: ObservableObject {
     @Published var date: Date
 
-    let title: String = "Edit Date Started"
-    let dateStartedLabel: String = "Date Started"
     let saveButtonLabel: String = "Save"
-
+    
+    let field: Field
     private let projectId: UUID
     private let service: ProjectService
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(projectId: UUID,
-         date: Date,
+    init(_ field: Field,
+         projectId: UUID,
+         date: Date?,
          service: ProjectService = ProjectService()) {
+        self.field = field
         self.projectId = projectId
-        self.date = date
+        self.date = date ?? Date()
         self.service = service
     }
     
@@ -42,5 +43,29 @@ class EditDateViewModel: ObservableObject {
                 completion()
             }
             .store(in: &cancellables)
+    }
+}
+
+extension EditDateViewModel {
+    enum Field: CustomStringConvertible {
+        case dateStarted, dateFinished
+        
+        var description: String {
+            switch self {
+            case .dateStarted:
+                return "Date Started"
+            case .dateFinished:
+                return "Date Finished"
+            }
+        }
+        
+        var title: String {
+            switch self {
+            case .dateStarted:
+                return "Edit Date Started"
+            case .dateFinished:
+                return "Edit Date Finished"
+            }
+        }
     }
 }

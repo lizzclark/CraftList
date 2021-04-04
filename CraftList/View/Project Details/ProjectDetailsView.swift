@@ -9,22 +9,36 @@ import SwiftUI
 
 struct ProjectDetailsView: View {
     @State private var isShowingDeleteAlert = false
-    @State private var isShowingEditNameView = false
-    @State private var isShowingEditDateStartedView = false
+    @State private var activeEditSheet: EditSheet? = nil
     @ObservedObject var viewModel: ProjectDetailsViewModel
+    
+    enum EditSheet: Identifiable {
+        var id: Int {
+            hashValue
+        }
+        case none, name, dateStarted
+    }
     
     @State private var name = ""
     
     var body: some View {
+        if let project = viewModel.project {
+            projectDetails(for: project)
+                .padding()
+                .navigationBarTitle(project.name, displayMode: .inline)
+                .navigationBarItems(trailing: deleteButton)
+        } else {
+            Text(viewModel.emptyStateLabel)
+                .padding()
+        }
+    }
+        
+    private func projectDetails(for project: ProjectDetailsViewModel.Data) -> some View {
         VStack(alignment: .center, spacing: 16) {
-            if let data = viewModel.project {
-                titleView(data.name)
-                dateStartedView(data.dateStartedText)
-                dateFinishedView(data.dateFinishedText)
+                titleView(project.name)
+                dateStartedView(project.dateStartedText)
+                dateFinishedView(project.dateFinishedText)
                 Spacer()
-            } else {
-                Text(viewModel.emptyStateLabel)
-            }
         }
         .alert(isPresented: $isShowingDeleteAlert, content: {
             Alert(title: Text(viewModel.deleteTitle),
@@ -32,23 +46,16 @@ struct ProjectDetailsView: View {
                   primaryButton: .destructive(Text(viewModel.deleteLabel), action: viewModel.deleteProject),
                   secondaryButton: .cancel(Text(viewModel.cancelLabel)))
         })
-        .sheet(isPresented: $isShowingEditNameView) {
-            if let project = viewModel.project {
+        .sheet(item: $activeEditSheet) { item in
+            switch item {
+            case .name:
                 EditNameView(viewModel: .init(projectId: viewModel.id, name: project.name))
-            } else {
+            case .dateStarted:
+                EditDateView(viewModel: .init(.dateStarted, projectId: viewModel.id, date: project.dateStarted))
+            case .none:
                 EmptyView()
             }
         }
-        .sheet(isPresented: $isShowingEditDateStartedView) {
-            if let project = viewModel.project {
-                EditDateView(viewModel: .init(projectId: viewModel.id, date: project.dateStarted))
-            } else {
-                EmptyView()
-            }
-        }
-        .padding()
-        .navigationBarTitle(viewModel.project?.name ?? "", displayMode: .inline)
-        .navigationBarItems(trailing: deleteButton)
     }
     
     private var deleteButton: some View {
@@ -61,7 +68,7 @@ struct ProjectDetailsView: View {
         
     private func titleView(_ title: String) -> some View {
         HStack(spacing: 16) {
-            Button(action: { isShowingEditNameView.toggle() }) {
+            Button(action: { activeEditSheet = .name }) {
                 Text(title)
                     .multilineTextAlignment(.center)
                     .font(.title)
@@ -80,7 +87,7 @@ struct ProjectDetailsView: View {
                 }
                 HStack {
                     Spacer()
-                    Button(viewModel.editLabel, action: { isShowingEditDateStartedView.toggle() })
+                    Button(viewModel.editLabel, action: { activeEditSheet = .dateStarted })
                 }
             }
         }

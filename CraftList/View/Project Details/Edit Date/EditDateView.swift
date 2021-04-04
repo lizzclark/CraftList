@@ -20,7 +20,7 @@ struct EditDateView: View {
             Form {
                 Section {
                     DatePicker(selection: $viewModel.date, in: ...Date(), displayedComponents: .date) {
-                        Text(viewModel.dateStartedLabel)
+                        Text(viewModel.field.description)
                     }
                 }
                 Section {
@@ -31,13 +31,13 @@ struct EditDateView: View {
                     }
                 }
             }
-            .navigationBarTitle(viewModel.title, displayMode: .inline)
+            .navigationBarTitle(viewModel.field.title, displayMode: .inline)
         }
     }
 }
 
 struct EditDateView_Previews: PreviewProvider {
     static var previews: some View {
-        EditDateView(viewModel: EditDateViewModel(projectId: UUID(), date: Date()))
+        EditDateView(viewModel: EditDateViewModel(.dateStarted, projectId: UUID(), date: Date()))
     }
 }
