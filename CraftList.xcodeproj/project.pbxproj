@@ -13,7 +13,7 @@
 		859C9FA1261717D8003D5BF4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 859C9FA0261717D8003D5BF4 /* Preview Assets.xcassets */; };
 		859C9FA3261717D8003D5BF4 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FA2261717D8003D5BF4 /* Persistence.swift */; };
 		859C9FA6261717D8003D5BF4 /* CraftList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FA4261717D8003D5BF4 /* CraftList.xcdatamodeld */; };
-		859C9FB1261717D8003D5BF4 /* CraftListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FB0261717D8003D5BF4 /* CraftListTests.swift */; };
+		859C9FB1261717D8003D5BF4 /* MockDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FB0261717D8003D5BF4 /* MockDataStore.swift */; };
 		859C9FBC261717D8003D5BF4 /* CraftListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FBB261717D8003D5BF4 /* CraftListUITests.swift */; };
 		859C9FCD26171A0F003D5BF4 /* AddProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FCC26171A0F003D5BF4 /* AddProjectView.swift */; };
 		859C9FD6261724E5003D5BF4 /* AddProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9FD5261724E5003D5BF4 /* AddProjectViewModel.swift */; };
@@ -32,6 +32,7 @@
 		859CA0542619BC28003D5BF4 /* EditNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA0532619BC28003D5BF4 /* EditNameViewModel.swift */; };
 		859CA05A2619C0C5003D5BF4 /* EditDateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA0592619C0C5003D5BF4 /* EditDateViewModel.swift */; };
 		859CA05F2619C641003D5BF4 /* EditDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA05E2619C641003D5BF4 /* EditDateView.swift */; };
+		859CA0652619D700003D5BF4 /* ProjectServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA0642619D6FF003D5BF4 /* ProjectServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +62,7 @@
 		859C9FA5261717D8003D5BF4 /* CraftList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CraftList.xcdatamodel; sourceTree = "<group>"; };
 		859C9FA7261717D8003D5BF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		859C9FAC261717D8003D5BF4 /* CraftListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CraftListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		859C9FB0261717D8003D5BF4 /* CraftListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CraftListTests.swift; sourceTree = "<group>"; };
+		859C9FB0261717D8003D5BF4 /* MockDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataStore.swift; sourceTree = "<group>"; };
 		859C9FB2261717D8003D5BF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		859C9FB7261717D8003D5BF4 /* CraftListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CraftListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		859C9FBB261717D8003D5BF4 /* CraftListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CraftListUITests.swift; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 		859CA0532619BC28003D5BF4 /* EditNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameViewModel.swift; sourceTree = "<group>"; };
 		859CA0592619C0C5003D5BF4 /* EditDateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDateViewModel.swift; sourceTree = "<group>"; };
 		859CA05E2619C641003D5BF4 /* EditDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDateView.swift; sourceTree = "<group>"; };
+		859CA0642619D6FF003D5BF4 /* ProjectServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +160,8 @@
 		859C9FAF261717D8003D5BF4 /* CraftListTests */ = {
 			isa = PBXGroup;
 			children = (
-				859C9FB0261717D8003D5BF4 /* CraftListTests.swift */,
+				859CA0632619D6DF003D5BF4 /* Service */,
+				859C9FB0261717D8003D5BF4 /* MockDataStore.swift */,
 				859C9FB2261717D8003D5BF4 /* Info.plist */,
 			);
 			path = CraftListTests;
@@ -257,6 +260,14 @@
 				859CA05E2619C641003D5BF4 /* EditDateView.swift */,
 			);
 			path = "Edit Date";
+			sourceTree = "<group>";
+		};
+		859CA0632619D6DF003D5BF4 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				859CA0642619D6FF003D5BF4 /* ProjectServiceTests.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -416,7 +427,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				859C9FB1261717D8003D5BF4 /* CraftListTests.swift in Sources */,
+				859C9FB1261717D8003D5BF4 /* MockDataStore.swift in Sources */,
+				859CA0652619D700003D5BF4 /* ProjectServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

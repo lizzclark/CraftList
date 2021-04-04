@@ -13,9 +13,9 @@ enum ServiceError: Error {
 }
 
 struct ProjectService {
-    private let dataStore: DataStore
+    private let dataStore: DataStoreProtocol
     
-    init(dataStore: DataStore = DataStore.shared) {
+    init(dataStore: DataStoreProtocol = DataStore.shared) {
         self.dataStore = dataStore
     }
     

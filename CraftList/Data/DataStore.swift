@@ -13,7 +13,17 @@ enum DataStoreError: Error {
     case fetching, deleting, adding, updating
 }
 
-class DataStore: NSObject {
+protocol DataStoreProtocol {
+    func projectsPublisher() -> AnyPublisher<[ProjectData], DataStoreError>
+    func fetchProject(id: UUID, completion: (Result<ProjectData, DataStoreError>) -> Void)
+    func add(projectData: AddProjectData, completion: (Result<UUID, DataStoreError>) -> Void)
+    func deleteProject(id: UUID, completion: (Result<String, DataStoreError>) -> Void)
+    func updateProjectName(id: UUID, name: String, completion: (Result<String, DataStoreError>) -> Void)
+    func updateProjectDateStarted(id: UUID, date: Date, completion: (Result<Date, DataStoreError>) -> Void)
+    func updateProjectDateFinished(id: UUID, date: Date, completion: (Result<Date, DataStoreError>) -> Void)
+}
+
+class DataStore: NSObject, DataStoreProtocol {
     static let shared: DataStore = DataStore()
     
     private enum Keys {
