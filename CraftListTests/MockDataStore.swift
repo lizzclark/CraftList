@@ -10,60 +10,38 @@ import XCTest
 import Combine
 
 final class MockDataStore: DataStoreProtocol {
-    var stubError: DataStoreError?
-    
     var projectsPublisherCalled = false
-    var stubProjectsPublisherData: [ProjectData]?
+    var stubProjectsPublisherResult: Result<[ProjectData], DataStoreError> = .failure(.adding)
     func projectsPublisher() -> AnyPublisher<[ProjectData], DataStoreError> {
         projectsPublisherCalled = true
-        
-        var result: Result<[ProjectData], DataStoreError> = .failure(.adding)
-        if let projects = stubProjectsPublisherData {
-            result = .success(projects)
-        } else if let error = stubError {
-            result = .failure(error)
-        }
-        return result.publisher.eraseToAnyPublisher()
+        return stubProjectsPublisherResult.publisher.eraseToAnyPublisher()
     }
     
     var fetchProjectCalled = false
     var capturedFetchProjectId: UUID?
-    var stubFetchProjectData: ProjectData?
+    var stubFetchProjectResult: Result<ProjectData, DataStoreError> = .failure(.fetching)
     func fetchProject(id: UUID, completion: (Result<ProjectData, DataStoreError>) -> Void) {
         fetchProjectCalled = true
         capturedFetchProjectId = id
-        if let error = stubError {
-            completion(.failure(error))
-        } else if let data = stubFetchProjectData {
-            completion(.success(data))
-        }
+        completion(stubFetchProjectResult)
     }
     
     var addProjectCalled = false
     var capturedAddProjectData: AddProjectData?
+    var stubAddProjectResult: Result<UUID, DataStoreError> = .failure(.adding)
     func add(projectData: AddProjectData, completion: (Result<UUID, DataStoreError>) -> Void) {
         addProjectCalled = true
         capturedAddProjectData = projectData
-        
-        if let error = stubError {
-            completion(.failure(error))
-        } else {
-            completion(.success(UUID()))
-        }
+        completion(stubAddProjectResult)
     }
     
     var deleteProjectCalled = false
     var capturedDeleteProjectId: UUID?
-    var stubDeletedProjectName: String?
+    var stubDeleteProjectResult: Result<String, DataStoreError> = .failure(.deleting)
     func deleteProject(id: UUID, completion: (Result<String, DataStoreError>) -> Void) {
         deleteProjectCalled = true
         capturedDeleteProjectId = id
-        
-        if let error = stubError {
-            completion(.failure(error))
-        } else if let stubName = stubDeletedProjectName {
-            completion(.success(stubName))
-        }
+        completion(stubDeleteProjectResult)
     }
     
     var capturedUpdateProjectId: UUID?
@@ -71,38 +49,29 @@ final class MockDataStore: DataStoreProtocol {
 
     var updateProjectNameCalled = false
     var capturedUpdateProjectName: String?
+    var stubUpdateProjectNameResult: Result<String, DataStoreError> = .failure(.updating)
     func updateProjectName(id: UUID, name: String, completion: (Result<String, DataStoreError>) -> Void) {
         updateProjectNameCalled = true
         capturedUpdateProjectId = id
         capturedUpdateProjectName = name
-        if let error = stubError {
-            completion(.failure(error))
-        } else {
-            completion(.success(name))
-        }
+        completion(stubUpdateProjectNameResult)
     }
     
     var updateProjectDateStartedCalled = false
+    var stubUpdateDateStartedResult: Result<Date, DataStoreError> = .failure(.updating)
     func updateProjectDateStarted(id: UUID, date: Date, completion: (Result<Date, DataStoreError>) -> Void) {
         updateProjectDateStartedCalled = true
         capturedUpdateProjectId = id
         capturedUpdateProjectDate = date
-        if let error = stubError {
-            completion(.failure(error))
-        } else {
-            completion(.success(date))
-        }
+        completion(stubUpdateDateStartedResult)
     }
     
     var updateProjectDateFinishedCalled = false
+    var stubUpdateDateFinishedResult: Result<Date, DataStoreError> = .failure(.updating)
     func updateProjectDateFinished(id: UUID, date: Date, completion: (Result<Date, DataStoreError>) -> Void) {
         updateProjectDateFinishedCalled = true
         capturedUpdateProjectId = id
         capturedUpdateProjectDate = date
-        if let error = stubError {
-            completion(.failure(error))
-        } else {
-            completion(.success(date))
-        }
+        completion(stubUpdateDateFinishedResult)
     }
 }

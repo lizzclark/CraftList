@@ -33,12 +33,12 @@ struct ProjectService {
             .eraseToAnyPublisher()
     }
         
-    func addProject(name: String, dateStarted: Date, dateFinished: Date?) -> AnyPublisher<String, ServiceError> {
-        return Future<String, ServiceError> { promise in
+    func addProject(name: String, dateStarted: Date, dateFinished: Date?) -> AnyPublisher<UUID, ServiceError> {
+        return Future<UUID, ServiceError> { promise in
             dataStore.add(projectData: AddProjectData(name: name, dateStarted: dateStarted, dateFinished: dateFinished)) { result in
                 switch result {
-                case .success:
-                    promise(.success(name))
+                case .success(let id):
+                    promise(.success(id))
                 case .failure:
                     promise(.failure(ServiceError.failure))
                 }
