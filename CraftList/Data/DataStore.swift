@@ -128,6 +128,21 @@ class DataStore: NSObject {
             completion(.failure(DataStoreError.updating))
         }
     }
+    
+    func updateProjectDateFinished(id: UUID, date: Date, completion: (Result<Date, DataStoreError>) -> Void) {
+        let fetchController = makeFetchController(for: id)
+        do {
+            try fetchController.performFetch()
+            guard let object = fetchController.fetchedObjects?.first else { throw DataStoreError.fetching }
+            object.setValue(date, forKey: Keys.dateFinished)
+            try managedObjectContext.save()
+            guard let newDate = object.dateFinished else { throw DataStoreError.updating }
+            completion(.success(newDate))
+        } catch {
+            completion(.failure(DataStoreError.updating))
+        }
+    }
+
         
     private func makeFetchController(for id: UUID) -> NSFetchedResultsController<Project> {
         let request: NSFetchRequest<Project> = Project.fetchRequest()

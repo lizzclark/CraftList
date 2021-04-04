@@ -16,7 +16,7 @@ struct ProjectDetailsView: View {
         var id: Int {
             hashValue
         }
-        case none, name, dateStarted
+        case none, name, dateStarted, dateFinished
     }
     
     @State private var name = ""
@@ -52,6 +52,8 @@ struct ProjectDetailsView: View {
                 EditNameView(viewModel: .init(projectId: viewModel.id, name: project.name))
             case .dateStarted:
                 EditDateView(viewModel: .init(.dateStarted, projectId: viewModel.id, date: project.dateStarted))
+            case .dateFinished:
+                EditDateView(viewModel: .init(.dateFinished, projectId: viewModel.id, date: project.dateFinished))
             case .none:
                 EmptyView()
             }
@@ -106,9 +108,7 @@ struct ProjectDetailsView: View {
             }
             HStack {
                 Spacer()
-                Button(viewModel.editLabel) {
-                    print("edit date finished")
-                }
+                Button(viewModel.editLabel, action: { activeEditSheet = .dateFinished })
             }
         }
     }

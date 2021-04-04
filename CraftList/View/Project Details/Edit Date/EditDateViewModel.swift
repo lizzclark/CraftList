@@ -30,6 +30,15 @@ class EditDateViewModel: ObservableObject {
     }
     
     func save(_ completion: @escaping () -> Void) {
+        switch field {
+        case .dateStarted:
+            updateDateStarted(with: completion)
+        case .dateFinished:
+            updateDateFinished(with: completion)
+        }
+    }
+    
+    private func updateDateStarted(with completion: @escaping () -> Void) {
         service.updateProjectDateStarted(id: projectId, date: date)
             .sink(receiveCompletion: { result in
                 switch result {
@@ -44,6 +53,23 @@ class EditDateViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
+    
+    private func updateDateFinished(with completion: @escaping () -> Void) {
+        service.updateProjectDateFinished(id: projectId, date: date)
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure:
+                    // handle error
+                    break
+                }
+            }) { _ in
+                completion()
+            }
+            .store(in: &cancellables)
+    }
+
 }
 
 extension EditDateViewModel {
