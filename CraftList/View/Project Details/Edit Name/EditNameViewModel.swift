@@ -17,14 +17,17 @@ class EditNameViewModel: ObservableObject {
     
     private(set) var projectId: UUID
     private let service: ProjectServiceProtocol
+    let onDismiss: () -> Void
     private var cancellables = Set<AnyCancellable>()
     
     init(projectId: UUID,
          name: String,
-         service: ProjectServiceProtocol = ProjectService()) {
+         service: ProjectServiceProtocol = ProjectService(),
+         _ onDismiss: @escaping () -> Void) {
         self.projectId = projectId
         self.name = name
         self.service = service
+        self.onDismiss = onDismiss
     }
     
     func save(_ completion: @escaping () -> Void) {

@@ -11,7 +11,7 @@ import SwiftUI
 struct CraftListApp: App {
     var body: some Scene {
         WindowGroup {
-            ProjectListView()
+            ProjectListView(viewModel: ProjectListViewModel())
         }
     }
 }

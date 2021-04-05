@@ -27,6 +27,7 @@ struct EditDateView: View {
                     Button(viewModel.saveButtonLabel) {
                         viewModel.save {
                             self.presentationMode.wrappedValue.dismiss()
+                            self.viewModel.onDismiss()
                         }
                     }
                 }
@@ -38,6 +39,6 @@ struct EditDateView: View {
 
 struct EditDateView_Previews: PreviewProvider {
     static var previews: some View {
-        EditDateView(viewModel: EditDateViewModel(.dateStarted, projectId: UUID(), date: Date()))
+        EditDateView(viewModel: EditDateViewModel(.dateStarted, projectId: UUID(), date: Date(), { }))
     }
 }

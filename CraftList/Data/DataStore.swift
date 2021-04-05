@@ -7,14 +7,13 @@
 
 import Foundation
 import CoreData
-import Combine
 
 enum DataStoreError: Error {
     case fetching, deleting, adding, updating
 }
 
 protocol DataStoreProtocol {
-    func projectsPublisher() -> AnyPublisher<[ProjectData], DataStoreError>
+    func fetchProjects(completion: (Result<[ProjectData], DataStoreError>) -> Void)
     func fetchProject(id: UUID, completion: (Result<ProjectData, DataStoreError>) -> Void)
     func add(projectData: AddProjectData, completion: (Result<UUID, DataStoreError>) -> Void)
     func deleteProject(id: UUID, completion: (Result<String, DataStoreError>) -> Void)
@@ -23,7 +22,7 @@ protocol DataStoreProtocol {
     func updateProjectDateFinished(id: UUID, date: Date, completion: (Result<Date, DataStoreError>) -> Void)
 }
 
-class DataStore: NSObject, DataStoreProtocol {
+class DataStore: DataStoreProtocol {
     static let shared: DataStore = DataStore()
     
     private enum Keys {
@@ -31,16 +30,13 @@ class DataStore: NSObject, DataStoreProtocol {
         static let dateStarted = "dateStarted"
         static let dateFinished = "dateFinished"
     }
-    
-    private var projects = CurrentValueSubject<[ProjectData], DataStoreError>([])
-    
+
     private lazy var projectFetchRequest: NSFetchRequest<Project> = {
         let request: NSFetchRequest<Project> = Project.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(keyPath: \Project.dateStarted, ascending: false)]
         return request
     }()
     
-    private var projectFetchController: NSFetchedResultsController<Project>?
     private let managedObjectContext: NSManagedObjectContext
     private let transformer: DataTransformer
     
@@ -48,26 +44,20 @@ class DataStore: NSObject, DataStoreProtocol {
          transformer: DataTransformer = DataTransformer()) {
         self.managedObjectContext = managedObjectContext
         self.transformer = transformer
-        super.init()
-        setUpAndFetch()
     }
-    
-    private func setUpAndFetch() {
-        projectFetchController = NSFetchedResultsController(fetchRequest: projectFetchRequest,
+        
+    func fetchProjects(completion: (Result<[ProjectData], DataStoreError>) -> Void) {
+        let fetchController = NSFetchedResultsController(fetchRequest: projectFetchRequest,
                                                             managedObjectContext: managedObjectContext,
                                                             sectionNameKeyPath: nil,
                                                             cacheName: nil)
-        projectFetchController?.delegate = self
         do {
-            try projectFetchController?.performFetch()
-            projects.value = transformer.projectData(from: projectFetchController?.fetchedObjects)
+            try fetchController.performFetch()
+            let fetchedProjects = transformer.projectData(from: fetchController.fetchedObjects)
+            completion(.success(fetchedProjects))
         } catch {
-            projects.send(completion: .failure(DataStoreError.fetching))
+            completion(.failure(.fetching))
         }
-    }
-    
-    func projectsPublisher() -> AnyPublisher<[ProjectData], DataStoreError> {
-        return projects.eraseToAnyPublisher()
     }
         
     func fetchProject(id: UUID, completion: (Result<ProjectData, DataStoreError>) -> Void) {
@@ -165,12 +155,5 @@ class DataStore: NSObject, DataStoreProtocol {
                                           managedObjectContext: managedObjectContext,
                                           sectionNameKeyPath: nil,
                                           cacheName: nil)
-    }
-}
-
-extension DataStore: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        guard let projects = controller.fetchedObjects as? [Project] else { return }
-        self.projects.value = transformer.projectData(from: projects)
     }
 }

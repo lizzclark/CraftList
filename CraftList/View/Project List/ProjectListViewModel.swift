@@ -19,6 +19,7 @@ class ProjectListViewModel: ObservableObject {
     }
     
     let navBarTitle = "Projects"
+    let loadingText = "Fetching your projects..."
     
     @Published var projects: [Project] = []
     
@@ -27,11 +28,10 @@ class ProjectListViewModel: ObservableObject {
     
     init(service: ProjectServiceProtocol = ProjectService()) {
         self.service = service
-        subscribeToProjects()
     }
     
-    private func subscribeToProjects() {
-        service.projects()
+    func fetchProjects() {
+        service.getProjects()
             .sink(receiveCompletion: { result in
                 switch result {
                 case .finished:

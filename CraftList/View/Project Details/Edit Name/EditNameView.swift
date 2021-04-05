@@ -26,6 +26,7 @@ struct EditNameView: View {
                     Button(viewModel.saveButtonLabel) {
                         viewModel.save {
                             self.presentationMode.wrappedValue.dismiss()
+                            self.viewModel.onDismiss()
                         }
                     }
                 }
@@ -37,6 +38,6 @@ struct EditNameView: View {
 
 struct EditNameView_Previews: PreviewProvider {
     static var previews: some View {
-        EditNameView(viewModel: EditNameViewModel(projectId: UUID(), name: "My project"))
+        EditNameView(viewModel: EditNameViewModel(projectId: UUID(), name: "My project", { }))
     }
 }

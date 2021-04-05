@@ -8,23 +8,36 @@
 import SwiftUI
 
 struct ProjectListView: View {
-    @ObservedObject private var viewModel = ProjectListViewModel()
+    @ObservedObject private var viewModel: ProjectListViewModel
         
     @State var isShowingAddProjectView = false
     
+    init(viewModel: ProjectListViewModel) {
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         NavigationView {
-            renderProjectList()
-                .navigationBarTitle(viewModel.navBarTitle, displayMode: .inline)
-                .navigationBarItems(trailing: barButtonItem)
+            view(for: viewModel.projects)
+                .onAppear(perform: viewModel.fetchProjects)
         }
         .sheet(isPresented: $isShowingAddProjectView) {
             AddProjectView()
         }
     }
     
-    private func renderProjectList() -> some View {
-        return List {
+    @ViewBuilder private func view(for projects: [ProjectListViewModel.Project]) -> some View {
+        if projects.count > 0 {
+            renderProjectList()
+                .navigationBarTitle(viewModel.navBarTitle, displayMode: .inline)
+                .navigationBarItems(trailing: barButtonItem)
+        } else {
+            Text(viewModel.loadingText)
+        }
+    }
+    
+    @ViewBuilder private func renderProjectList() -> some View {
+        List {
             ForEach(viewModel.projects, id: \.id) { project in
                 NavigationLink(destination: ProjectDetailsView(viewModel: ProjectDetailsViewModel(id: project.id))) {
                     ProjectListItemView(viewModel: ProjectListItemViewModel(name: project.name, image: project.image, dateStarted: project.dateStarted, dateFinished: project.dateFinished))
@@ -51,6 +64,6 @@ struct ProjectListView: View {
 
 struct ProjectListView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectListView()
+        ProjectListView(viewModel: ProjectListViewModel())
     }
 }

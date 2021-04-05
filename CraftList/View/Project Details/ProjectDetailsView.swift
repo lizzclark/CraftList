@@ -22,18 +22,20 @@ struct ProjectDetailsView: View {
     @State private var name = ""
     
     var body: some View {
-        Group {
-            if let project = viewModel.project {
-                projectDetails(for: project)
-                    .padding()
-                    .navigationBarTitle(project.name, displayMode: .inline)
-                    .navigationBarItems(trailing: deleteButton)
-            } else {
-                Text(viewModel.emptyStateLabel)
-                    .padding()
-            }
+        body(for: viewModel.project)
+            .onAppear(perform: viewModel.fetchProject)
+    }
+    
+    @ViewBuilder private func body(for project: ProjectDetailsViewModel.Data?) -> some View {
+        if let data = project {
+            projectDetails(for: data)
+                .padding()
+                .navigationBarTitle(data.name, displayMode: .inline)
+                .navigationBarItems(trailing: deleteButton)
+        } else {
+            Text(viewModel.emptyStateLabel)
+                .padding()
         }
-        .onAppear(perform: viewModel.fetchProject)
     }
         
     private func projectDetails(for project: ProjectDetailsViewModel.Data) -> some View {
@@ -58,11 +60,17 @@ struct ProjectDetailsView: View {
         .sheet(item: $activeEditSheet) { item in
             switch item {
             case .name:
-                EditNameView(viewModel: .init(projectId: viewModel.id, name: project.name))
+                EditNameView(viewModel: .init(projectId: viewModel.id, name: project.name) {
+                    viewModel.fetchProject()
+                })
             case .dateStarted:
-                EditDateView(viewModel: .init(.dateStarted, projectId: viewModel.id, date: project.dateStarted))
+                EditDateView(viewModel: .init(.dateStarted, projectId: viewModel.id, date: project.dateStarted) {
+                    viewModel.fetchProject()
+                })
             case .dateFinished:
-                EditDateView(viewModel: .init(.dateFinished, projectId: viewModel.id, date: project.dateFinished))
+                EditDateView(viewModel: .init(.dateFinished, projectId: viewModel.id, date: project.dateFinished) {
+                    viewModel.fetchProject()
+                })
             case .none:
                 EmptyView()
             }

@@ -13,7 +13,7 @@ enum ServiceError: Error {
 }
 
 protocol ProjectServiceProtocol {
-    func projects() -> AnyPublisher<[ProjectModel], ServiceError>
+    func getProjects() -> AnyPublisher<[ProjectModel], ServiceError>
     func addProject(name: String, imageData: Data?, dateStarted: Date, dateFinished: Date?) -> AnyPublisher<UUID, ServiceError>
     func deleteProject(id: UUID) -> AnyPublisher<String, ServiceError>
     func getProject(id: UUID) -> AnyPublisher<ProjectModel, ServiceError>
@@ -31,16 +31,19 @@ struct ProjectService: ProjectServiceProtocol {
         self.transformer = transformer
     }
     
-    func projects() -> AnyPublisher<[ProjectModel], ServiceError> {
-        return dataStore
-            .projectsPublisher()
-            .map({ data in
-                return data.map { transformer.model(from: $0) }
-            })
-            .mapError({ _ in
-                return ServiceError.failure
-            })
-            .eraseToAnyPublisher()
+    func getProjects() -> AnyPublisher<[ProjectModel], ServiceError> {
+        return Future<[ProjectModel], ServiceError> { promise in
+            dataStore.fetchProjects { result in
+                switch result {
+                case .success(let projectsData):
+                    let models = projectsData.map { transformer.model(from: $0) }
+                    promise(.success(models))
+                case .failure:
+                    promise(.failure(ServiceError.failure))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
     }
         
     func addProject(name: String, imageData: Data?, dateStarted: Date, dateFinished: Date?) -> AnyPublisher<UUID, ServiceError> {

@@ -16,17 +16,20 @@ class EditDateViewModel: ObservableObject {
     let field: Field
     private(set) var projectId: UUID
     private let service: ProjectServiceProtocol
+    let onDismiss: () -> Void
     
     private var cancellables = Set<AnyCancellable>()
     
     init(_ field: Field,
          projectId: UUID,
          date: Date?,
-         service: ProjectServiceProtocol = ProjectService()) {
+         service: ProjectServiceProtocol = ProjectService(),
+         _ onDismiss: @escaping () -> Void) {
         self.field = field
         self.projectId = projectId
         self.date = date ?? Date()
         self.service = service
+        self.onDismiss = onDismiss
     }
     
     func save(_ completion: @escaping () -> Void) {
