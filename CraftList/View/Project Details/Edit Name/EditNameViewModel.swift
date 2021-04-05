@@ -15,13 +15,13 @@ class EditNameViewModel: ObservableObject {
     let projectNameLabel: String = "Project Name"
     let saveButtonLabel: String = "Save"
     
-    private let projectId: UUID
-    private let service: ProjectService
+    private(set) var projectId: UUID
+    private let service: ProjectServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     
     init(projectId: UUID,
          name: String,
-         service: ProjectService = ProjectService()) {
+         service: ProjectServiceProtocol = ProjectService()) {
         self.projectId = projectId
         self.name = name
         self.service = service
