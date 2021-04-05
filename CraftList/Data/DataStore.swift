@@ -42,10 +42,10 @@ class DataStore: NSObject, DataStoreProtocol {
     
     private var projectFetchController: NSFetchedResultsController<Project>?
     private let managedObjectContext: NSManagedObjectContext
-    private let transformer: ProjectTransformer
+    private let transformer: DataTransformer
     
     init(managedObjectContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext,
-         transformer: ProjectTransformer = ProjectTransformer()) {
+         transformer: DataTransformer = DataTransformer()) {
         self.managedObjectContext = managedObjectContext
         self.transformer = transformer
         super.init()

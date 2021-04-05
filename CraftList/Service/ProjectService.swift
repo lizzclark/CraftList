@@ -24,22 +24,18 @@ protocol ProjectServiceProtocol {
 
 struct ProjectService: ProjectServiceProtocol {
     private let dataStore: DataStoreProtocol
+    private let transformer: ModelTransformer
     
-    init(dataStore: DataStoreProtocol = DataStore.shared) {
+    init(dataStore: DataStoreProtocol = DataStore.shared, transformer: ModelTransformer = ModelTransformer()) {
         self.dataStore = dataStore
+        self.transformer = transformer
     }
     
     func projects() -> AnyPublisher<[ProjectModel], ServiceError> {
         return dataStore
             .projectsPublisher()
             .map({ data in
-                return data.map { projectData in
-                    var image: UIImage?
-                    if let imageData = projectData.imageData {
-                        image = UIImage(data: imageData)
-                    }
-                    return ProjectModel(id: projectData.id, name: projectData.name, image: image, dateStarted: projectData.dateStarted, dateFinished: projectData.dateFinished)
-                }
+                return data.map { transformer.model(from: $0) }
             })
             .mapError({ _ in
                 return ServiceError.failure
@@ -80,12 +76,7 @@ struct ProjectService: ProjectServiceProtocol {
             dataStore.fetchProject(id: id) { result in
                 switch result {
                 case .success(let projectData):
-                    var image: UIImage?
-                    if let imageData = projectData.imageData {
-                        image = UIImage(data: imageData)
-                    }
-                    let model = ProjectModel(id: projectData.id, name: projectData.name, image: image, dateStarted: projectData.dateStarted, dateFinished: projectData.dateFinished)
-                    promise(.success(model))
+                    promise(.success(transformer.model(from: projectData)))
                 case .failure:
                     promise(.failure(ServiceError.failure))
                 }
