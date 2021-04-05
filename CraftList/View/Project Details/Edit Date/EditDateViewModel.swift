@@ -14,15 +14,15 @@ class EditDateViewModel: ObservableObject {
     let saveButtonLabel: String = "Save"
     
     let field: Field
-    private let projectId: UUID
-    private let service: ProjectService
+    private(set) var projectId: UUID
+    private let service: ProjectServiceProtocol
     
     private var cancellables = Set<AnyCancellable>()
     
     init(_ field: Field,
          projectId: UUID,
          date: Date?,
-         service: ProjectService = ProjectService()) {
+         service: ProjectServiceProtocol = ProjectService()) {
         self.field = field
         self.projectId = projectId
         self.date = date ?? Date()

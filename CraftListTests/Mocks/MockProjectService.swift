@@ -42,12 +42,22 @@ final class MockProjectService: ProjectServiceProtocol {
     }
     
     var stubUpdateDateStartedResult: Result<Date, ServiceError> = .failure(.failure)
+    var updateDateStartedCalled = false
+    var capturedDateStarted: Date?
     func updateProjectDateStarted(id: UUID, date: Date) -> AnyPublisher<Date, ServiceError> {
+        updateDateStartedCalled = true
+        capturedProjectId = id
+        capturedDateStarted = date
         return stubUpdateDateStartedResult.publisher.eraseToAnyPublisher()
     }
     
     var stubUpdateDateFinishedResult: Result<Date, ServiceError> = .failure(.failure)
+    var updateDateFinishedCalled = false
+    var capturedDateFinished: Date?
     func updateProjectDateFinished(id: UUID, date: Date) -> AnyPublisher<Date, ServiceError> {
+        updateDateFinishedCalled = true
+        capturedProjectId = id
+        capturedDateFinished = date
         return stubUpdateDateFinishedResult.publisher.eraseToAnyPublisher()
     }
 }
