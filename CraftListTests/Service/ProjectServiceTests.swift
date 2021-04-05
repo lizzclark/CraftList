@@ -47,21 +47,9 @@ class ProjectServiceTests: XCTestCase {
     // MARK: - Projects
     
     func testProjects_CallsDataStoreProjects() {
-        let expect = expectation(description: #function)
+        _ = service.projects()
         
-        service.projects()
-            .sink(receiveCompletion: { result in
-                switch result {
-                case .failure:
-                    XCTAssertTrue(self.mockedDataStore.projectsPublisherCalled)
-                    expect.fulfill()
-                case .finished:
-                    break
-                }
-            }) { _ in }
-            .store(in: &cancellables)
-        
-        waitForExpectations(timeout: 0.5)
+        XCTAssertTrue(self.mockedDataStore.projectsPublisherCalled)
     }
     
     func testProjects_PublishesProjectModelsOnSuccess() {
@@ -108,25 +96,14 @@ class ProjectServiceTests: XCTestCase {
     // MARK: - Add Project
     
     func testAddProject_CallsDataStoreWithCorrectProjectData() {
-        let expect = expectation(description: #function)
         let expectedDate = Date()
         
-        service.addProject(name: "Test", dateStarted: expectedDate, dateFinished: nil)
-            .sink(receiveCompletion: { result in
-                switch result {
-                case .failure:
-                    XCTAssertTrue(self.mockedDataStore.addProjectCalled)
-                    XCTAssertEqual(self.mockedDataStore.capturedAddProjectData?.name, "Test")
-                    XCTAssertEqual(self.mockedDataStore.capturedAddProjectData?.dateStarted, expectedDate)
-                    XCTAssertNil(self.mockedDataStore.capturedAddProjectData?.dateFinished)
-                    expect.fulfill()
-                case .finished:
-                    break
-                }
-            }) { _ in }
-            .store(in: &cancellables)
+        _ = service.addProject(name: "Test", dateStarted: expectedDate, dateFinished: nil)
         
-        waitForExpectations(timeout: 0.5)
+        XCTAssertTrue(self.mockedDataStore.addProjectCalled)
+        XCTAssertEqual(self.mockedDataStore.capturedAddProjectData?.name, "Test")
+        XCTAssertEqual(self.mockedDataStore.capturedAddProjectData?.dateStarted, expectedDate)
+        XCTAssertNil(self.mockedDataStore.capturedAddProjectData?.dateFinished)
     }
 
     func testAddProject_PublishesIdOnSuccess() {
@@ -166,23 +143,12 @@ class ProjectServiceTests: XCTestCase {
     // MARK: - Get Project
     
     func testGetProject_CallsDataStoreWithId() {
-        let expect = expectation(description: #function)
         let expectedId = UUID()
         
-        service.getProject(id: expectedId)
-            .sink(receiveCompletion: { result in
-                switch result {
-                case .finished:
-                    break
-                case .failure:
-                    XCTAssertTrue(self.mockedDataStore.fetchProjectCalled)
-                    XCTAssertEqual(self.mockedDataStore.capturedFetchProjectId, expectedId)
-                    expect.fulfill()
-                }
-            }) { _ in }
-            .store(in: &cancellables)
-        
-        waitForExpectations(timeout: 0.5)
+        _ = service.getProject(id: expectedId)
+
+        XCTAssertTrue(self.mockedDataStore.fetchProjectCalled)
+        XCTAssertEqual(self.mockedDataStore.capturedFetchProjectId, expectedId)
     }
 
     func testGetProject_PublishesProjectModelOnSuccess() {
@@ -224,23 +190,11 @@ class ProjectServiceTests: XCTestCase {
     // MARK: - Delete Project
     
     func testDeleteProject_CallsDataStoreWithProjectId() {
-        let expect = expectation(description: #function)
         let expectedId = UUID()
         
-        service.deleteProject(id: expectedId)
-            .sink(receiveCompletion: { result in
-                switch result {
-                case .finished:
-                    break
-                case .failure:
-                    XCTAssertTrue(self.mockedDataStore.deleteProjectCalled)
-                    XCTAssertEqual(self.mockedDataStore.capturedDeleteProjectId, expectedId)
-                    expect.fulfill()
-                }
-            }) { _ in }
-            .store(in: &cancellables)
-        
-        waitForExpectations(timeout: 0.5)
+        _ = service.deleteProject(id: expectedId)
+        XCTAssertTrue(self.mockedDataStore.deleteProjectCalled)
+        XCTAssertEqual(self.mockedDataStore.capturedDeleteProjectId, expectedId)
     }
 
     func testDeleteProject_PublishesProjectNameOnSuccess() {
@@ -279,26 +233,13 @@ class ProjectServiceTests: XCTestCase {
     // MARK: - Update Project Name
     
     func testUpdateProjectName_CallsDataStoreWithIdAndName() {
-        let expect = expectation(description: #function)
         let expectedId = UUID()
         
-        service.updateProjectName(id: expectedId, name: "Test")
-            .sink(receiveCompletion: { result in
-                switch result {
-                case .finished:
-                    break
-                case .failure:
-                    XCTAssertTrue(self.mockedDataStore.updateProjectNameCalled)
-                    XCTAssertEqual(self.mockedDataStore.capturedUpdateProjectId, expectedId)
-                    XCTAssertEqual(self.mockedDataStore.capturedUpdateProjectName, "Test")
-                    expect.fulfill()
-                }
-            }) { _ in }
-            .store(in: &cancellables)
-        
-        waitForExpectations(timeout: 0.5)
+        _ = service.updateProjectName(id: expectedId, name: "Test")
+        XCTAssertTrue(self.mockedDataStore.updateProjectNameCalled)
+        XCTAssertEqual(self.mockedDataStore.capturedUpdateProjectId, expectedId)
+        XCTAssertEqual(self.mockedDataStore.capturedUpdateProjectName, "Test")
     }
-
     
     func testUpdateProjectName_PublishesProjectNameOnSuccess() {
         let expect = expectation(description: #function)
@@ -336,20 +277,13 @@ class ProjectServiceTests: XCTestCase {
     // MARK: - Update Project Date Started
     
     func testUpdateProjectDateStarted_CallsDataStoreWithIdAndDate() {
-        let expect = expectation(description: #function)
         let expectedId = UUID()
         let expectedDate = Date()
         
-        service.updateProjectDateStarted(id: expectedId, date: expectedDate)
-            .sink(receiveCompletion: { result in
-                XCTAssertTrue(self.mockedDataStore.updateProjectDateStartedCalled)
-                XCTAssertEqual(self.mockedDataStore.capturedUpdateProjectId, expectedId)
-                XCTAssertEqual(self.mockedDataStore.capturedUpdateProjectDate, expectedDate)
-                expect.fulfill()
-            }) { _ in }
-            .store(in: &cancellables)
-        
-        waitForExpectations(timeout: 0.5)
+        _ = service.updateProjectDateStarted(id: expectedId, date: expectedDate)
+        XCTAssertTrue(self.mockedDataStore.updateProjectDateStartedCalled)
+        XCTAssertEqual(self.mockedDataStore.capturedUpdateProjectId, expectedId)
+        XCTAssertEqual(self.mockedDataStore.capturedUpdateProjectDate, expectedDate)
     }
     
     func testUpdateProjectDateStarted_PublishesProjectDateStartedOnSuccess() {
@@ -389,20 +323,13 @@ class ProjectServiceTests: XCTestCase {
     // MARK: - Update Project Date Finished
     
     func testUpdateProjectDateFinished_CallsDataStoreWithProjectIDAndDate() {
-        let expect = expectation(description: #function)
         let expectedId = UUID()
         let expectedDate = Date()
         
-        service.updateProjectDateFinished(id: expectedId, date: expectedDate)
-            .sink(receiveCompletion: { _ in
-                XCTAssertTrue(self.mockedDataStore.updateProjectDateFinishedCalled)
-                XCTAssertEqual(self.mockedDataStore.capturedUpdateProjectId, expectedId)
-                XCTAssertEqual(self.mockedDataStore.capturedUpdateProjectDate, expectedDate)
-                expect.fulfill()
-            }) { _ in }
-            .store(in: &cancellables)
-        
-        waitForExpectations(timeout: 0.5)
+        _ = service.updateProjectDateFinished(id: expectedId, date: expectedDate)
+        XCTAssertTrue(self.mockedDataStore.updateProjectDateFinishedCalled)
+        XCTAssertEqual(self.mockedDataStore.capturedUpdateProjectId, expectedId)
+        XCTAssertEqual(self.mockedDataStore.capturedUpdateProjectDate, expectedDate)
     }
 
     
