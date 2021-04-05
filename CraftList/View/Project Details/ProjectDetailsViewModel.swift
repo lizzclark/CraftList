@@ -36,7 +36,6 @@ class ProjectDetailsViewModel: ObservableObject {
     init(id: UUID, service: ProjectServiceProtocol = ProjectService()) {
         self.service = service
         self.id = id
-        fetchData()
     }
     
     func deleteProject() {
@@ -55,7 +54,7 @@ class ProjectDetailsViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    private func fetchData() {
+    func fetchProject() {
         service.getProject(id: id)
             .sink(receiveCompletion: { result in
                 switch result {

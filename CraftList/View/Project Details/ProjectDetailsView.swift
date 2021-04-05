@@ -22,15 +22,18 @@ struct ProjectDetailsView: View {
     @State private var name = ""
     
     var body: some View {
-        if let project = viewModel.project {
-            projectDetails(for: project)
-                .padding()
-                .navigationBarTitle(project.name, displayMode: .inline)
-                .navigationBarItems(trailing: deleteButton)
-        } else {
-            Text(viewModel.emptyStateLabel)
-                .padding()
+        Group {
+            if let project = viewModel.project {
+                projectDetails(for: project)
+                    .padding()
+                    .navigationBarTitle(project.name, displayMode: .inline)
+                    .navigationBarItems(trailing: deleteButton)
+            } else {
+                Text(viewModel.emptyStateLabel)
+                    .padding()
+            }
         }
+        .onAppear(perform: viewModel.fetchProject)
     }
         
     private func projectDetails(for project: ProjectDetailsViewModel.Data) -> some View {

@@ -29,29 +29,25 @@ class ProjectDetailsViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    //MARK: - Init and Fetch
+    //MARK: - Fetch Project
     
-    func test_init_FetchesDataFromService() {
+    func test_FetchProject_FetchesDataFromService() {
+        viewModel.fetchProject()
         XCTAssertTrue(mockedService.getProjectCalled)
         XCTAssertEqual(mockedService.capturedProjectId, viewModel.id)
     }
     
-    func test_onFetchingData_CanTransformAndPublishProject() {
+    func test_FetchProject_OnSuccess_TransformsAndPublishesProject() {
         mockedService.stubGetProjectResult = .success(Data.project)
-        viewModel = ProjectDetailsViewModel(id: UUID(), service: mockedService)
         
-        let expect = expectation(description: #function)
-        
-        _ = viewModel.$project.sink { project in
-            XCTAssertNotNil(project)
-            XCTAssertEqual(project?.name, Data.project.name)
-            XCTAssertEqual(project?.dateStarted, Data.project.dateStarted)
-            XCTAssertEqual(project?.dateFinished, Data.project.dateFinished)
-            XCTAssertEqual(project?.dateStartedText, "1 January 2001")
-            XCTAssertEqual(project?.dateFinishedText, "1 January 2001")
-            expect.fulfill()
-        }
-        waitForExpectations(timeout: 1)
+        viewModel.fetchProject()
+        let project = viewModel.project
+        XCTAssertNotNil(project)
+        XCTAssertEqual(project?.name, Data.project.name)
+        XCTAssertEqual(project?.dateStarted, Data.project.dateStarted)
+        XCTAssertEqual(project?.dateFinished, Data.project.dateFinished)
+        XCTAssertEqual(project?.dateStartedText, "1 January 2001")
+        XCTAssertEqual(project?.dateFinishedText, "1 January 2001")
     }
     
     // MARK: - Delete Project
