@@ -11,11 +11,26 @@ struct AddProjectView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel = AddProjectViewModel()
     
+    @State var isShowingImagePicker = false
+    @State var image: UIImage?
+    
     var body: some View {
         NavigationView {
             Form {
                 Section {
                     TextField(viewModel.projectNameLabel, text: $viewModel.name)
+                }
+                Section {
+                    if let image = self.image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                    Button(viewModel.selectImageLabel) {
+                        isShowingImagePicker = true
+                    }
+                }
+                Section {
                     DatePicker(selection: $viewModel.dateStarted, in: ...Date(), displayedComponents: .date) {
                         Text(viewModel.dateStartedLabel)
                     }
@@ -30,6 +45,9 @@ struct AddProjectView: View {
                 }
             }
             .navigationBarTitle(viewModel.title)
+            .sheet(isPresented: $isShowingImagePicker) { 
+                ImagePicker(selectedImage: self.$image)
+            }
         }
     }
     

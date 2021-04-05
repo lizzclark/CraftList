@@ -7,15 +7,18 @@
 
 import Foundation
 import Combine
+import UIKit
 
 class AddProjectViewModel: ObservableObject {
     @Published var name: String = ""
+    @Published var image: UIImage? = nil
     @Published var dateStarted: Date = Date()
     @Published var isFinished = false
     @Published var dateFinishedFieldValue: Date = Date()
     
     let title = "Add a Project"
     let projectNameLabel = "Project Name"
+    let selectImageLabel = "Select Image"
     let dateStartedLabel = "Date Started"
     let statusLabel = "Status"
     let wipLabel = "WIP"

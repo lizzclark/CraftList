@@ -39,6 +39,7 @@
 		859CA090261B023E003D5BF4 /* ProjectDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA08F261B023E003D5BF4 /* ProjectDetailsViewModelTests.swift */; };
 		85F5A6DC261B0DA200FE8329 /* ProjectListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F5A6DB261B0DA200FE8329 /* ProjectListViewModelTests.swift */; };
 		85F5A6E2261B124600FE8329 /* AddProjectViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F5A6E1261B124600FE8329 /* AddProjectViewModelTests.swift */; };
+		85F5A6EA261B24E800FE8329 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F5A6E9261B24E800FE8329 /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		859CA08F261B023E003D5BF4 /* ProjectDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		85F5A6DB261B0DA200FE8329 /* ProjectListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModelTests.swift; sourceTree = "<group>"; };
 		85F5A6E1261B124600FE8329 /* AddProjectViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectViewModelTests.swift; sourceTree = "<group>"; };
+		85F5A6E9261B24E800FE8329 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +196,7 @@
 			children = (
 				859C9FCC26171A0F003D5BF4 /* AddProjectView.swift */,
 				859C9FD5261724E5003D5BF4 /* AddProjectViewModel.swift */,
+				85F5A6E9261B24E800FE8329 /* ImagePicker.swift */,
 			);
 			path = "Add Project";
 			sourceTree = "<group>";
@@ -480,6 +483,7 @@
 				859C9FF826172EA1003D5BF4 /* ProjectListViewModel.swift in Sources */,
 				859CA0432618E674003D5BF4 /* EditNameView.swift in Sources */,
 				859CA02326187816003D5BF4 /* ProjectService.swift in Sources */,
+				85F5A6EA261B24E800FE8329 /* ImagePicker.swift in Sources */,
 				859C9FCD26171A0F003D5BF4 /* AddProjectView.swift in Sources */,
 				859CA03C2618A83E003D5BF4 /* ProjectModel.swift in Sources */,
 				859C9FA3261717D8003D5BF4 /* Persistence.swift in Sources */,
