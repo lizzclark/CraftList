@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProjectDetailsView: View {
+    @Environment(\.presentationMode) var presentationMode
     @State private var isShowingDeleteAlert = false
     @State private var activeEditSheet: EditSheet? = nil
     @ObservedObject var viewModel: ProjectDetailsViewModel
@@ -32,6 +33,13 @@ struct ProjectDetailsView: View {
                 .padding()
                 .navigationBarTitle(data.name, displayMode: .inline)
                 .navigationBarItems(trailing: deleteButton)
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(leading: Button(action: { self.presentationMode.wrappedValue.dismiss() }, label: {
+                    Image(systemName: "chevron.left")
+                        .resizable()
+                        .frame(width: 14, height: 24)
+                        .aspectRatio(contentMode: .fit)
+                }))
         } else {
             Text(viewModel.emptyStateLabel)
                 .padding()
