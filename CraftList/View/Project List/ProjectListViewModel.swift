@@ -21,10 +21,10 @@ class ProjectListViewModel: ObservableObject {
     
     @Published var projects: [Project] = []
     
-    private let service: ProjectService
+    private let service: ProjectServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     
-    init(service: ProjectService = ProjectService()) {
+    init(service: ProjectServiceProtocol = ProjectService()) {
         self.service = service
         subscribeToProjects()
     }

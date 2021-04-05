@@ -37,6 +37,7 @@
 		859CA07E261AFE1F003D5BF4 /* MockProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA07D261AFE1F003D5BF4 /* MockProjectService.swift */; };
 		859CA088261AFEC4003D5BF4 /* EditDateViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA087261AFEC4003D5BF4 /* EditDateViewModelTests.swift */; };
 		859CA090261B023E003D5BF4 /* ProjectDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA08F261B023E003D5BF4 /* ProjectDetailsViewModelTests.swift */; };
+		85F5A6DC261B0DA200FE8329 /* ProjectListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F5A6DB261B0DA200FE8329 /* ProjectListViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		859CA07D261AFE1F003D5BF4 /* MockProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProjectService.swift; sourceTree = "<group>"; };
 		859CA087261AFEC4003D5BF4 /* EditDateViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDateViewModelTests.swift; sourceTree = "<group>"; };
 		859CA08F261B023E003D5BF4 /* ProjectDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailsViewModelTests.swift; sourceTree = "<group>"; };
+		85F5A6DB261B0DA200FE8329 /* ProjectListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,6 +284,7 @@
 		859CA072261AF8D9003D5BF4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				85F5A6D7261B0A8D00FE8329 /* Project List */,
 				859CA073261AF8DF003D5BF4 /* Project Details */,
 			);
 			path = View;
@@ -320,6 +323,14 @@
 				859CA087261AFEC4003D5BF4 /* EditDateViewModelTests.swift */,
 			);
 			path = "Edit Date";
+			sourceTree = "<group>";
+		};
+		85F5A6D7261B0A8D00FE8329 /* Project List */ = {
+			isa = PBXGroup;
+			children = (
+				85F5A6DB261B0DA200FE8329 /* ProjectListViewModelTests.swift */,
+			);
+			path = "Project List";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -483,6 +494,7 @@
 				859CA090261B023E003D5BF4 /* ProjectDetailsViewModelTests.swift in Sources */,
 				859C9FB1261717D8003D5BF4 /* MockDataStore.swift in Sources */,
 				859CA07E261AFE1F003D5BF4 /* MockProjectService.swift in Sources */,
+				85F5A6DC261B0DA200FE8329 /* ProjectListViewModelTests.swift in Sources */,
 				859CA076261AF8F6003D5BF4 /* EditNameViewModelTests.swift in Sources */,
 				859CA0652619D700003D5BF4 /* ProjectServiceTests.swift in Sources */,
 			);

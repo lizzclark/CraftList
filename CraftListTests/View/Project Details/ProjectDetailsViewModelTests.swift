@@ -57,8 +57,8 @@ class ProjectDetailsViewModelTests: XCTestCase {
         viewModel = ProjectDetailsViewModel(id: expectedId, service: mockedService)
         viewModel.deleteProject()
         
-        XCTAssertTrue(mockedService.deleteProjectCalled)
-        XCTAssertEqual(mockedService.capturedProjectId, expectedId)
+        XCTAssertEqual(mockedService.deleteProjectCalledCount, 1)
+        XCTAssertEqual(mockedService.capturedDeleteProjectIds.first, expectedId)
     }
     
     func test_DeleteProject_SetsProjectToNilOnSuccess() {

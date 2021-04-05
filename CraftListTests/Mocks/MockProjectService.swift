@@ -13,7 +13,9 @@ final class MockProjectService: ProjectServiceProtocol {
     var capturedProjectId: UUID?
 
     var stubProjectsResult: Result<[ProjectModel], ServiceError> = .failure(.failure)
+    var projectsCalled = false
     func projects() -> AnyPublisher<[ProjectModel], ServiceError> {
+        projectsCalled = true
         return stubProjectsResult.publisher.eraseToAnyPublisher()
     }
     
@@ -23,10 +25,11 @@ final class MockProjectService: ProjectServiceProtocol {
     }
     
     var stubDeleteProjectResult: Result<String, ServiceError> = .failure(.failure)
-    var deleteProjectCalled = false
+    var deleteProjectCalledCount = 0
+    var capturedDeleteProjectIds = [UUID]()
     func deleteProject(id: UUID) -> AnyPublisher<String, ServiceError> {
-        deleteProjectCalled = true
-        capturedProjectId = id
+        deleteProjectCalledCount += 1
+        capturedDeleteProjectIds.append(id)
         return stubDeleteProjectResult.publisher.eraseToAnyPublisher()
     }
     
