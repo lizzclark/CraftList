@@ -33,6 +33,8 @@
 		859CA05A2619C0C5003D5BF4 /* EditDateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA0592619C0C5003D5BF4 /* EditDateViewModel.swift */; };
 		859CA05F2619C641003D5BF4 /* EditDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA05E2619C641003D5BF4 /* EditDateView.swift */; };
 		859CA0652619D700003D5BF4 /* ProjectServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA0642619D6FF003D5BF4 /* ProjectServiceTests.swift */; };
+		859CA076261AF8F6003D5BF4 /* EditNameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA075261AF8F6003D5BF4 /* EditNameViewModelTests.swift */; };
+		859CA07E261AFE1F003D5BF4 /* MockProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA07D261AFE1F003D5BF4 /* MockProjectService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,8 @@
 		859CA0592619C0C5003D5BF4 /* EditDateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDateViewModel.swift; sourceTree = "<group>"; };
 		859CA05E2619C641003D5BF4 /* EditDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDateView.swift; sourceTree = "<group>"; };
 		859CA0642619D6FF003D5BF4 /* ProjectServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectServiceTests.swift; sourceTree = "<group>"; };
+		859CA075261AF8F6003D5BF4 /* EditNameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameViewModelTests.swift; sourceTree = "<group>"; };
+		859CA07D261AFE1F003D5BF4 /* MockProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProjectService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,8 +164,9 @@
 		859C9FAF261717D8003D5BF4 /* CraftListTests */ = {
 			isa = PBXGroup;
 			children = (
+				859CA082261AFE25003D5BF4 /* Mocks */,
+				859CA072261AF8D9003D5BF4 /* View */,
 				859CA0632619D6DF003D5BF4 /* Service */,
-				859C9FB0261717D8003D5BF4 /* MockDataStore.swift */,
 				859C9FB2261717D8003D5BF4 /* Info.plist */,
 			);
 			path = CraftListTests;
@@ -268,6 +273,39 @@
 				859CA0642619D6FF003D5BF4 /* ProjectServiceTests.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		859CA072261AF8D9003D5BF4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				859CA073261AF8DF003D5BF4 /* Project Details */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		859CA073261AF8DF003D5BF4 /* Project Details */ = {
+			isa = PBXGroup;
+			children = (
+				859CA074261AF8E5003D5BF4 /* Edit Name */,
+			);
+			path = "Project Details";
+			sourceTree = "<group>";
+		};
+		859CA074261AF8E5003D5BF4 /* Edit Name */ = {
+			isa = PBXGroup;
+			children = (
+				859CA075261AF8F6003D5BF4 /* EditNameViewModelTests.swift */,
+			);
+			path = "Edit Name";
+			sourceTree = "<group>";
+		};
+		859CA082261AFE25003D5BF4 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				859CA07D261AFE1F003D5BF4 /* MockProjectService.swift */,
+				859C9FB0261717D8003D5BF4 /* MockDataStore.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -428,6 +466,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				859C9FB1261717D8003D5BF4 /* MockDataStore.swift in Sources */,
+				859CA07E261AFE1F003D5BF4 /* MockProjectService.swift in Sources */,
+				859CA076261AF8F6003D5BF4 /* EditNameViewModelTests.swift in Sources */,
 				859CA0652619D700003D5BF4 /* ProjectServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,7 +12,17 @@ enum ServiceError: Error {
     case failure
 }
 
-struct ProjectService {
+protocol ProjectServiceProtocol {
+    func projects() -> AnyPublisher<[ProjectModel], ServiceError>
+    func addProject(name: String, dateStarted: Date, dateFinished: Date?) -> AnyPublisher<UUID, ServiceError>
+    func deleteProject(id: UUID) -> AnyPublisher<String, ServiceError>
+    func getProject(id: UUID) -> AnyPublisher<ProjectModel, ServiceError>
+    func updateProjectName(id: UUID, name: String) -> AnyPublisher<String, ServiceError>
+    func updateProjectDateStarted(id: UUID, date: Date) -> AnyPublisher<Date, ServiceError>
+    func updateProjectDateFinished(id: UUID, date: Date) -> AnyPublisher<Date, ServiceError>
+}
+
+struct ProjectService: ProjectServiceProtocol {
     private let dataStore: DataStoreProtocol
     
     init(dataStore: DataStoreProtocol = DataStore.shared) {
