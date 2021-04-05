@@ -27,10 +27,13 @@ class AddProjectViewModel: ObservableObject {
     let saveLabel = "Save"
     
     private let service: ProjectServiceProtocol
+    let onDismiss: () -> Void
     private var cancellables = Set<AnyCancellable>()
     
-    init(service: ProjectServiceProtocol = ProjectService()) {
+    init(service: ProjectServiceProtocol = ProjectService(),
+         onDismiss: @escaping () -> Void) {
         self.service = service
+        self.onDismiss = onDismiss
     }
     
     func save(_ completion: @escaping () -> Void) {

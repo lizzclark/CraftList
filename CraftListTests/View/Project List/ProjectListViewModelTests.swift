@@ -37,7 +37,7 @@ class ProjectListViewModelTests: XCTestCase {
     
     func test_FetchProjects_CallsService() {
         viewModel.fetchProjects()
-        XCTAssertTrue(mockedService.getProjectsCalled)
+        XCTAssertEqual(mockedService.getProjectsCalledCount, 1)
     }
     
     func test_OnSuccessfulFetch_ItCanTransformAndPublishProjects() {
@@ -73,4 +73,14 @@ class ProjectListViewModelTests: XCTestCase {
         XCTAssertEqual(mockedService.capturedDeleteProjectIds.first, Data.projects.first?.id)
         XCTAssertEqual(mockedService.capturedDeleteProjectIds.last, Data.projects.last?.id)
     }
+    
+    func test_WhenItemIsDeleted_RefreshesProjects() {
+        viewModel.fetchProjects()
+        mockedService.stubDeleteProjectResult = .success("Deleted")
+        viewModel.deleteItems(offsets: .init(integer: 1))
+        
+        XCTAssertEqual(mockedService.deleteProjectCalledCount, 1)
+        XCTAssertEqual(mockedService.getProjectsCalledCount, 2)
+    }
+
 }

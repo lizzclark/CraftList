@@ -13,9 +13,9 @@ final class MockProjectService: ProjectServiceProtocol {
     var capturedProjectId: UUID?
 
     var stubGetProjectsResult: Result<[ProjectModel], ServiceError> = .failure(.failure)
-    var getProjectsCalled = false
+    var getProjectsCalledCount = 0
     func getProjects() -> AnyPublisher<[ProjectModel], ServiceError> {
-        getProjectsCalled = true
+        getProjectsCalledCount += 1
         return stubGetProjectsResult.publisher.eraseToAnyPublisher()
     }
     

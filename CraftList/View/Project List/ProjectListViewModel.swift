@@ -71,8 +71,8 @@ class ProjectListViewModel: ObservableObject {
                     // handle error
                     break
                 }
-            }) { _ in
-                // successfully deleted
+            }) { [weak self] _ in
+                self?.fetchProjects()
             }
             .store(in: &cancellables)
     }

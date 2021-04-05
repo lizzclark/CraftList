@@ -22,7 +22,9 @@ struct ProjectListView: View {
                 .onAppear(perform: viewModel.fetchProjects)
         }
         .sheet(isPresented: $isShowingAddProjectView) {
-            AddProjectView()
+            AddProjectView(viewModel: AddProjectViewModel(onDismiss: {
+                viewModel.fetchProjects()
+            }))
         }
     }
     

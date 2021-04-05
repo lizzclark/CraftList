@@ -9,9 +9,13 @@ import SwiftUI
 
 struct AddProjectView: View {
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var viewModel = AddProjectViewModel()
+    @ObservedObject var viewModel: AddProjectViewModel
     
     @State var isShowingImagePicker = false
+    
+    init(viewModel: AddProjectViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         NavigationView {
@@ -39,6 +43,7 @@ struct AddProjectView: View {
                     Button(viewModel.saveLabel) {
                         viewModel.save {
                             self.presentationMode.wrappedValue.dismiss()
+                            self.viewModel.onDismiss()
                         }
                     }
                 }
@@ -69,6 +74,6 @@ struct AddProjectView: View {
 
 struct AddProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        AddProjectView()
+        AddProjectView(viewModel: .init(onDismiss: { }))
     }
 }

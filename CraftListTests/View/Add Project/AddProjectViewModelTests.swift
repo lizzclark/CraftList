@@ -16,7 +16,7 @@ class AddProjectViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockedService = MockProjectService()
-        viewModel = AddProjectViewModel(service: mockedService)
+        viewModel = AddProjectViewModel(service: mockedService, onDismiss: {})
     }
     
     override func tearDown() {
