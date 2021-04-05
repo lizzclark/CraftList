@@ -49,6 +49,14 @@ class AddProjectViewModelTests: XCTestCase {
         XCTAssertEqual(mockedService.capturedAddProjectDateFinished, expectedDate)
     }
     
+    func testSave_WhenImageIsSupplied_SendsImagePNGData() {
+        let expectedImage = UIImage(systemName: "cloud.sun")
+        viewModel.image = expectedImage
+        
+        viewModel.save { }
+        XCTAssertEqual(mockedService.capturedAddImageData, expectedImage?.pngData())
+    }
+    
     func testSave_CallsCompletionOnSuccess() {
         mockedService.stubAddProjectResult = .success(UUID())
         var completionCalled = false

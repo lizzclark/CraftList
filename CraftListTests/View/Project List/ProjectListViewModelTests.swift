@@ -15,8 +15,8 @@ class ProjectListViewModelTests: XCTestCase {
     
     private enum Data {
         static let projects = [
-            ProjectModel(id: UUID(), name: "Name", dateStarted: Date(), dateFinished: Date()),
-            ProjectModel(id: UUID(), name: "Name 2", dateStarted: Date(), dateFinished: nil)
+            ProjectModel(id: UUID(), name: "Name", image: UIImage(systemName: "cloud.sun"), dateStarted: Date(), dateFinished: Date()),
+            ProjectModel(id: UUID(), name: "Name 2", image: nil, dateStarted: Date(), dateFinished: nil)
         ]
     }
     

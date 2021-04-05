@@ -12,19 +12,23 @@ import Combine
 class ProjectServiceTests: XCTestCase {
     private var cancellables = Set<AnyCancellable>()
     
-    private enum Data {
+    private enum TestData {
+        static let imageData = UIImage(systemName: "cloud.sun")?.pngData()
         static let projects = [
             ProjectData(id: UUID(),
                         name: "Name 1",
+                        imageData: imageData,
                         dateStarted: Date(),
                         dateFinished: Date()),
             ProjectData(id: UUID(),
                         name: "Name 2",
+                        imageData: nil,
                         dateStarted: Date(),
                         dateFinished: Date())
         ]
         static let project = ProjectData(id: UUID(),
                                          name: "Name",
+                                         imageData: imageData,
                                          dateStarted: Date(),
                                          dateFinished: nil)
     }
@@ -54,19 +58,22 @@ class ProjectServiceTests: XCTestCase {
     
     func testProjects_PublishesProjectModelsOnSuccess() {
         let expect = expectation(description: #function)
-        mockedDataStore.stubProjectsPublisherResult = .success(Data.projects)
+        mockedDataStore.stubProjectsPublisherResult = .success(TestData.projects)
         
         service.projects()
             .sink(receiveCompletion: { _ in }) { models in
                 XCTAssertEqual(models.count, 2)
-                XCTAssertEqual(models.first?.name, Data.projects[0].name)
-                XCTAssertEqual(models.first?.id, Data.projects[0].id)
-                XCTAssertEqual(models.first?.dateStarted, Data.projects[0].dateStarted)
-                XCTAssertEqual(models.first?.dateFinished, Data.projects[0].dateFinished)
-                XCTAssertEqual(models.last?.name, Data.projects[1].name)
-                XCTAssertEqual(models.last?.id, Data.projects[1].id)
-                XCTAssertEqual(models.last?.dateStarted, Data.projects[1].dateStarted)
-                XCTAssertEqual(models.last?.dateFinished, Data.projects[1].dateFinished)
+                let projects = TestData.projects
+                XCTAssertEqual(models.first?.name, projects[0].name)
+                XCTAssertNotNil(models.first?.image)
+                XCTAssertEqual(models.first?.id, projects[0].id)
+                XCTAssertEqual(models.first?.dateStarted, projects[0].dateStarted)
+                XCTAssertEqual(models.first?.dateFinished, projects[0].dateFinished)
+                XCTAssertEqual(models.last?.name, projects[1].name)
+                XCTAssertNil(models.last?.image)
+                XCTAssertEqual(models.last?.id, projects[1].id)
+                XCTAssertEqual(models.last?.dateStarted, projects[1].dateStarted)
+                XCTAssertEqual(models.last?.dateFinished, projects[1].dateFinished)
                 expect.fulfill()
             }
             .store(in: &cancellables)
@@ -97,11 +104,11 @@ class ProjectServiceTests: XCTestCase {
     
     func testAddProject_CallsDataStoreWithCorrectProjectData() {
         let expectedDate = Date()
-        
-        _ = service.addProject(name: "Test", dateStarted: expectedDate, dateFinished: nil)
+        _ = service.addProject(name: "Test", imageData: TestData.imageData, dateStarted: expectedDate, dateFinished: nil)
         
         XCTAssertTrue(self.mockedDataStore.addProjectCalled)
         XCTAssertEqual(self.mockedDataStore.capturedAddProjectData?.name, "Test")
+        XCTAssertEqual(self.mockedDataStore.capturedAddProjectData?.imageData, TestData.imageData)
         XCTAssertEqual(self.mockedDataStore.capturedAddProjectData?.dateStarted, expectedDate)
         XCTAssertNil(self.mockedDataStore.capturedAddProjectData?.dateFinished)
     }
@@ -111,7 +118,7 @@ class ProjectServiceTests: XCTestCase {
         let expectedId = UUID()
         mockedDataStore.stubAddProjectResult = .success(expectedId)
         
-        service.addProject(name: "Test", dateStarted: Date(), dateFinished: nil)
+        service.addProject(name: "Test", imageData: Data(), dateStarted: Date(), dateFinished: nil)
             .sink(receiveCompletion: { _ in }) { id in
                 XCTAssertEqual(id, expectedId)
                 expect.fulfill()
@@ -125,7 +132,7 @@ class ProjectServiceTests: XCTestCase {
         let expect = expectation(description: #function)
         mockedDataStore.stubAddProjectResult = .failure(.adding)
         
-        service.addProject(name: "Test", dateStarted: Date(), dateFinished: nil)
+        service.addProject(name: "Test", imageData: Data(), dateStarted: Date(), dateFinished: nil)
             .sink(receiveCompletion: { result in
                 switch result {
                 case .finished:
@@ -153,13 +160,14 @@ class ProjectServiceTests: XCTestCase {
 
     func testGetProject_PublishesProjectModelOnSuccess() {
         let expect = expectation(description: #function)
-        mockedDataStore.stubFetchProjectResult = .success(Data.project)
+        mockedDataStore.stubFetchProjectResult = .success(TestData.project)
         
         service.getProject(id: UUID())
             .sink(receiveCompletion: { _ in }) { model in
-                XCTAssertEqual(model.id, Data.project.id)
-                XCTAssertEqual(model.name, Data.project.name)
-                XCTAssertEqual(model.dateStarted, Data.project.dateStarted)
+                XCTAssertEqual(model.id, TestData.project.id)
+                XCTAssertEqual(model.name, TestData.project.name)
+                XCTAssertNotNil(model.image)
+                XCTAssertEqual(model.dateStarted, TestData.project.dateStarted)
                 XCTAssertNil(model.dateFinished)
                 expect.fulfill()
             }
