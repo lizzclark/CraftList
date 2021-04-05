@@ -38,10 +38,13 @@ struct ProjectDetailsView: View {
         
     private func projectDetails(for project: ProjectDetailsViewModel.Data) -> some View {
         VStack(alignment: .center, spacing: 16) {
-                nameView(project.name)
-                dateStartedView(project.dateStartedText)
-                dateFinishedView(project.dateFinishedText)
-                Spacer()
+            nameView(project.name)
+            if let image = project.image {
+                Image(uiImage: image)
+            }
+            dateStartedView(project.dateStartedText)
+            dateFinishedView(project.dateFinishedText)
+            Spacer()
         }
         .alert(isPresented: $isShowingDeleteAlert, content: {
             Alert(title: Text(viewModel.deleteTitle),

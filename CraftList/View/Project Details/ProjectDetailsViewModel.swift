@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 class ProjectDetailsViewModel: ObservableObject {
     let dateStartedLabel = "Date Started"
@@ -21,6 +22,7 @@ class ProjectDetailsViewModel: ObservableObject {
 
     struct Data {
         let name: String
+        let image: UIImage?
         let dateStarted: Date
         let dateFinished: Date?
         let dateStartedText: String
@@ -77,6 +79,7 @@ class ProjectDetailsViewModel: ObservableObject {
             dateFinishedText = DateFormatter.longDateFormatter.string(from: finishDate)
         }
         return Data(name: projectModel.name,
+                    image: projectModel.image,
                     dateStarted: projectModel.dateStarted,
                     dateFinished: projectModel.dateFinished,
                     dateStartedText: DateFormatter.longDateFormatter.string(from: projectModel.dateStarted),

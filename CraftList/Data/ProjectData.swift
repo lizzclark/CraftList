@@ -10,12 +10,14 @@ import Foundation
 struct ProjectData {
     let id: UUID
     let name: String
+    let imageData: Data?
     let dateStarted: Date
     let dateFinished: Date?
 }
 
 struct AddProjectData {
     let name: String
+    let imageData: Data?
     let dateStarted: Date
     let dateFinished: Date?
 }

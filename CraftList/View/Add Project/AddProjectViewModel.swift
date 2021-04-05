@@ -38,7 +38,7 @@ class AddProjectViewModel: ObservableObject {
         if isFinished {
             finishDate = dateFinishedFieldValue
         }
-        service.addProject(name: name, dateStarted: dateStarted, dateFinished: finishDate)
+        service.addProject(name: name, imageData: image?.pngData(), dateStarted: dateStarted, dateFinished: finishDate)
             .sink(receiveCompletion: { result in
                 switch result {
                 case .finished:

@@ -12,7 +12,6 @@ struct AddProjectView: View {
     @ObservedObject var viewModel = AddProjectViewModel()
     
     @State var isShowingImagePicker = false
-    @State var image: UIImage?
     
     var body: some View {
         NavigationView {
@@ -21,7 +20,7 @@ struct AddProjectView: View {
                     TextField(viewModel.projectNameLabel, text: $viewModel.name)
                 }
                 Section {
-                    if let image = self.image {
+                    if let image = viewModel.image {
                         Image(uiImage: image)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -46,7 +45,7 @@ struct AddProjectView: View {
             }
             .navigationBarTitle(viewModel.title)
             .sheet(isPresented: $isShowingImagePicker) { 
-                ImagePicker(selectedImage: self.$image)
+                ImagePicker(selectedImage: $viewModel.image)
             }
         }
     }

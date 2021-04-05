@@ -5,7 +5,7 @@
 //  Created by Lizz Clark on 03/04/2021.
 //
 
-import Foundation
+import UIKit
 import Combine
 
 enum ServiceError: Error {
@@ -14,7 +14,7 @@ enum ServiceError: Error {
 
 protocol ProjectServiceProtocol {
     func projects() -> AnyPublisher<[ProjectModel], ServiceError>
-    func addProject(name: String, dateStarted: Date, dateFinished: Date?) -> AnyPublisher<UUID, ServiceError>
+    func addProject(name: String, imageData: Data?, dateStarted: Date, dateFinished: Date?) -> AnyPublisher<UUID, ServiceError>
     func deleteProject(id: UUID) -> AnyPublisher<String, ServiceError>
     func getProject(id: UUID) -> AnyPublisher<ProjectModel, ServiceError>
     func updateProjectName(id: UUID, name: String) -> AnyPublisher<String, ServiceError>
@@ -34,7 +34,11 @@ struct ProjectService: ProjectServiceProtocol {
             .projectsPublisher()
             .map({ data in
                 return data.map { projectData in
-                    return ProjectModel(id: projectData.id, name: projectData.name, dateStarted: projectData.dateStarted, dateFinished: projectData.dateFinished)
+                    var image: UIImage?
+                    if let imageData = projectData.imageData {
+                        image = UIImage(data: imageData)
+                    }
+                    return ProjectModel(id: projectData.id, name: projectData.name, image: image, dateStarted: projectData.dateStarted, dateFinished: projectData.dateFinished)
                 }
             })
             .mapError({ _ in
@@ -43,9 +47,9 @@ struct ProjectService: ProjectServiceProtocol {
             .eraseToAnyPublisher()
     }
         
-    func addProject(name: String, dateStarted: Date, dateFinished: Date?) -> AnyPublisher<UUID, ServiceError> {
+    func addProject(name: String, imageData: Data?, dateStarted: Date, dateFinished: Date?) -> AnyPublisher<UUID, ServiceError> {
         return Future<UUID, ServiceError> { promise in
-            dataStore.add(projectData: AddProjectData(name: name, dateStarted: dateStarted, dateFinished: dateFinished)) { result in
+            dataStore.add(projectData: AddProjectData(name: name, imageData: imageData, dateStarted: dateStarted, dateFinished: dateFinished)) { result in
                 switch result {
                 case .success(let id):
                     promise(.success(id))
@@ -76,7 +80,11 @@ struct ProjectService: ProjectServiceProtocol {
             dataStore.fetchProject(id: id) { result in
                 switch result {
                 case .success(let projectData):
-                    let model = ProjectModel(id: projectData.id, name: projectData.name, dateStarted: projectData.dateStarted, dateFinished: projectData.dateFinished)
+                    var image: UIImage?
+                    if let imageData = projectData.imageData {
+                        image = UIImage(data: imageData)
+                    }
+                    let model = ProjectModel(id: projectData.id, name: projectData.name, image: image, dateStarted: projectData.dateStarted, dateFinished: projectData.dateFinished)
                     promise(.success(model))
                 case .failure:
                     promise(.failure(ServiceError.failure))

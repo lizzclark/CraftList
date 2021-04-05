@@ -86,6 +86,9 @@ class DataStore: NSObject, DataStoreProtocol {
         let id = UUID()
         newProject.id = id
         newProject.name = projectData.name
+        if let image = projectData.imageData {
+            newProject.image = image
+        }
         newProject.dateStarted = projectData.dateStarted
         if let dateFinished = projectData.dateFinished {
             newProject.dateFinished = dateFinished
