@@ -10,9 +10,10 @@ import Combine
 
 class ProjectListViewModel: ObservableObject {
     
-    struct Project: Hashable {
+    struct Project {
         let id: UUID
         let name: String
+        let image: Image?
         let dateStarted: Date
         let dateFinished: Date?
     }
@@ -47,7 +48,13 @@ class ProjectListViewModel: ObservableObject {
     }
     
     func viewModels(from projects: [ProjectModel]) -> [Project] {
-        return projects.map { Project(id: $0.id, name: $0.name, dateStarted: $0.dateStarted, dateFinished: $0.dateFinished) }
+        return projects.map { project in
+            var projectImage: Image?
+            if let uiImage = project.image {
+                projectImage = Image(uiImage: uiImage)
+            }
+            return Project(id: project.id, name: project.name, image: projectImage, dateStarted: project.dateStarted, dateFinished: project.dateFinished)
+        }
     }
     
     func deleteItems(offsets: IndexSet) {

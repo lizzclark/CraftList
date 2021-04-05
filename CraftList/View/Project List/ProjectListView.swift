@@ -27,7 +27,7 @@ struct ProjectListView: View {
         return List {
             ForEach(viewModel.projects, id: \.id) { project in
                 NavigationLink(destination: ProjectDetailsView(viewModel: ProjectDetailsViewModel(id: project.id))) {
-                    ProjectListItemView(viewModel: ProjectListItemViewModel(name: project.name, dateStarted: project.dateStarted, dateFinished: project.dateFinished))
+                    ProjectListItemView(viewModel: ProjectListItemViewModel(name: project.name, image: project.image, dateStarted: project.dateStarted, dateFinished: project.dateFinished))
                 }
             }
             .onDelete { offsets in

@@ -43,6 +43,7 @@ struct ProjectDetailsView: View {
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
             }
             dateStartedView(project.dateStartedText)
             dateFinishedView(project.dateFinishedText)
