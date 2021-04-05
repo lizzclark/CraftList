@@ -48,19 +48,19 @@ class ProjectServiceTests: XCTestCase {
         super.tearDown()
     }
     
-    // MARK: - Projects
+    // MARK: - Get Projects
     
-    func testProjects_CallsDataStoreProjects() {
-        _ = service.projects()
+    func testGetProjects_CallsDataStoreFetchProjects() {
+        _ = service.getProjects()
         
-        XCTAssertTrue(self.mockedDataStore.projectsPublisherCalled)
+        XCTAssertTrue(self.mockedDataStore.fetchProjectsCalled)
     }
     
-    func testProjects_PublishesProjectModelsOnSuccess() {
+    func testGetProjects_PublishesProjectModelsOnSuccess() {
         let expect = expectation(description: #function)
-        mockedDataStore.stubProjectsPublisherResult = .success(TestData.projects)
+        mockedDataStore.stubFetchProjectsResult = .success(TestData.projects)
         
-        service.projects()
+        service.getProjects()
             .sink(receiveCompletion: { _ in }) { models in
                 XCTAssertEqual(models.count, 2)
                 let projects = TestData.projects
@@ -83,9 +83,9 @@ class ProjectServiceTests: XCTestCase {
     
     func testProjects_PublishesError() {
         let expect = expectation(description: #function)
-        mockedDataStore.stubProjectsPublisherResult = .failure(.fetching)
+        mockedDataStore.stubFetchProjectsResult = .failure(.fetching)
         
-        service.projects()
+        service.getProjects()
             .sink(receiveCompletion: { result in
                 switch result {
                 case .finished:

@@ -10,11 +10,11 @@ import XCTest
 import Combine
 
 final class MockDataStore: DataStoreProtocol {
-    var projectsPublisherCalled = false
-    var stubProjectsPublisherResult: Result<[ProjectData], DataStoreError> = .failure(.adding)
-    func projectsPublisher() -> AnyPublisher<[ProjectData], DataStoreError> {
-        projectsPublisherCalled = true
-        return stubProjectsPublisherResult.publisher.eraseToAnyPublisher()
+    var fetchProjectsCalled = false
+    var stubFetchProjectsResult: Result<[ProjectData], DataStoreError> = .failure(.adding)
+    func fetchProjects(completion: (Result<[ProjectData], DataStoreError>) -> Void) {
+        fetchProjectsCalled = true
+        completion(stubFetchProjectsResult)
     }
     
     var fetchProjectCalled = false

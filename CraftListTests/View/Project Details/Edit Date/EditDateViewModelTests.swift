@@ -17,8 +17,8 @@ class EditDateViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockedService = MockProjectService()
-        dateStartedViewModel = EditDateViewModel(.dateStarted, projectId: UUID(), date: Date(), service: mockedService)
-        dateFinishedViewModel = EditDateViewModel(.dateFinished, projectId: UUID(), date: Date(), service: mockedService)
+        dateStartedViewModel = EditDateViewModel(.dateStarted, projectId: UUID(), date: Date(), service: mockedService, { })
+        dateFinishedViewModel = EditDateViewModel(.dateFinished, projectId: UUID(), date: Date(), service: mockedService, { })
     }
     
     override func tearDown() {

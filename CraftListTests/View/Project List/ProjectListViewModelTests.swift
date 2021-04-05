@@ -23,7 +23,7 @@ class ProjectListViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockedService = MockProjectService()
-        mockedService.stubProjectsResult = .success(Data.projects)
+        mockedService.stubGetProjectsResult = .success(Data.projects)
         viewModel = ProjectListViewModel(service: mockedService)
     }
     
@@ -33,13 +33,15 @@ class ProjectListViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: - Init and Transform
+    // MARK: - Fetch Projects
     
-    func test_Init_SubscribesToProjects() {
-        XCTAssertTrue(mockedService.projectsCalled)
+    func test_FetchProjects_CallsService() {
+        viewModel.fetchProjects()
+        XCTAssertTrue(mockedService.getProjectsCalled)
     }
     
-    func test_ItCanTransformAndPublishProjects() {
+    func test_OnSuccessfulFetch_ItCanTransformAndPublishProjects() {
+        viewModel.fetchProjects()
         XCTAssertEqual(viewModel.projects.count, 2)
         let firstProject = viewModel.projects.first
         XCTAssertEqual(firstProject?.id, Data.projects.first?.id)
@@ -56,6 +58,7 @@ class ProjectListViewModelTests: XCTestCase {
     // MARK: - Delete Items
     
     func test_DeleteItems_SingleItem_CallsDeleteWithID() {
+        viewModel.fetchProjects()
         viewModel.deleteItems(offsets: .init(integer: 1))
         
         XCTAssertEqual(mockedService.deleteProjectCalledCount, 1)
@@ -63,6 +66,7 @@ class ProjectListViewModelTests: XCTestCase {
     }
     
     func test_DeleteItems_MultipleItems_CallsDeleteWithIDs() {
+        viewModel.fetchProjects()
         viewModel.deleteItems(offsets: IndexSet([0, 1]))
         
         XCTAssertEqual(mockedService.deleteProjectCalledCount, 2)

@@ -9,14 +9,14 @@ import Foundation
 @testable import CraftList
 import Combine
 
-final class MockProjectService: ProjectServiceProtocol {
+final class MockProjectService: ProjectServiceProtocol {    
     var capturedProjectId: UUID?
 
-    var stubProjectsResult: Result<[ProjectModel], ServiceError> = .failure(.failure)
-    var projectsCalled = false
-    func projects() -> AnyPublisher<[ProjectModel], ServiceError> {
-        projectsCalled = true
-        return stubProjectsResult.publisher.eraseToAnyPublisher()
+    var stubGetProjectsResult: Result<[ProjectModel], ServiceError> = .failure(.failure)
+    var getProjectsCalled = false
+    func getProjects() -> AnyPublisher<[ProjectModel], ServiceError> {
+        getProjectsCalled = true
+        return stubGetProjectsResult.publisher.eraseToAnyPublisher()
     }
     
     var stubAddProjectResult: Result<UUID, ServiceError> = .failure(.failure)

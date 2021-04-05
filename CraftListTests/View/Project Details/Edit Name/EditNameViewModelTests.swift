@@ -17,7 +17,7 @@ class EditNameViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockedService = MockProjectService()
-        viewModel = EditNameViewModel(projectId: UUID(), name: "Project name", service: mockedService)
+        viewModel = EditNameViewModel(projectId: UUID(), name: "Project name", service: mockedService, { })
     }
     
     override func tearDown() {
