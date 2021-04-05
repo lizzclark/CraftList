@@ -41,6 +41,8 @@ struct ProjectDetailsView: View {
             nameView(project.name)
             if let image = project.image {
                 Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
             }
             dateStartedView(project.dateStartedText)
             dateFinishedView(project.dateFinishedText)
