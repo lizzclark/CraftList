@@ -6,6 +6,70 @@
 //
 
 import SwiftUI
+import Combine
+#warning("import is for the editImageViewModel")
+
+class EditImageViewModel: ObservableObject {
+    @Published var image: UIImage?
+    
+    private let projectId: UUID
+    private let service: ProjectServiceProtocol
+    let onDismiss: () -> Void
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(projectId: UUID,
+         service: ProjectServiceProtocol = ProjectService(),
+         onDismiss: @escaping () -> Void) {
+        self.projectId = projectId
+        self.service = service
+        self.onDismiss = onDismiss
+    }
+    
+    func saveImage(completion: () -> Void) {
+        guard let imageData = image?.pngData() else { return }
+        service.updateProjectImage(id: projectId, data: imageData)
+            .sink(receiveCompletion: { _ in
+                print("comp")
+            }, receiveValue: { _ in
+                print("Data")
+            })
+            .store(in: &cancellables)
+    }
+}
+
+struct EditImageView: View {
+    @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var viewModel: EditImageViewModel
+    @State var isShowingPicker = false
+    
+    init(viewModel: EditImageViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    var body: some View {
+        Group {
+            if let chosenImage = viewModel.image {
+                VStack {
+                    Image(uiImage: chosenImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                    Button("Save image") {
+                        viewModel.saveImage {
+                            self.presentationMode.wrappedValue.dismiss()
+                        }
+                    }
+                }
+            } else {
+                Button("Select image") {
+                    isShowingPicker = true
+                }
+            }
+        }
+        .sheet(isPresented: $isShowingPicker) {
+            ImagePicker(selectedImage: $viewModel.image)
+        }
+    }
+}
 
 struct ProjectDetailsView: View {
     @State private var isShowingDeleteAlert = false
@@ -16,7 +80,7 @@ struct ProjectDetailsView: View {
         var id: Int {
             hashValue
         }
-        case none, name, dateStarted, dateFinished
+        case none, name, image, dateStarted, dateFinished
     }
     
     @State private var name = ""
@@ -46,6 +110,10 @@ struct ProjectDetailsView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
+            } else {
+                Button("Add an image") {
+                    activeEditSheet = .image
+                }
             }
             dateStartedView(project.dateStartedText)
             dateFinishedView(project.dateFinishedText)
@@ -61,6 +129,10 @@ struct ProjectDetailsView: View {
             switch item {
             case .name:
                 EditNameView(viewModel: .init(projectId: viewModel.id, name: project.name) {
+                    viewModel.fetchProject()
+                })
+            case .image:
+                EditImageView(viewModel: .init(projectId: viewModel.id) {
                     viewModel.fetchProject()
                 })
             case .dateStarted:

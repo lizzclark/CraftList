@@ -18,6 +18,7 @@ protocol DataStoreProtocol {
     func add(projectData: AddProjectData, completion: (Result<UUID, DataStoreError>) -> Void)
     func deleteProject(id: UUID, completion: (Result<String, DataStoreError>) -> Void)
     func updateProjectName(id: UUID, name: String, completion: (Result<String, DataStoreError>) -> Void)
+    func updateProjectImage(id: UUID, data: Data, completion: (Result<Data, DataStoreError>) -> Void)
     func updateProjectDateStarted(id: UUID, date: Date, completion: (Result<Date, DataStoreError>) -> Void)
     func updateProjectDateFinished(id: UUID, date: Date, completion: (Result<Date, DataStoreError>) -> Void)
 }
@@ -27,6 +28,7 @@ class DataStore: DataStoreProtocol {
     
     private enum Keys {
         static let name = "name"
+        static let image = "image"
         static let dateStarted = "dateStarted"
         static let dateFinished = "dateFinished"
     }
@@ -113,6 +115,20 @@ class DataStore: DataStoreProtocol {
             try managedObjectContext.save()
             guard let newName = object.name else { throw DataStoreError.updating }
             completion(.success(newName))
+        } catch {
+            completion(.failure(DataStoreError.updating))
+        }
+    }
+    
+    func updateProjectImage(id: UUID, data: Data, completion: (Result<Data, DataStoreError>) -> Void) {
+        let fetchController = makeFetchController(for: id)
+        do {
+            try fetchController.performFetch()
+            guard let object = fetchController.fetchedObjects?.first else { throw DataStoreError.fetching }
+            object.setValue(data, forKey: Keys.image)
+            try managedObjectContext.save()
+            guard let newImage = object.image else { throw DataStoreError.updating }
+            completion(.success(newImage))
         } catch {
             completion(.failure(DataStoreError.updating))
         }
