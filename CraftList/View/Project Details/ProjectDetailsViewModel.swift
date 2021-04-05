@@ -30,10 +30,10 @@ class ProjectDetailsViewModel: ObservableObject {
     @Published var project: Data?
     
     let id: UUID
-    private let service: ProjectService
+    private let service: ProjectServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     
-    init(id: UUID, service: ProjectService = ProjectService()) {
+    init(id: UUID, service: ProjectServiceProtocol = ProjectService()) {
         self.service = service
         self.id = id
         fetchData()

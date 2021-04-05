@@ -36,6 +36,7 @@
 		859CA076261AF8F6003D5BF4 /* EditNameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA075261AF8F6003D5BF4 /* EditNameViewModelTests.swift */; };
 		859CA07E261AFE1F003D5BF4 /* MockProjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA07D261AFE1F003D5BF4 /* MockProjectService.swift */; };
 		859CA088261AFEC4003D5BF4 /* EditDateViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA087261AFEC4003D5BF4 /* EditDateViewModelTests.swift */; };
+		859CA090261B023E003D5BF4 /* ProjectDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CA08F261B023E003D5BF4 /* ProjectDetailsViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		859CA075261AF8F6003D5BF4 /* EditNameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNameViewModelTests.swift; sourceTree = "<group>"; };
 		859CA07D261AFE1F003D5BF4 /* MockProjectService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProjectService.swift; sourceTree = "<group>"; };
 		859CA087261AFEC4003D5BF4 /* EditDateViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDateViewModelTests.swift; sourceTree = "<group>"; };
+		859CA08F261B023E003D5BF4 /* ProjectDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailsViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,6 +292,7 @@
 			children = (
 				859CA086261AFEB6003D5BF4 /* Edit Date */,
 				859CA074261AF8E5003D5BF4 /* Edit Name */,
+				859CA08F261B023E003D5BF4 /* ProjectDetailsViewModelTests.swift */,
 			);
 			path = "Project Details";
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				859CA088261AFEC4003D5BF4 /* EditDateViewModelTests.swift in Sources */,
+				859CA090261B023E003D5BF4 /* ProjectDetailsViewModelTests.swift in Sources */,
 				859C9FB1261717D8003D5BF4 /* MockDataStore.swift in Sources */,
 				859CA07E261AFE1F003D5BF4 /* MockProjectService.swift in Sources */,
 				859CA076261AF8F6003D5BF4 /* EditNameViewModelTests.swift in Sources */,

@@ -10,6 +10,8 @@ import Foundation
 import Combine
 
 final class MockProjectService: ProjectServiceProtocol {
+    var capturedProjectId: UUID?
+
     var stubProjectsResult: Result<[ProjectModel], ServiceError> = .failure(.failure)
     func projects() -> AnyPublisher<[ProjectModel], ServiceError> {
         return stubProjectsResult.publisher.eraseToAnyPublisher()
@@ -21,18 +23,23 @@ final class MockProjectService: ProjectServiceProtocol {
     }
     
     var stubDeleteProjectResult: Result<String, ServiceError> = .failure(.failure)
+    var deleteProjectCalled = false
     func deleteProject(id: UUID) -> AnyPublisher<String, ServiceError> {
+        deleteProjectCalled = true
+        capturedProjectId = id
         return stubDeleteProjectResult.publisher.eraseToAnyPublisher()
     }
     
     var stubGetProjectResult: Result<ProjectModel, ServiceError> = .failure(.failure)
+    var getProjectCalled = false
     func getProject(id: UUID) -> AnyPublisher<ProjectModel, ServiceError> {
+        getProjectCalled = true
+        capturedProjectId = id
         return stubGetProjectResult.publisher.eraseToAnyPublisher()
     }
     
     var stubUpdateProjectNameResult: Result<String, ServiceError> = .failure(.failure)
     var updateProjectNameCalled = false
-    var capturedProjectId: UUID?
     var capturedProjectName: String?
     func updateProjectName(id: UUID, name: String) -> AnyPublisher<String, ServiceError> {
         updateProjectNameCalled = true
