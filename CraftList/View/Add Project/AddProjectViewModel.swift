@@ -23,10 +23,10 @@ class AddProjectViewModel: ObservableObject {
     let dateFinishedLabel = "Date Finished"
     let saveLabel = "Save"
     
-    private let service: ProjectService
+    private let service: ProjectServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     
-    init(service: ProjectService = ProjectService()) {
+    init(service: ProjectServiceProtocol = ProjectService()) {
         self.service = service
     }
     

@@ -20,7 +20,15 @@ final class MockProjectService: ProjectServiceProtocol {
     }
     
     var stubAddProjectResult: Result<UUID, ServiceError> = .failure(.failure)
+    var addProjectCalled = false
+    var capturedAddProjectName: String?
+    var capturedAddProjectDateStarted: Date?
+    var capturedAddProjectDateFinished: Date?
     func addProject(name: String, dateStarted: Date, dateFinished: Date?) -> AnyPublisher<UUID, ServiceError> {
+        addProjectCalled = true
+        capturedAddProjectName = name
+        capturedAddProjectDateStarted = dateStarted
+        capturedAddProjectDateFinished = dateFinished
         return stubAddProjectResult.publisher.eraseToAnyPublisher()
     }
     
