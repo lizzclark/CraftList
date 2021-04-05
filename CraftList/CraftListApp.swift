@@ -9,12 +9,9 @@ import SwiftUI
 
 @main
 struct CraftListApp: App {
-    let persistenceController = PersistenceController.shared
-
     var body: some Scene {
         WindowGroup {
             ProjectListView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
