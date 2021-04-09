@@ -77,7 +77,13 @@ class DataStore: DataStoreProtocol {
         newProject.id = id
         newProject.name = projectData.name
         if let image = projectData.imageData {
-            newProject.image = image
+            let imageId = UUID()
+            newProject.imageId = imageId
+            do {
+                try ImageStorage(name: "idk", fileManager: .default).setImageData(image, forKey: imageId.uuidString)
+            } catch {
+                completion(.failure(DataStoreError.adding))
+            }
         }
         newProject.dateStarted = projectData.dateStarted
         if let dateFinished = projectData.dateFinished {
@@ -157,3 +163,68 @@ class DataStore: DataStoreProtocol {
                                           cacheName: nil)
     }
 }
+
+import FileProvider
+import UIKit
+
+typealias FileManager = FileProvider.FileManager
+
+enum ImageError: Error {
+    case invalid
+}
+
+final class ImageStorage {
+    
+    private let fileManager: FileManager
+    private let path: String
+
+    init(name: String, fileManager: FileManager) throws {
+        self.fileManager = fileManager
+
+        let url = try fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let path = url.appendingPathComponent(name, isDirectory: true).path
+        self.path = path
+        
+        try createDirectory()
+        try setDirectoryAttributes([.protectionKey: FileProtectionType.complete])
+    }
+    
+    func setImageData(_ data: Data, forKey key: String) throws {
+        let filePath = makeFilePath(for: key)
+        _ = fileManager.createFile(atPath: filePath, contents: data, attributes: nil)
+    }
+    
+    func image(forKey key: String) throws -> UIImage {
+        let filePath = makeFilePath(for: key)
+        let data = try Data(contentsOf: URL(fileURLWithPath: filePath))
+        guard let image = UIImage(data: data) else {
+            throw ImageError.invalid
+        }
+        return image
+    }
+}
+
+private extension ImageStorage {
+
+    func setDirectoryAttributes(_ attributes: [FileAttributeKey: Any]) throws {
+        try fileManager.setAttributes(attributes, ofItemAtPath: path)
+    }
+    
+    func makeFileName(for key: String) -> String {
+        let fileExtension = URL(fileURLWithPath: key).pathExtension
+        return fileExtension.isEmpty ? key : "\(key).\(fileExtension)"
+    }
+
+    func makeFilePath(for key: String) -> String {
+        return "\(path)/\(makeFileName(for: key))"
+    }
+    
+    func createDirectory() throws {
+        guard !fileManager.fileExists(atPath: path) else {
+            return
+        }
+        
+        try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+    }
+}
+

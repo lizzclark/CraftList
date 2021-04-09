@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct DataTransformer {
     func projectData(from projects: [Project]?) -> [ProjectData] {
@@ -17,6 +18,16 @@ struct DataTransformer {
               let id = project.id,
               let name = project.name,
               let dateStarted = project.dateStarted else { return nil }
-        return ProjectData(id: id, name: name, imageData: project.image, dateStarted: dateStarted, dateFinished: project.dateFinished)
+        let image: UIImage
+        if let imageId = project.imageId {
+            do {
+                image = try ImageStorage(name: "idk", fileManager: .default).image(forKey: imageId.uuidString)
+            } catch {
+                image = UIImage(systemName: "cloud.sun")!
+            }
+        } else {
+            image = UIImage(systemName: "trash.fill")!
+        }
+        return ProjectData(id: id, name: name, imageData: image.pngData(), dateStarted: dateStarted, dateFinished: project.dateFinished)
     }
 }

@@ -4,7 +4,7 @@
         <attribute name="dateFinished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateStarted" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="imageId" optional="YES" attributeType="UUID" allowsExternalBinaryDataStorage="YES" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <elements>
