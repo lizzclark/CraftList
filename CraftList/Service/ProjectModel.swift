@@ -12,4 +12,5 @@ struct ProjectModel {
     let name: String
     let dateStarted: Date
     let dateFinished: Date?
+    let hasImage: Bool
 }

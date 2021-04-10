@@ -12,6 +12,7 @@ struct ProjectData {
     let name: String
     let dateStarted: Date
     let dateFinished: Date?
+    let hasImage: Bool
 }
 
 struct AddProjectData {

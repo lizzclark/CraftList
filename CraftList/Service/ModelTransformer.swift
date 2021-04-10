@@ -12,6 +12,7 @@ struct ModelTransformer {
         return ProjectModel(id: projectData.id,
                             name: projectData.name,
                             dateStarted: projectData.dateStarted,
-                            dateFinished: projectData.dateFinished)
+                            dateFinished: projectData.dateFinished,
+                            hasImage: projectData.hasImage)
     }
 }

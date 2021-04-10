@@ -27,7 +27,7 @@ class ProjectDetailsViewModel: ObservableObject {
         let dateFinished: Date?
         let dateStartedText: String
         let dateFinishedText: String?
-        let imagePublisher: AnyPublisher<UIImage, Never>
+        let imagePublisher: AnyPublisher<UIImage, Never>?
     }
     
     @Published var project: Data?
@@ -80,10 +80,13 @@ class ProjectDetailsViewModel: ObservableObject {
             dateFinishedText = DateFormatter.longDateFormatter.string(from: finishDate)
         }
         
-        let imagePublisher = service
-            .getImage(projectId: projectModel.id)
-            .ignoreError()
-            .eraseToAnyPublisher()
+        var imagePublisher: AnyPublisher<UIImage, Never>?
+        if projectModel.hasImage {
+            imagePublisher = service
+                .getImage(projectId: projectModel.id)
+                .ignoreError()
+                .eraseToAnyPublisher()
+        }
         
         return Data(name: projectModel.name,
                     dateStarted: projectModel.dateStarted,

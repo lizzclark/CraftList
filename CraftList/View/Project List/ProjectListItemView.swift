@@ -19,10 +19,12 @@ struct ProjectListItemView: View {
         VStack(alignment: .leading) {
             Text(viewModel.name)
                 .font(.headline)
-            Color.clear
-                .aspectRatio(1.5, contentMode: .fill)
-                .overlay(imageView)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+            if let imagePublisher = viewModel.imagePublisher {
+                Color.clear
+                    .aspectRatio(1.5, contentMode: .fill)
+                    .overlay(imageView(with: imagePublisher))
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
             Text(viewModel.dateStartedText)
             if let dateFinishedText = viewModel.dateFinishedText {
                 Text(dateFinishedText)
@@ -30,8 +32,8 @@ struct ProjectListItemView: View {
         }
     }
     
-    private var imageView: some View {
-        LoadingImage(publisher: viewModel.imagePublisher)
+    private func imageView(with imagePublisher: AnyPublisher<UIImage, Never>) -> some View {
+        LoadingImage(publisher: imagePublisher)
     }
 }
 

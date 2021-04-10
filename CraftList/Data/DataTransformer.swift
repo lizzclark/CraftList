@@ -21,6 +21,7 @@ struct DataTransformer {
         return ProjectData(id: id,
                            name: name,
                            dateStarted: dateStarted,
-                           dateFinished: project.dateFinished)
+                           dateFinished: project.dateFinished,
+                           hasImage: project.hasImage)
     }
 }

@@ -53,8 +53,10 @@ struct ProjectDetailsView: View {
     private func projectDetails(for project: ProjectDetailsViewModel.Data) -> some View {
         VStack(alignment: .center, spacing: 16) {
             nameView(project.name)
-            LoadingImage(publisher: project.imagePublisher)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+            if let imagePublisher = project.imagePublisher {
+                LoadingImage(publisher: imagePublisher)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
             dateStartedView(project.dateStartedText)
             dateFinishedView(project.dateFinishedText)
             Spacer()

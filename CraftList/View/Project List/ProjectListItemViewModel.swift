@@ -12,7 +12,7 @@ import Combine
 struct ProjectListItemViewModel {
     let id: UUID
     let name: String
-    let imagePublisher: AnyPublisher<UIImage, Never>
+    let imagePublisher: AnyPublisher<UIImage, Never>?
     let dateStarted: Date
     let dateFinished: Date?
     var dateStartedText: String {
@@ -25,7 +25,7 @@ struct ProjectListItemViewModel {
     
     init(id: UUID,
          name: String,
-         imagePublisher: AnyPublisher<UIImage, Never>,
+         imagePublisher: AnyPublisher<UIImage, Never>?,
          dateStarted: Date,
          dateFinished: Date?) {
         self.id = id

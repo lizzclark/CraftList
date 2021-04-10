@@ -93,6 +93,9 @@ class DataStore: DataStoreProtocol {
                 completion(.failure(DataStoreError.adding))
                 return
             }
+            newProject.hasImage = true
+        } else {
+            newProject.hasImage = false
         }
         newProject.dateStarted = projectData.dateStarted
         if let dateFinished = projectData.dateFinished {

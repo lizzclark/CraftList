@@ -40,10 +40,13 @@ class ProjectListViewModel: ObservableObject {
     
     func viewModels(from projects: [ProjectModel]) -> [ProjectListItemViewModel] {
         return projects.map { project in
-            let imagePublisher = service
-                .getImage(projectId: project.id)
-                .ignoreError()
-                .eraseToAnyPublisher()
+            var imagePublisher: AnyPublisher<UIImage, Never>?
+            if project.hasImage {
+                imagePublisher = service
+                    .getImage(projectId: project.id)
+                    .ignoreError()
+                    .eraseToAnyPublisher()
+            }
             return ProjectListItemViewModel(id: project.id,
                                             name: project.name,
                                             imagePublisher: imagePublisher,
