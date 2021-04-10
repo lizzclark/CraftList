@@ -28,21 +28,25 @@ struct ProjectDetailsView: View {
     }
     
     @ViewBuilder private func body(for project: ProjectDetailsViewModel.Data?) -> some View {
-        if let data = project {
-            projectDetails(for: data)
-                .padding()
-                .navigationBarTitle(data.name, displayMode: .inline)
-                .navigationBarItems(trailing: deleteButton)
-                .navigationBarBackButtonHidden(true)
-                .navigationBarItems(leading: Button(action: { self.presentationMode.wrappedValue.dismiss() }, label: {
-                    Image(systemName: "chevron.left")
-                        .resizable()
-                        .frame(width: 14, height: 24)
-                        .aspectRatio(contentMode: .fit)
-                }))
-        } else {
-            Text(viewModel.emptyStateLabel)
-                .padding()
+        ScrollView {
+            Group {
+                if let data = project {
+                    projectDetails(for: data)
+                        .padding()
+                } else {
+                    Text(viewModel.emptyStateLabel)
+                        .padding()
+                }
+            }
+            .navigationBarTitle(project?.name ?? "Project", displayMode: .inline)
+            .navigationBarItems(trailing: deleteButton)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: Button(action: { self.presentationMode.wrappedValue.dismiss() }, label: {
+                Image(systemName: "chevron.left")
+                    .resizable()
+                    .frame(width: 14, height: 24)
+                    .aspectRatio(contentMode: .fit)
+            }))
         }
     }
         
