@@ -93,11 +93,3 @@ class ProjectDetailsViewModel: ObservableObject {
                     imagePublisher: imagePublisher)
     }
 }
-
-public extension Publisher {
-    func ignoreError() -> Publishers.Catch<Self, Empty<Self.Output, Never>> {
-        return self.catch { _ in
-            return Empty()
-        }
-    }
-}
