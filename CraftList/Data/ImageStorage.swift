@@ -11,10 +11,6 @@ import UIKit
 
 typealias FileManager = FileProvider.FileManager
 
-enum ImageError: Error {
-    case invalid
-}
-
 protocol ImageStorageProtocol {
     func setImageData(_ data: Data, forKey key: String) -> Bool
     func image(forKey key: String) -> UIImage?
@@ -26,10 +22,11 @@ final class ImageStorage: ImageStorageProtocol {
         return try! ImageStorage(name: "craftlist")
     }()
     
-    private let fileManager: FileManager
-    private let path: String
+    private let fileManager: FileManagerProtocol
+    private(set) var path: String
 
-    init(name: String, fileManager: FileManager = FileManager()) throws {
+    init(name: String,
+         fileManager: FileManagerProtocol = FileManager()) throws {
         self.fileManager = fileManager
 
         let url = try fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -78,3 +75,12 @@ private extension ImageStorage {
     }
 }
 
+protocol FileManagerProtocol {
+    func url(for directory: FileManager.SearchPathDirectory, in domain: FileManager.SearchPathDomainMask, appropriateFor url: URL?, create shouldCreate: Bool) throws -> URL
+    func createFile(atPath path: String, contents data: Data?, attributes attr: [FileAttributeKey : Any]?) -> Bool
+    func setAttributes(_ attributes: [FileAttributeKey : Any], ofItemAtPath path: String) throws
+    func fileExists(atPath path: String) -> Bool
+    func createDirectory(atPath path: String, withIntermediateDirectories createIntermediates: Bool, attributes: [FileAttributeKey : Any]?) throws
+}
+
+extension FileManager: FileManagerProtocol { }
