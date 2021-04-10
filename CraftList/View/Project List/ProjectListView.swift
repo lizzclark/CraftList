@@ -20,6 +20,8 @@ struct ProjectListView: View {
         NavigationView {
             view(for: viewModel.projects)
                 .onAppear(perform: viewModel.fetchProjects)
+                .navigationBarTitle(viewModel.navBarTitle, displayMode: .inline)
+                .navigationBarItems(trailing: barButtonItem)
         }
         .sheet(isPresented: $isShowingAddProjectView) {
             AddProjectView(viewModel: AddProjectViewModel(onDismiss: {
@@ -31,8 +33,6 @@ struct ProjectListView: View {
     @ViewBuilder private func view(for projects: [ProjectListViewModel.Project]) -> some View {
         if projects.count > 0 {
             renderProjectList()
-                .navigationBarTitle(viewModel.navBarTitle, displayMode: .inline)
-                .navigationBarItems(trailing: barButtonItem)
         } else {
             Text(viewModel.loadingText)
         }
