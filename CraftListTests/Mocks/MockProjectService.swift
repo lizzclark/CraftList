@@ -7,9 +7,10 @@
 
 import Foundation
 @testable import CraftList
+import UIKit
 import Combine
 
-final class MockProjectService: ProjectServiceProtocol {    
+final class MockProjectService: ProjectServiceProtocol {
     var capturedProjectId: UUID?
 
     var stubGetProjectsResult: Result<[ProjectModel], ServiceError> = .failure(.failure)
@@ -49,6 +50,12 @@ final class MockProjectService: ProjectServiceProtocol {
         getProjectCalled = true
         capturedProjectId = id
         return stubGetProjectResult.publisher.eraseToAnyPublisher()
+    }
+    
+    var stubGetImageResult: Result<UIImage, ServiceError> = .failure(.failure)
+    func getImage(projectId: UUID) -> AnyPublisher<UIImage, ServiceError> {
+        capturedProjectId = projectId
+        return stubGetImageResult.publisher.eraseToAnyPublisher()
     }
     
     var stubUpdateProjectNameResult: Result<String, ServiceError> = .failure(.failure)

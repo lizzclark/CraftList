@@ -16,7 +16,6 @@ class ProjectDetailsViewModelTests: XCTestCase {
     private enum Data {
         static let project = ProjectModel(id: UUID(),
                                           name: "Name",
-                                          image: UIImage(systemName: "cloud.sun"),
                                           dateStarted: Date(timeIntervalSinceReferenceDate: 2),
                                           dateFinished: Date(timeIntervalSinceReferenceDate: 2))
     }
@@ -48,7 +47,6 @@ class ProjectDetailsViewModelTests: XCTestCase {
         let project = viewModel.project
         XCTAssertNotNil(project)
         XCTAssertEqual(project?.name, Data.project.name)
-        XCTAssertNotNil(project?.image)
         XCTAssertEqual(project?.dateStarted, Data.project.dateStarted)
         XCTAssertEqual(project?.dateFinished, Data.project.dateFinished)
         XCTAssertEqual(project?.dateStartedText, "1 January 2001")

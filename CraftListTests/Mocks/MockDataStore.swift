@@ -26,6 +26,15 @@ final class MockDataStore: DataStoreProtocol {
         completion(stubFetchProjectResult)
     }
     
+    var fetchImageCalled = false
+    var capturedFetchImageId: UUID?
+    var stubFetchImageResult: Result<UIImage, DataStoreError> = .failure(.fetching)
+    func fetchImage(id: UUID, completion: @escaping (Result<UIImage, DataStoreError>) -> Void) {
+        fetchImageCalled = true
+        capturedFetchImageId = id
+        completion(stubFetchImageResult)
+    }
+    
     var addProjectCalled = false
     var capturedAddProjectData: AddProjectData?
     var stubAddProjectResult: Result<UUID, DataStoreError> = .failure(.adding)
