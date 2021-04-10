@@ -4,10 +4,9 @@
         <attribute name="dateFinished" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateStarted" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="imageId" optional="YES" attributeType="UUID" allowsExternalBinaryDataStorage="YES" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Project" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Project" positionX="-63" positionY="-18" width="128" height="103"/>
     </elements>
 </model>
