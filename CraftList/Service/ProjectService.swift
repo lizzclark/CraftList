@@ -17,6 +17,7 @@ protocol ProjectServiceProtocol {
     func addProject(name: String, imageData: Data?, dateStarted: Date, dateFinished: Date?) -> AnyPublisher<UUID, ServiceError>
     func deleteProject(id: UUID) -> AnyPublisher<String, ServiceError>
     func getProject(id: UUID) -> AnyPublisher<ProjectModel, ServiceError>
+    func getImage(projectId: UUID) -> AnyPublisher<UIImage, ServiceError>
     func updateProjectName(id: UUID, name: String) -> AnyPublisher<String, ServiceError>
     func updateProjectDateStarted(id: UUID, date: Date) -> AnyPublisher<Date, ServiceError>
     func updateProjectDateFinished(id: UUID, date: Date) -> AnyPublisher<Date, ServiceError>
@@ -87,6 +88,21 @@ struct ProjectService: ProjectServiceProtocol {
         }
         .eraseToAnyPublisher()
     }
+    
+    func getImage(projectId: UUID) -> AnyPublisher<UIImage, ServiceError> {
+        return Future<UIImage, ServiceError> { promise in
+            dataStore.fetchImage(id: projectId) { result in
+                switch result {
+                case .success(let image):
+                    promise(.success(image))
+                case .failure:
+                    promise(.failure(ServiceError.failure))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+
     
     func updateProjectName(id: UUID, name: String) -> AnyPublisher<String, ServiceError> {
         return Future<String, ServiceError> { promise in

@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 enum DataStoreError: Error {
     case fetching, deleting, adding, updating
@@ -15,6 +16,7 @@ enum DataStoreError: Error {
 protocol DataStoreProtocol {
     func fetchProjects(completion: (Result<[ProjectData], DataStoreError>) -> Void)
     func fetchProject(id: UUID, completion: (Result<ProjectData, DataStoreError>) -> Void)
+    func fetchImage(id: UUID, completion: @escaping (Result<UIImage, DataStoreError>) -> Void)
     func add(projectData: AddProjectData, completion: (Result<UUID, DataStoreError>) -> Void)
     func deleteProject(id: UUID, completion: (Result<String, DataStoreError>) -> Void)
     func updateProjectName(id: UUID, name: String, completion: (Result<String, DataStoreError>) -> Void)
@@ -39,11 +41,14 @@ class DataStore: DataStoreProtocol {
     
     private let managedObjectContext: NSManagedObjectContext
     private let transformer: DataTransformer
+    private let imageStore: ImageStorage
     
     init(managedObjectContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext,
-         transformer: DataTransformer = DataTransformer()) {
+         transformer: DataTransformer = DataTransformer(),
+         imageStore: ImageStorage = .default) {
         self.managedObjectContext = managedObjectContext
         self.transformer = transformer
+        self.imageStore = imageStore
     }
         
     func fetchProjects(completion: (Result<[ProjectData], DataStoreError>) -> Void) {
@@ -71,16 +76,27 @@ class DataStore: DataStoreProtocol {
         }
     }
     
+    func fetchImage(id: UUID, completion: @escaping (Result<UIImage, DataStoreError>) -> Void) {
+            do {
+                let image: UIImage = try self.imageStore.image(forKey: id.uuidString)
+                DispatchQueue.main.async {
+                    completion(.success(image))
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completion(.failure(DataStoreError.fetching))
+                }
+            }
+    }
+    
     func add(projectData: AddProjectData, completion: (Result<UUID, DataStoreError>) -> Void) {
         let newProject = Project(context: managedObjectContext)
         let id = UUID()
         newProject.id = id
         newProject.name = projectData.name
         if let image = projectData.imageData {
-            let imageId = UUID()
-            newProject.imageId = imageId
             do {
-                try ImageStorage(name: "idk", fileManager: .default).setImageData(image, forKey: imageId.uuidString)
+                try imageStore.setImageData(image, forKey: id.uuidString)
             } catch {
                 completion(.failure(DataStoreError.adding))
             }
@@ -163,68 +179,3 @@ class DataStore: DataStoreProtocol {
                                           cacheName: nil)
     }
 }
-
-import FileProvider
-import UIKit
-
-typealias FileManager = FileProvider.FileManager
-
-enum ImageError: Error {
-    case invalid
-}
-
-final class ImageStorage {
-    
-    private let fileManager: FileManager
-    private let path: String
-
-    init(name: String, fileManager: FileManager) throws {
-        self.fileManager = fileManager
-
-        let url = try fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        let path = url.appendingPathComponent(name, isDirectory: true).path
-        self.path = path
-        
-        try createDirectory()
-        try setDirectoryAttributes([.protectionKey: FileProtectionType.complete])
-    }
-    
-    func setImageData(_ data: Data, forKey key: String) throws {
-        let filePath = makeFilePath(for: key)
-        _ = fileManager.createFile(atPath: filePath, contents: data, attributes: nil)
-    }
-    
-    func image(forKey key: String) throws -> UIImage {
-        let filePath = makeFilePath(for: key)
-        let data = try Data(contentsOf: URL(fileURLWithPath: filePath))
-        guard let image = UIImage(data: data) else {
-            throw ImageError.invalid
-        }
-        return image
-    }
-}
-
-private extension ImageStorage {
-
-    func setDirectoryAttributes(_ attributes: [FileAttributeKey: Any]) throws {
-        try fileManager.setAttributes(attributes, ofItemAtPath: path)
-    }
-    
-    func makeFileName(for key: String) -> String {
-        let fileExtension = URL(fileURLWithPath: key).pathExtension
-        return fileExtension.isEmpty ? key : "\(key).\(fileExtension)"
-    }
-
-    func makeFilePath(for key: String) -> String {
-        return "\(path)/\(makeFileName(for: key))"
-    }
-    
-    func createDirectory() throws {
-        guard !fileManager.fileExists(atPath: path) else {
-            return
-        }
-        
-        try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
-    }
-}
-

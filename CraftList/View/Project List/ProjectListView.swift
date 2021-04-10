@@ -30,7 +30,7 @@ struct ProjectListView: View {
         }
     }
     
-    @ViewBuilder private func view(for projects: [ProjectListViewModel.Project]) -> some View {
+    @ViewBuilder private func view(for projects: [ProjectListItemViewModel]) -> some View {
         if projects.count > 0 {
             renderProjectList()
         } else {
@@ -41,8 +41,10 @@ struct ProjectListView: View {
     @ViewBuilder private func renderProjectList() -> some View {
         List {
             ForEach(viewModel.projects, id: \.id) { project in
-                NavigationLink(destination: ProjectDetailsView(viewModel: ProjectDetailsViewModel(id: project.id))) {
-                    ProjectListItemView(viewModel: ProjectListItemViewModel(name: project.name, image: project.image, dateStarted: project.dateStarted, dateFinished: project.dateFinished))
+                NavigationLink(
+                    destination: destination(for: project)
+                    ) {
+                    ProjectListItemView(viewModel: project)
                 }
             }
             .onDelete { offsets in
@@ -51,6 +53,10 @@ struct ProjectListView: View {
                 }
             }
         }
+    }
+    
+    private func destination(for project: ProjectListItemViewModel) -> some View {
+        ProjectDetailsView(viewModel: ProjectDetailsViewModel(id: project.id))
     }
     
     @ViewBuilder private var barButtonItem: some View {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		856F41F526218E4F00FB6A91 /* ImageStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856F41F426218E4E00FB6A91 /* ImageStorage.swift */; };
+		856F41FA2621913F00FB6A91 /* LoadingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856F41F92621913F00FB6A91 /* LoadingImage.swift */; };
 		859C9F9A261717D6003D5BF4 /* CraftListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9F99261717D6003D5BF4 /* CraftListApp.swift */; };
 		859C9F9C261717D6003D5BF4 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9F9B261717D6003D5BF4 /* ProjectListView.swift */; };
 		859C9F9E261717D8003D5BF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 859C9F9D261717D8003D5BF4 /* Assets.xcassets */; };
@@ -61,6 +63,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		856F41F426218E4E00FB6A91 /* ImageStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStorage.swift; sourceTree = "<group>"; };
+		856F41F92621913F00FB6A91 /* LoadingImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingImage.swift; sourceTree = "<group>"; };
 		859C9F96261717D6003D5BF4 /* CraftList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CraftList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		859C9F99261717D6003D5BF4 /* CraftListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CraftListApp.swift; sourceTree = "<group>"; };
 		859C9F9B261717D6003D5BF4 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
@@ -231,6 +235,7 @@
 				859C9FD4261724D4003D5BF4 /* Add Project */,
 				859C9FFF26173A48003D5BF4 /* Project Details */,
 				859C9FE6261729A0003D5BF4 /* Project List */,
+				856F41F92621913F00FB6A91 /* LoadingImage.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -241,6 +246,7 @@
 				859CA01126185941003D5BF4 /* DataStore.swift */,
 				859CA0192618603A003D5BF4 /* ProjectData.swift */,
 				859CA02A2618783B003D5BF4 /* DataTransformer.swift */,
+				856F41F426218E4E00FB6A91 /* ImageStorage.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -492,11 +498,13 @@
 				859C9FA3261717D8003D5BF4 /* Persistence.swift in Sources */,
 				85F5A6F5261B2EEE00FE8329 /* ModelTransformer.swift in Sources */,
 				859CA0542619BC28003D5BF4 /* EditNameViewModel.swift in Sources */,
+				856F41F526218E4F00FB6A91 /* ImageStorage.swift in Sources */,
 				859C9F9C261717D6003D5BF4 /* ProjectListView.swift in Sources */,
 				859CA05F2619C641003D5BF4 /* EditDateView.swift in Sources */,
 				859C9FA6261717D8003D5BF4 /* CraftList.xcdatamodeld in Sources */,
 				859CA00626173A76003D5BF4 /* ProjectDetailsView.swift in Sources */,
 				859CA05A2619C0C5003D5BF4 /* EditDateViewModel.swift in Sources */,
+				856F41FA2621913F00FB6A91 /* LoadingImage.swift in Sources */,
 				859C9F9A261717D6003D5BF4 /* CraftListApp.swift in Sources */,
 				859CA02B2618783B003D5BF4 /* DataTransformer.swift in Sources */,
 				859CA00126173A56003D5BF4 /* ProjectDetailsViewModel.swift in Sources */,

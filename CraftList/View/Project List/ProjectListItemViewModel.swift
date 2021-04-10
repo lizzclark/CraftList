@@ -7,10 +7,12 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 struct ProjectListItemViewModel {
+    let id: UUID
     let name: String
-    let image: Image?
+    let imagePublisher: AnyPublisher<UIImage, Never>
     let dateStarted: Date
     let dateFinished: Date?
     var dateStartedText: String {
@@ -21,10 +23,15 @@ struct ProjectListItemViewModel {
         return "Finished \(DateFormatter.longDateFormatter.string(from: date))"
     }
     
-    init(name: String, image: Image?, dateStarted: Date, dateFinished: Date?) {
+    init(id: UUID,
+         name: String,
+         imagePublisher: AnyPublisher<UIImage, Never>,
+         dateStarted: Date,
+         dateFinished: Date?) {
+        self.id = id
         self.name = name
-        self.image = image
         self.dateStarted = dateStarted
         self.dateFinished = dateFinished
+        self.imagePublisher = imagePublisher
     }
 }

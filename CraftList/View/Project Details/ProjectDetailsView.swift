@@ -53,12 +53,8 @@ struct ProjectDetailsView: View {
     private func projectDetails(for project: ProjectDetailsViewModel.Data) -> some View {
         VStack(alignment: .center, spacing: 16) {
             nameView(project.name)
-            if let image = project.image {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-            }
+            LoadingImage(publisher: project.imagePublisher)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
             dateStartedView(project.dateStartedText)
             dateFinishedView(project.dateFinishedText)
             Spacer()

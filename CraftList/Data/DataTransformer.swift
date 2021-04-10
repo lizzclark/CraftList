@@ -18,16 +18,9 @@ struct DataTransformer {
               let id = project.id,
               let name = project.name,
               let dateStarted = project.dateStarted else { return nil }
-        let image: UIImage
-        if let imageId = project.imageId {
-            do {
-                image = try ImageStorage(name: "idk", fileManager: .default).image(forKey: imageId.uuidString)
-            } catch {
-                image = UIImage(systemName: "cloud.sun")!
-            }
-        } else {
-            image = UIImage(systemName: "trash.fill")!
-        }
-        return ProjectData(id: id, name: name, imageData: image.pngData(), dateStarted: dateStarted, dateFinished: project.dateFinished)
+        return ProjectData(id: id,
+                           name: name,
+                           dateStarted: dateStarted,
+                           dateFinished: project.dateFinished)
     }
 }

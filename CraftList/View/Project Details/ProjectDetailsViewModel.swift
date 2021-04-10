@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import UIKit
+import SwiftUI
 
 class ProjectDetailsViewModel: ObservableObject {
     let dateStartedLabel = "Date Started"
@@ -22,11 +23,11 @@ class ProjectDetailsViewModel: ObservableObject {
 
     struct Data {
         let name: String
-        let image: UIImage?
         let dateStarted: Date
         let dateFinished: Date?
         let dateStartedText: String
         let dateFinishedText: String?
+        let imagePublisher: AnyPublisher<UIImage, Never>
     }
     
     @Published var project: Data?
@@ -78,11 +79,25 @@ class ProjectDetailsViewModel: ObservableObject {
         if let finishDate = projectModel.dateFinished {
             dateFinishedText = DateFormatter.longDateFormatter.string(from: finishDate)
         }
+        
+        let imagePublisher = service
+            .getImage(projectId: projectModel.id)
+            .ignoreError()
+            .eraseToAnyPublisher()
+        
         return Data(name: projectModel.name,
-                    image: projectModel.image,
                     dateStarted: projectModel.dateStarted,
                     dateFinished: projectModel.dateFinished,
                     dateStartedText: DateFormatter.longDateFormatter.string(from: projectModel.dateStarted),
-                    dateFinishedText: dateFinishedText)
+                    dateFinishedText: dateFinishedText,
+                    imagePublisher: imagePublisher)
+    }
+}
+
+public extension Publisher {
+    func ignoreError() -> Publishers.Catch<Self, Empty<Self.Output, Never>> {
+        return self.catch { _ in
+            return Empty()
+        }
     }
 }

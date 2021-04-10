@@ -10,7 +10,6 @@ import UIKit
 struct ProjectModel {
     let id: UUID
     let name: String
-    let image: UIImage?
     let dateStarted: Date
     let dateFinished: Date?
 }

@@ -9,19 +9,10 @@ import SwiftUI
 import Combine
 
 class ProjectListViewModel: ObservableObject {
-    
-    struct Project {
-        let id: UUID
-        let name: String
-        let image: Image?
-        let dateStarted: Date
-        let dateFinished: Date?
-    }
-    
     let navBarTitle = "Projects"
     let loadingText = "Fetching your projects..."
     
-    @Published var projects: [Project] = []
+    @Published var projects: [ProjectListItemViewModel] = []
     
     private let service: ProjectServiceProtocol
     private var cancellables = Set<AnyCancellable>()
@@ -47,13 +38,17 @@ class ProjectListViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func viewModels(from projects: [ProjectModel]) -> [Project] {
+    func viewModels(from projects: [ProjectModel]) -> [ProjectListItemViewModel] {
         return projects.map { project in
-            var projectImage: Image?
-            if let uiImage = project.image {
-                projectImage = Image(uiImage: uiImage)
-            }
-            return Project(id: project.id, name: project.name, image: projectImage, dateStarted: project.dateStarted, dateFinished: project.dateFinished)
+            let imagePublisher = service
+                .getImage(projectId: project.id)
+                .ignoreError()
+                .eraseToAnyPublisher()
+            return ProjectListItemViewModel(id: project.id,
+                                            name: project.name,
+                                            imagePublisher: imagePublisher,
+                                            dateStarted: project.dateStarted,
+                                            dateFinished: project.dateFinished)
         }
     }
     
