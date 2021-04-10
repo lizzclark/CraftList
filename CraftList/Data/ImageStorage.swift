@@ -15,7 +15,12 @@ enum ImageError: Error {
     case invalid
 }
 
-final class ImageStorage {
+protocol ImageStorageProtocol {
+    func setImageData(_ data: Data, forKey key: String) -> Bool
+    func image(forKey key: String) -> UIImage?
+}
+
+final class ImageStorage: ImageStorageProtocol {
     
     static let `default`: ImageStorage = {
         return try! ImageStorage(name: "craftlist")
@@ -35,16 +40,15 @@ final class ImageStorage {
         try setDirectoryAttributes([.protectionKey: FileProtectionType.complete])
     }
     
-    func setImageData(_ data: Data, forKey key: String) throws {
+    func setImageData(_ data: Data, forKey key: String) -> Bool {
         let filePath = makeFilePath(for: key)
-        _ = fileManager.createFile(atPath: filePath, contents: data, attributes: nil)
+        return fileManager.createFile(atPath: filePath, contents: data, attributes: nil)
     }
     
-    func image(forKey key: String) throws -> UIImage {
+    func image(forKey key: String) -> UIImage? {
         let filePath = makeFilePath(for: key)
-        let data = try Data(contentsOf: URL(fileURLWithPath: filePath))
-        guard let image = UIImage(data: data) else {
-            throw ImageError.invalid
+        guard let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)), let image = UIImage(data: data) else {
+            return nil
         }
         return image
     }

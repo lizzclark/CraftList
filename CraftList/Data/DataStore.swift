@@ -41,11 +41,11 @@ class DataStore: DataStoreProtocol {
     
     private let managedObjectContext: NSManagedObjectContext
     private let transformer: DataTransformer
-    private let imageStore: ImageStorage
+    private let imageStore: ImageStorageProtocol
     
     init(managedObjectContext: NSManagedObjectContext = PersistenceController.shared.container.viewContext,
          transformer: DataTransformer = DataTransformer(),
-         imageStore: ImageStorage = .default) {
+         imageStore: ImageStorageProtocol = ImageStorage.default) {
         self.managedObjectContext = managedObjectContext
         self.transformer = transformer
         self.imageStore = imageStore
@@ -77,16 +77,10 @@ class DataStore: DataStoreProtocol {
     }
     
     func fetchImage(id: UUID, completion: @escaping (Result<UIImage, DataStoreError>) -> Void) {
-            do {
-                let image: UIImage = try self.imageStore.image(forKey: id.uuidString)
-                DispatchQueue.main.async {
-                    completion(.success(image))
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    completion(.failure(DataStoreError.fetching))
-                }
-            }
+        if let image: UIImage = self.imageStore.image(forKey: id.uuidString) {
+            completion(.success(image))
+        } else {                    completion(.failure(DataStoreError.fetching))
+        }
     }
     
     func add(projectData: AddProjectData, completion: (Result<UUID, DataStoreError>) -> Void) {
@@ -95,10 +89,9 @@ class DataStore: DataStoreProtocol {
         newProject.id = id
         newProject.name = projectData.name
         if let image = projectData.imageData {
-            do {
-                try imageStore.setImageData(image, forKey: id.uuidString)
-            } catch {
+            guard imageStore.setImageData(image, forKey: id.uuidString) else {
                 completion(.failure(DataStoreError.adding))
+                return
             }
         }
         newProject.dateStarted = projectData.dateStarted

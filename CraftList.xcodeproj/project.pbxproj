@@ -10,6 +10,8 @@
 		856F41F526218E4F00FB6A91 /* ImageStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856F41F426218E4E00FB6A91 /* ImageStorage.swift */; };
 		856F41FA2621913F00FB6A91 /* LoadingImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856F41F92621913F00FB6A91 /* LoadingImage.swift */; };
 		856F41FF2621926A00FB6A91 /* Publisher+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856F41FE2621926A00FB6A91 /* Publisher+Extensions.swift */; };
+		856F42052621951500FB6A91 /* DataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856F42042621951500FB6A91 /* DataStoreTests.swift */; };
+		856F420D26219E7400FB6A91 /* MockImageStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856F420C26219E7400FB6A91 /* MockImageStorage.swift */; };
 		859C9F9A261717D6003D5BF4 /* CraftListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9F99261717D6003D5BF4 /* CraftListApp.swift */; };
 		859C9F9C261717D6003D5BF4 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859C9F9B261717D6003D5BF4 /* ProjectListView.swift */; };
 		859C9F9E261717D8003D5BF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 859C9F9D261717D8003D5BF4 /* Assets.xcassets */; };
@@ -67,6 +69,8 @@
 		856F41F426218E4E00FB6A91 /* ImageStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStorage.swift; sourceTree = "<group>"; };
 		856F41F92621913F00FB6A91 /* LoadingImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingImage.swift; sourceTree = "<group>"; };
 		856F41FE2621926A00FB6A91 /* Publisher+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extensions.swift"; sourceTree = "<group>"; };
+		856F42042621951500FB6A91 /* DataStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreTests.swift; sourceTree = "<group>"; };
+		856F420C26219E7400FB6A91 /* MockImageStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImageStorage.swift; sourceTree = "<group>"; };
 		859C9F96261717D6003D5BF4 /* CraftList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CraftList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		859C9F99261717D6003D5BF4 /* CraftListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CraftListApp.swift; sourceTree = "<group>"; };
 		859C9F9B261717D6003D5BF4 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
@@ -134,6 +138,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		856F42032621950200FB6A91 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				856F42042621951500FB6A91 /* DataStoreTests.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		859C9F8D261717D6003D5BF4 = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +194,7 @@
 		859C9FAF261717D8003D5BF4 /* CraftListTests */ = {
 			isa = PBXGroup;
 			children = (
+				856F42032621950200FB6A91 /* Data */,
 				859CA082261AFE25003D5BF4 /* Mocks */,
 				859CA072261AF8D9003D5BF4 /* View */,
 				859CA0632619D6DF003D5BF4 /* Service */,
@@ -331,6 +344,7 @@
 			children = (
 				859CA07D261AFE1F003D5BF4 /* MockProjectService.swift */,
 				859C9FB0261717D8003D5BF4 /* MockDataStore.swift */,
+				856F420C26219E7400FB6A91 /* MockImageStorage.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -523,10 +537,12 @@
 			files = (
 				85F5A6E2261B124600FE8329 /* AddProjectViewModelTests.swift in Sources */,
 				859CA088261AFEC4003D5BF4 /* EditDateViewModelTests.swift in Sources */,
+				856F42052621951500FB6A91 /* DataStoreTests.swift in Sources */,
 				859CA090261B023E003D5BF4 /* ProjectDetailsViewModelTests.swift in Sources */,
 				859C9FB1261717D8003D5BF4 /* MockDataStore.swift in Sources */,
 				859CA07E261AFE1F003D5BF4 /* MockProjectService.swift in Sources */,
 				85F5A6DC261B0DA200FE8329 /* ProjectListViewModelTests.swift in Sources */,
+				856F420D26219E7400FB6A91 /* MockImageStorage.swift in Sources */,
 				859CA076261AF8F6003D5BF4 /* EditNameViewModelTests.swift in Sources */,
 				859CA0652619D700003D5BF4 /* ProjectServiceTests.swift in Sources */,
 			);
